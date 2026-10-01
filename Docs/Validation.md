@@ -2,6 +2,12 @@
 
 ## Versión 0.2.0
 
+### Logo de la build 8
+
+- La N se dibuja mediante un único renderer CoreGraphics para el logo SwiftUI, el AppIcon claro/oscuro y su previsualización. Usa la geometría normalizada y el algoritmo de cuatro tonos del repositorio principal; mantiene los nodos opacos y el degradado diagonal con sus tres paradas.
+- Comprobación de píxeles del AppIcon: los cuatro centros coinciden exactamente con los tonos canónicos para Violeta (`#cbb6fb`, `#8b5cf6`, `#764ed1`, `#533794`), todos con alfa 255. El generador usa sRGB explícito para evitar cambios de color al exportar el PNG.
+- XCUITest existente de apariencia adaptativa aprobado en iPhone 16 Pro Max con iOS 26.3: Naranja/Claro, Verde azulado/Oscuro y persistencia tras relanzar. Capturas nativas [claro](../Screenshots/Brand/iphone16promax-build8-light.png) y [oscuro](../Screenshots/Brand/iphone16promax-build8-dark.png). AppIcon compilado e instalado; archivo iOS firmado `0.2.0 (8)` completado.
+
 ### Correcciones de la build 7
 
 - Dos XCUITests aprobados en iPhone 16 Pro Max iOS 26.3: lectura privada persistente después de las cuatro herramientas y pantalla negra, navegación por flechas/cuadrícula sin cambiar la audiencia, salida explícita mediante el libro y vídeo/volumen visibles únicamente en diapositivas con vídeo fuera de lectura privada.

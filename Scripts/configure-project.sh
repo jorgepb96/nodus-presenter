@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 python3 "$(dirname "$0")/generate-localizations.py"
+sh "$(dirname "$0")/regenerate-icons.sh"
 # Compile the documented hinge APIs only with an SDK which declares them.
 sdk_version=$(xcrun --sdk iphoneos --show-sdk-version)
 xcodegen generate

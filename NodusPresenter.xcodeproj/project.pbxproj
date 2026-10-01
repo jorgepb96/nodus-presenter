@@ -13,6 +13,7 @@
 		60E66E07A7495CA9586D6317 /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */; };
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
 		6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C219F692896CD41609D737 /* ActiveToolControls.swift */; };
+		705647EB00E2F8879563191B /* NodusBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81F4F411B5FD042B4DB926A /* NodusBrand.swift */; };
 		864B8D85EB9D201CF156AE69 /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6E3A8BB4D9B5062031965E98 /* PresenterCore */; };
 		90F2FD0CCE45143857FDCD7D /* LocalizationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */; };
 		96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */; };
@@ -61,6 +62,7 @@
 		E2B66731865A085B40F65E63 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F5983C45869A326E418E6C17 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F81F4F411B5FD042B4DB926A /* NodusBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodusBrand.swift; sourceTree = "<group>"; };
 		F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
 		FB2C4462680B6A823C85647A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,6 +125,7 @@
 				2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */,
 				45CB3308739BC1B3A207915D /* Info.plist */,
 				209B846EA3E80CFD772A2A60 /* InfoPlist.strings */,
+				F81F4F411B5FD042B4DB926A /* NodusBrand.swift */,
 				570BC6DEF33C4F03A11366BA /* NodusLogo.swift */,
 				5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */,
 				259C218F33EA401A89D72E7B /* PresenterPreferences.swift */,
@@ -257,6 +260,7 @@
 			files = (
 				6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */,
 				96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */,
+				705647EB00E2F8879563191B /* NodusBrand.swift in Sources */,
 				BE605160C7BD8A13048DA77A /* NodusLogo.swift in Sources */,
 				213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */,
 				F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */,
@@ -387,7 +391,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -465,7 +469,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
