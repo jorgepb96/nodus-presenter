@@ -1,0 +1,44 @@
+name: NodusPresenter
+options:
+  bundleIdPrefix: com.nodusresearch
+  deploymentTarget:
+    iOS: '18.0'
+packages:
+  PresenterCore:
+    path: .
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    DEVELOPMENT_TEAM: 6RPLS9EA4X
+    CODE_SIGN_STYLE: Automatic
+    MARKETING_VERSION: 0.1.0
+    CURRENT_PROJECT_VERSION: 1
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+targets:
+  NodusPresenter:
+    type: application
+    platform: iOS
+    sources: [App]
+    dependencies:
+      - package: PresenterCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nodusresearch.presenter
+        TARGETED_DEVICE_FAMILY: '1,2'
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: App/Info.plist
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+    scheme:
+      testTargets: [NodusPresenterUITests]
+  NodusPresenterUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests/UI]
+    dependencies:
+      - target: NodusPresenter
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.nodusresearch.presenter.uitests
