@@ -1,5 +1,54 @@
 import XCTest
 final class DemoTests: XCTestCase {
+    func testSlideSplitStopsAtUsefulSize() {
+        XCUIDevice.shared.orientation = .portrait
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let app = XCUIApplication()
+        app.launchArguments = ["--demo", "--reset-preferences", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]
+        app.launch()
+        XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))
+        app.buttons["tools"].tap()
+        app.sliders["layoutSlider"].adjust(toNormalizedSliderPosition: 0)
+        app.sliders["layoutSlider"].adjust(toNormalizedSliderPosition: 1)
+        let settingsShot = XCTAttachment(screenshot: app.screenshot()); settingsShot.name = "Slide split maximum in settings"; settingsShot.lifetime = .keepAlways; add(settingsShot)
+        app.buttons["dismissTools"].tap()
+        let slide = app.images["Diapositiva 3"]
+        XCTAssertEqual(slide.frame.width, app.frame.width - 32, accuracy: 2)
+        let notesTop = app.buttons["notesFontDecrease"].frame.minY
+        let divider = app.otherElements["panelDivider"]
+        XCTAssertTrue(divider.exists)
+        divider.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.1,
+            thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85)))
+        XCTAssertEqual(app.buttons["notesFontDecrease"].frame.minY, notesTop, accuracy: 2)
+        XCTAssertEqual(slide.frame.width, app.frame.width - 32, accuracy: 2)
+        app.buttons["tools"].tap()
+        app.switches["showNextSlide"].coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
+        app.sliders["layoutSlider"].adjust(toNormalizedSliderPosition: 1)
+        app.buttons["dismissTools"].tap()
+        XCTAssertTrue(app.buttons["nextSlidePreview"].exists)
+        XCTAssertEqual(slide.frame.width, app.frame.width - 32, accuracy: 2)
+        XCTAssertEqual(app.buttons["notesFontDecrease"].frame.minY - notesTop, 58, accuracy: 2)
+        // The final slide has no next preview: clamp the old, larger split immediately.
+        app.buttons["slides"].tap(); app.buttons["slide-cell-8"].tap()
+        XCTAssertFalse(app.buttons["nextSlidePreview"].exists)
+        XCTAssertEqual(app.buttons["notesFontDecrease"].frame.minY, notesTop, accuracy: 2)
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Slide split capped at full width"; screenshot.lifetime = .keepAlways; add(screenshot)
+        // The divider still moves back up to make the slide smaller.
+        app.otherElements["panelDivider"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.1,
+            thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.35)))
+        XCTAssertLessThan(app.images["Diapositiva 8"].frame.width, app.frame.width - 40)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let visibleNotes = XCTNSPredicateExpectation(predicate: NSPredicate(format: "hittable == true"), object: app.buttons["notesFontDecrease"])
+        XCTAssertEqual(XCTWaiter.wait(for: [visibleNotes], timeout: 5), .completed)
+        app.buttons["tools"].tap()
+        XCTAssertTrue(app.sliders["layoutSlider"].exists)
+        app.buttons["dismissTools"].tap()
+        XCUIDevice.shared.orientation = .portrait
+        XCTAssertTrue(app.buttons["notesFontDecrease"].isHittable)
+        XCTAssertLessThanOrEqual(app.images["Diapositiva 8"].frame.width, app.frame.width - 32 + 2)
+    }
+
     func testAdaptiveBrandAppearance() {
         let app = XCUIApplication(); app.launchArguments = ["--demo", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]; app.launch()
         XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))

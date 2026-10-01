@@ -7,6 +7,7 @@ struct PresenterView: View {
     @Environment(\.colorScheme) private var colorScheme
     @State private var showConnection = false
     @State private var dividerStart: Double?
+    @State private var layoutRange = PresenterLayout.defaultRange
     var body: some View {
         VStack(spacing: 0) {
             header
@@ -32,7 +33,7 @@ struct PresenterView: View {
             toolDock.frame(maxWidth: 520).padding(.horizontal, 16).padding(.top, 8).padding(.bottom, 5)
         }
         .sheet(isPresented: $session.showSlides) { SlidesSheet() }
-        .sheet(isPresented: $session.showTools) { ToolsSheet().presentationDetents([.large]) }
+        .sheet(isPresented: $session.showTools) { ToolsSheet(layoutRange: layoutRange).presentationDetents([.large]) }
         .sheet(isPresented: $showConnection) { connectionDetails.presentationDetents([.medium]) }
     }
     private var header: some View {
@@ -91,39 +92,51 @@ struct PresenterView: View {
         }
     }
     @ViewBuilder private func adjustableContent(size: CGSize) -> some View {
+        let image = session.image(for: session.displayedSlide)
+        let ratio = image.map { Double($0.size.width / max(1, $0.size.height)) } ?? 16 / 9
+        let hasNext = preferences.showNextSlide && session.displayedSlide < session.state.totalSlides
+        let range = PresenterLayout.shareRange(width: Double(size.width), height: Double(size.height), aspectRatio: ratio, hasNext: hasNext)
+        let share = PresenterLayout.clamp(preferences.slideShare, to: range)
         let wide = size.width >= 700
-        if wide {
-            let available = max(1, size.width - 52)
-            HStack(spacing: 0) {
-                slidePane.frame(width: min(available - 220, max(260, available * preferences.slideShare)))
-                divider(vertical: true, length: available)
-                notes
-            }.padding(.horizontal, 16).padding(.bottom, 4)
-        } else {
-            let available = max(1, size.height - 24)
-            VStack(spacing: 0) {
-                slidePane.frame(height: available * preferences.slideShare)
-                divider(vertical: false, length: available)
-                notes
-            }.padding(.horizontal, 16).padding(.bottom, 4)
+        Group {
+            if wide {
+                let available = max(1, size.width - 52)
+                HStack(spacing: 0) {
+                    slidePane.frame(width: min(available - 220, max(260, available * share)))
+                    divider(vertical: true, length: available, range: range)
+                    notes
+                }.padding(.horizontal, 16).padding(.bottom, 4)
+            } else {
+                let available = max(1, size.height - 24)
+                VStack(spacing: 0) {
+                    slidePane.frame(height: available * share)
+                    divider(vertical: false, length: available, range: range)
+                    notes
+                }.padding(.horizontal, 16).padding(.bottom, 4)
+            }
+        }.onChange(of: range, initial: true) { _, value in
+            layoutRange = value
+            dividerStart = nil
+            let clamped = PresenterLayout.clamp(preferences.slideShare, to: value)
+            if preferences.slideShare != clamped { preferences.slideShare = clamped }
         }
     }
-    private func divider(vertical: Bool, length: CGFloat) -> some View {
+    private func divider(vertical: Bool, length: CGFloat, range: ClosedRange<Double>) -> some View {
         RoundedRectangle(cornerRadius: 3).fill(Color.secondary.opacity(0.35))
             .frame(width: vertical ? 4 : 40, height: vertical ? 40 : 4)
             .frame(width: vertical ? 20 : nil, height: vertical ? nil : 20)
             .frame(maxWidth: vertical ? nil : .infinity, maxHeight: vertical ? .infinity : nil)
             .contentShape(Rectangle())
             .gesture(DragGesture(minimumDistance: 1, coordinateSpace: .global).onChanged { value in
-                if dividerStart == nil { dividerStart = preferences.slideShare }
+                if dividerStart == nil { dividerStart = PresenterLayout.clamp(preferences.slideShare, to: range) }
                 let delta = vertical ? value.translation.width : value.translation.height
-                preferences.slideShare = min(0.72, max(0.24, (dividerStart ?? 0.42) + Double(delta / length)))
+                preferences.slideShare = PresenterLayout.clamp((dividerStart ?? range.lowerBound) + Double(delta / length), to: range)
             }.onEnded { _ in dividerStart = nil })
             .accessibilityElement().accessibilityLabel(L10n.text("Slide and notes split"))
             .accessibilityValue(L10n.text("Slide %d percent", Int(preferences.slideShare * 100)))
             .accessibilityIdentifier("panelDivider")
             .accessibilityAdjustableAction { direction in
-                preferences.slideShare = min(0.72, max(0.24, preferences.slideShare + (direction == .increment ? 0.05 : -0.05)))
+                preferences.slideShare = PresenterLayout.clamp(preferences.slideShare + (direction == .increment ? 0.05 : -0.05), to: range)
             }
     }
     private var slidePane: some View {
@@ -131,7 +144,7 @@ struct PresenterView: View {
             let image = session.image(for: session.displayedSlide)
             let ratio = image.map { $0.size.width / max(1, $0.size.height) } ?? 16 / 9
             let hasNext = preferences.showNextSlide && session.displayedSlide < session.state.totalSlides
-            let canvasHeight = min(geometry.size.width / ratio, max(1, geometry.size.height - (hasNext ? 152 : 94)))
+            let canvasHeight = min(geometry.size.width / ratio, max(1, geometry.size.height - CGFloat(PresenterLayout.chromeHeight(hasNext: hasNext))))
             VStack(spacing: 4) {
                 HStack {
                     Text("\(session.displayedSlide) / \(session.state.totalSlides)").font(.caption.monospacedDigit().weight(.semibold))
@@ -359,6 +372,7 @@ struct SlidesSheet: View {
 }
 
 struct ToolsSheet: View {
+    let layoutRange: ClosedRange<Double>
     @EnvironmentObject var session: PresenterSession
     @EnvironmentObject var preferences: PresenterPreferences
     @Environment(\.dismiss) var dismiss
@@ -370,11 +384,12 @@ struct ToolsSheet: View {
                 Section(L10n.text("Layout")) {
                     Toggle(L10n.text("Show next slide"), isOn: $preferences.showNextSlide).accessibilityIdentifier("showNextSlide")
                     VStack(spacing: 12) {
-                        HStack { Text(L10n.text("Slide %d%%", Int(layoutDraft * 100))); Spacer(); Text(L10n.text("Notes %d%%", 100 - Int(layoutDraft * 100))) }.font(.caption).foregroundStyle(.secondary)
-                        Slider(value: $layoutDraft, in: 0.24...0.72, onEditingChanged: { editing in
-                            if !editing { preferences.slideShare = layoutDraft }
+                        HStack { Text(L10n.text("Slide %d%%", Int(layoutDraft * 100))).accessibilityIdentifier("layoutSlideShare"); Spacer(); Text(L10n.text("Notes %d%%", 100 - Int(layoutDraft * 100))) }.font(.caption).foregroundStyle(.secondary)
+                        Slider(value: Binding(get: { layoutDraft }, set: { layoutDraft = PresenterLayout.clamp($0, to: layoutRange) }),
+                               in: layoutRange.lowerBound...max(layoutRange.upperBound, layoutRange.lowerBound + 0.0001), onEditingChanged: { editing in
+                            if !editing { preferences.slideShare = PresenterLayout.clamp(layoutDraft, to: layoutRange) }
                         }) { Text(L10n.text("Slide and notes space")) }
-                            .accessibilityIdentifier("layoutSlider")
+                            .accessibilityIdentifier("layoutSlider").disabled(layoutRange.lowerBound == layoutRange.upperBound)
                     }.padding(.vertical, 6)
                 }
                 Section(L10n.text("Theme")) {
@@ -425,7 +440,9 @@ struct ToolsSheet: View {
                         if session.isDemo { Text(L10n.text("The demo simulates the video state.")).font(.caption).foregroundStyle(.secondary) }
                     }.disabled(!session.canControl)
                 }
-            }.onAppear { layoutDraft = preferences.slideShare }.onDisappear { preferences.slideShare = layoutDraft }.navigationTitle(L10n.text("Settings")).toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() }.accessibilityIdentifier("dismissTools") } }
+            }.onAppear { layoutDraft = PresenterLayout.clamp(preferences.slideShare, to: layoutRange) }
+                .onChange(of: layoutRange) { _, range in layoutDraft = PresenterLayout.clamp(layoutDraft, to: range) }
+                .onDisappear { preferences.slideShare = PresenterLayout.clamp(layoutDraft, to: layoutRange) }.navigationTitle(L10n.text("Settings")).toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() }.accessibilityIdentifier("dismissTools") } }
         }
     }
 }
