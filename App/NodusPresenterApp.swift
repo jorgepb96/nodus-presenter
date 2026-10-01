@@ -68,7 +68,7 @@ struct RootView: View {
                                 ConnectionBadge()
                                 if session.isPairing { Button(L10n.text("Cancel connection"), role: .cancel) { session.disconnect() } }
                                 Label(L10n.text("Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair."), systemImage: "qrcode")
-                                Label(L10n.text("The direct link can work without the room’s router. Keep Wi-Fi enabled on both devices."), systemImage: "antenna.radiowaves.left.and.right")
+                                Label(L10n.text("On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network."), systemImage: "antenna.radiowaves.left.and.right")
                                 Button { scanning = true } label: { Label(L10n.text("Scan QR code"), systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity).padding(.vertical, 6) }
                                     .buttonStyle(.borderedProminent).accessibilityIdentifier("scanQR")
                             }.padding(24).modifier(GlassPanel())

@@ -17,6 +17,7 @@
 "Communities that transform" = "Comunidades que transformam";
 "Connect" = "Ligar";
 "Connect to Nodus on your Mac to control the presentation, including without a router." = "Liga ao Nodus no teu Mac para controlar a apresentação, mesmo sem router.";
+"Connect to Nodus on your computer to control the presentation over the local network." = "Liga ao Nodus no teu computador para controlar a apresentação através da rede local.";
 "Connect to understand" = "Ligar para compreender";
 "Connected to Nodus" = "Ligado ao Nodus";
 "Connecting to Nodus…" = "A ligar ao Nodus…";
@@ -62,6 +63,7 @@
 "OK" = "OK";
 "Off" = "Desativado";
 "On" = "Ativado";
+"On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network." = "No Mac, mantém o Wi-Fi ligado para a ligação direta. No Windows e Linux, liga ambos os dispositivos à mesma rede local.";
 "On screen" = "No ecrã";
 "Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair." = "Abre o Presenter no Nodus e escolhe App iPhone–iPad. Lê o código QR para emparelhar.";
 "Orange" = "Laranja";
@@ -88,6 +90,7 @@
 "Returns to the slide on screen before using this control." = "Volta ao diapositivo no ecrã antes de usar este controlo.";
 "Running" = "Em curso";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "Lê o QR do Nodus para ligar o comando ao teu Mac.";
+"Scan Nodus’s QR code to connect your controller to your computer." = "Lê o QR do Nodus para ligar o comando ao teu computador.";
 "Scan QR code" = "Ler código QR";
 "Seconds" = "Segundos";
 "Settings" = "Definições";
@@ -119,6 +122,8 @@
 "Tool color" = "Cor da ferramenta";
 "Try demo" = "Experimentar demonstração";
 "Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled." = "Não foi possível encontrar o Nodus. Verifica a permissão de rede local e se o Wi-Fi está ligado.";
+"Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus." = "Não é possível ligar ao Nodus. Verifica se ambos os dispositivos estão na mesma rede local e se a firewall do computador permite o Nodus.";
+"Video volume" = "Volume do vídeo";
 "Violet" = "Violeta";
 "What we build together" = "O que construímos juntos";
 "Your presentation, in your hands." = "A tua apresentação, nas tuas mãos.";

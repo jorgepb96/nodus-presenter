@@ -59,3 +59,13 @@ Fuentes oficiales consultadas:
 - [onHingeChange](https://developer.apple.com/documentation/swiftui/view/onhingechange(isenabled:_:))
 - [includePeerToPeer](https://developer.apple.com/documentation/network/nwparameters/includepeertopeer)
 - [TN3151: Choosing the right networking API](https://developer.apple.com/documentation/technotes/tn3151-choosing-the-right-networking-api)
+
+
+## Paridad Windows/Linux — 1 de octubre de 2026
+
+- Core: doce pruebas pasan, con validación adicional de QR v2, endpoints IPv4, puerto, fingerprint y campos duplicados; QR v1 sigue seleccionando el transporte original del Mac.
+- iPhone 16 Pro Max, iOS 26.3: seis XCUITests de Demo pasan, incluidas navegación, lectura privada, herramientas/pantalla negra, controles de vídeo y volumen, apariencia/icono, ojo y reparto de paneles. Build de Simulator compilada correctamente.
+- TLS 1.3 real de Electron hacia la app de Simulator: sesión autenticada con una dirección inaccesible antes de loopback; estado verde, PDF descargado y notas, navegación, play, volumen 27, lectura privada a la página 3 con público en 2, puntero y pantalla negra comprobados contra el estado del servidor. El fixture es de pruebas y no sustituye una sesión con una máquina Windows/Linux física.
+- Certificado alterado en el QR: la app real del simulador rechaza la conexión, conserva el punto rojo y no muestra la presentación.
+- Las nuevas etiquetas, errores y permisos tienen recursos completos en los nueve idiomas. Los parámetros TLS-PSK del Mac y su helper no se han modificado; pasan sus pruebas TLS/clave errónea/preview/PDF.
+- CI del repositorio principal añade Windows y Ubuntu para ejecutar el protocolo y renderizado JPEG bajo su runtime Electron real. La validación de LAN/firewalls con hardware físico queda pendiente.

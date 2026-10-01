@@ -17,6 +17,7 @@
 "Communities that transform" = "Des communautés qui transforment";
 "Connect" = "Connecter";
 "Connect to Nodus on your Mac to control the presentation, including without a router." = "Connectez-vous à Nodus sur votre Mac pour contrôler la présentation, même sans routeur.";
+"Connect to Nodus on your computer to control the presentation over the local network." = "Connectez-vous à Nodus sur votre ordinateur pour contrôler la présentation via le réseau local.";
 "Connect to understand" = "Se relier pour comprendre";
 "Connected to Nodus" = "Connecté à Nodus";
 "Connecting to Nodus…" = "Connexion à Nodus…";
@@ -62,6 +63,7 @@
 "OK" = "OK";
 "Off" = "Désactivé";
 "On" = "Activé";
+"On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network." = "Sur Mac, gardez le Wi-Fi activé pour la liaison directe. Sur Windows et Linux, connectez les deux appareils au même réseau local.";
 "On screen" = "À l’écran";
 "Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair." = "Ouvrez Presenter dans Nodus et choisissez App iPhone–iPad. Scannez son code QR pour l’associer.";
 "Orange" = "Orange";
@@ -88,6 +90,7 @@
 "Returns to the slide on screen before using this control." = "Revient à la diapositive à l’écran avant d’utiliser cette commande.";
 "Running" = "En cours";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "Scannez le code QR de Nodus pour connecter la télécommande à votre Mac.";
+"Scan Nodus’s QR code to connect your controller to your computer." = "Scannez le code QR de Nodus pour connecter la télécommande à votre ordinateur.";
 "Scan QR code" = "Scanner le code QR";
 "Seconds" = "Secondes";
 "Settings" = "Réglages";
@@ -119,6 +122,8 @@
 "Tool color" = "Couleur de l’outil";
 "Try demo" = "Essayer la démo";
 "Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled." = "Impossible de trouver Nodus. Vérifiez l’autorisation du réseau local et que le Wi-Fi est activé.";
+"Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus." = "Impossible de joindre Nodus. Vérifiez que les deux appareils sont sur le même réseau local et que le pare-feu de l’ordinateur autorise Nodus.";
+"Video volume" = "Volume de la vidéo";
 "Violet" = "Violet";
 "What we build together" = "Ce que nous construisons ensemble";
 "Your presentation, in your hands." = "Votre présentation, entre vos mains.";

@@ -19,9 +19,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Scan Nodus’s QR code to connect your controller to your Mac.</string>
+	<string>Scan Nodus’s QR code to connect your controller to your computer.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Connect to Nodus on your Mac to control the presentation, including without a router.</string>
+	<string>Connect to Nodus on your computer to control the presentation over the local network.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_nodus-presenter._tcp</string>

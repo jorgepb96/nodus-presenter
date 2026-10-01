@@ -463,7 +463,7 @@ struct ToolsSheet: View {
                 }.disabled(!session.canControl)
                 if session.hasCurrentVideo && !session.localPreview {
                     Section(L10n.text("Audio")) {
-                        Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100, step: 1) { Text(L10n.text("Mac volume")) }
+                        Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100, step: 1) { Text(session.volumeTitle) }
                             .accessibilityIdentifier("macVolumeSlider").disabled(!session.canControl)
                     }
                     Section(L10n.text("Slide video")) {

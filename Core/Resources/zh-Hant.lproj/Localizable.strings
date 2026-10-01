@@ -17,6 +17,7 @@
 "Communities that transform" = "推動變革的社群";
 "Connect" = "連線";
 "Connect to Nodus on your Mac to control the presentation, including without a router." = "連線至 Mac 上的 Nodus 來控制簡報，即使沒有路由器也能使用。";
+"Connect to Nodus on your computer to control the presentation over the local network." = "透過區域網路連線至電腦上的 Nodus，以控制簡報。";
 "Connect to understand" = "連結以理解";
 "Connected to Nodus" = "已連線至 Nodus";
 "Connecting to Nodus…" = "正在連線至 Nodus…";
@@ -62,6 +63,7 @@
 "OK" = "確定";
 "Off" = "已關閉";
 "On" = "已開啟";
+"On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network." = "在 Mac 上，請保持 Wi-Fi 開啟以使用直接連線。在 Windows 和 Linux 上，請將兩部裝置連線至同一個區域網路。";
 "On screen" = "展示畫面";
 "Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair." = "在 Nodus 中開啟 Presenter，選擇 App iPhone–iPad，然後掃描 QR 碼進行配對。";
 "Orange" = "橙色";
@@ -88,6 +90,7 @@
 "Returns to the slide on screen before using this control." = "使用此控制項前會返回正在展示的投影片。";
 "Running" = "執行中";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "掃描 Nodus 的 QR 碼，將遙控器連線至你的 Mac。";
+"Scan Nodus’s QR code to connect your controller to your computer." = "掃描 Nodus 的 QR 碼，將遙控器連線至電腦。";
 "Scan QR code" = "掃描 QR 碼";
 "Seconds" = "秒";
 "Settings" = "設定";
@@ -119,6 +122,8 @@
 "Tool color" = "工具顏色";
 "Try demo" = "體驗示範";
 "Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled." = "無法找到 Nodus。請檢查區域網路權限，並確認 Wi-Fi 已開啟。";
+"Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus." = "無法連線至 Nodus。請確認兩部裝置位於同一個區域網路，且電腦防火牆允許 Nodus。";
+"Video volume" = "影片音量";
 "Violet" = "紫羅蘭";
 "What we build together" = "我們共同構建的未來";
 "Your presentation, in your hands." = "簡報盡在掌握。";

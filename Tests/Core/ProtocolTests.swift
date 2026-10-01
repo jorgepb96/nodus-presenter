@@ -7,10 +7,34 @@ final class ProtocolTests: XCTestCase {
         let key = Data(repeating: 7, count: 32).base64EncodedString()
         let good = URL(string: "nodus-presenter://pair?version=1&service=\(service)&key=\(key)&name=Mac")!
         XCTAssertEqual(try Pairing(url: good).key.count, 32)
+        XCTAssertNil(try Pairing(url: good).lan, "Existing Mac QR keeps Bonjour/TLS-PSK")
         for suffix in ["&version=2", "&key=bad", "&service=../../file"] {
             XCTAssertThrowsError(try Pairing(url: URL(string: good.absoluteString + suffix)!))
         }
         XCTAssertThrowsError(try Pairing(url: URL(string: "https://example.com")!))
+    }
+    func testLANPairingRequiresPinnedCertificateAndBoundedIPv4Endpoints() throws {
+        let key = Data(repeating: 8, count: 32).base64EncodedString()
+        let url = "nodus-presenter://pair?version=2&transport=lan&service=nodus-12345678-1234-1234-1234-123456789abc&key=\(key)&fingerprint=\(String(repeating: "ab", count: 32))&hosts=192.168.1.10,10.0.0.2&port=43210&name=Linux"
+        let pairing = try Pairing(url: URL(string: url)!)
+        XCTAssertEqual(pairing.lan?.hosts, ["192.168.1.10", "10.0.0.2"])
+        XCTAssertEqual(pairing.lan?.port, 43210)
+        XCTAssertEqual(pairing.lan?.fingerprint, Data(repeating: 0xab, count: 32))
+        XCTAssertEqual(pairing.name, "Linux")
+        for (field, badValues) in [
+            ("port", ["0", "65536", "-1", "https"]),
+            ("hosts", ["example.com", "192.168.1.999", "0.0.0.0", "224.0.0.1", "192.168.01.2", "192.168.1.2,192.168.1.2", "192.168.1.2,"]),
+            ("fingerprint", ["", "ab", String(repeating: "g", count: 64)]),
+            ("transport", ["http", "bonjour", ""])
+        ] {
+            for value in badValues {
+                var parts = URLComponents(string: url)!
+                parts.queryItems = parts.queryItems!.map { $0.name == field ? URLQueryItem(name: field, value: value) : $0 }
+                XCTAssertThrowsError(try Pairing(url: parts.url!), "\(field): \(value)")
+            }
+        }
+        XCTAssertThrowsError(try Pairing(url: URL(string: url + "&port=1234")!))
+        XCTAssertThrowsError(try Pairing(url: URL(string: url.replacingOccurrences(of: "version=2", with: "version=3"))!))
     }
     func testFramesSurviveEveryPossibleTCPSplit() throws {
         let payload = Data("{\"kind\":\"state\",\"notes\":\"Conexión — 日本語\"}".utf8)

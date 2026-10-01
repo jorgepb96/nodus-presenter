@@ -17,6 +17,7 @@
 "Communities that transform" = "変革をもたらすコミュニティ";
 "Connect" = "接続";
 "Connect to Nodus on your Mac to control the presentation, including without a router." = "Mac の Nodus に接続して、ルーターがなくてもプレゼンテーションを操作します。";
+"Connect to Nodus on your computer to control the presentation over the local network." = "ローカルネットワーク経由でコンピューターの Nodus に接続し、プレゼンテーションを操作します。";
 "Connect to understand" = "つながって理解する";
 "Connected to Nodus" = "Nodus に接続済み";
 "Connecting to Nodus…" = "Nodus に接続中…";
@@ -62,6 +63,7 @@
 "OK" = "OK";
 "Off" = "オフ";
 "On" = "オン";
+"On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network." = "Mac では直接接続のために Wi-Fi をオンにしてください。Windows と Linux では両方のデバイスを同じローカルネットワークに接続してください。";
 "On screen" = "画面上";
 "Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair." = "Nodus で Presenter を開き、App iPhone–iPad を選択します。QR コードを読み取ってペアリングしてください。";
 "Orange" = "オレンジ";
@@ -88,6 +90,7 @@
 "Returns to the slide on screen before using this control." = "このコントロールを使う前に、表示中のスライドに戻ります。";
 "Running" = "計測中";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "Nodus の QR コードを読み取り、コントローラーを Mac に接続します。";
+"Scan Nodus’s QR code to connect your controller to your computer." = "Nodus の QR コードを読み取り、コントローラーをコンピューターに接続します。";
 "Scan QR code" = "QR コードを読み取る";
 "Seconds" = "秒";
 "Settings" = "設定";
@@ -119,6 +122,8 @@
 "Tool color" = "ツールの色";
 "Try demo" = "デモを試す";
 "Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled." = "Nodus が見つかりません。ローカルネットワークのアクセス許可と Wi-Fi がオンになっていることを確認してください。";
+"Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus." = "Nodus に接続できません。両方のデバイスが同じローカルネットワークに接続され、コンピューターのファイアウォールで Nodus が許可されていることを確認してください。";
+"Video volume" = "動画の音量";
 "Violet" = "バイオレット";
 "What we build together" = "私たちが共に築くもの";
 "Your presentation, in your hands." = "プレゼンテーションを、あなたの手に。";

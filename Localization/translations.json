@@ -11,8 +11,8 @@
     "pt"
   ],
   "permissions": {
-    "NSCameraUsageDescription": "Scan Nodus’s QR code to connect your controller to your Mac.",
-    "NSLocalNetworkUsageDescription": "Connect to Nodus on your Mac to control the presentation, including without a router."
+    "NSCameraUsageDescription": "Scan Nodus’s QR code to connect your controller to your computer.",
+    "NSLocalNetworkUsageDescription": "Connect to Nodus on your computer to control the presentation over the local network."
   },
   "strings": {
     "Violet": [
@@ -1274,6 +1274,56 @@
       "Kehrt vor der Verwendung dieses Steuerelements zur angezeigten Folie zurück.",
       "Torna alla diapositiva sullo schermo prima di usare questo comando.",
       "Volta ao diapositivo no ecrã antes de usar este controlo."
+    ],
+    "Video volume": [
+      "Volumen del vídeo",
+      "Volume de la vidéo",
+      "视频音量",
+      "影片音量",
+      "動画の音量",
+      "Videolautstärke",
+      "Volume del video",
+      "Volume do vídeo"
+    ],
+    "Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus.": [
+      "No se puede conectar con Nodus. Comprueba que ambos dispositivos estén en la misma red local y que el firewall del ordenador permita Nodus.",
+      "Impossible de joindre Nodus. Vérifiez que les deux appareils sont sur le même réseau local et que le pare-feu de l’ordinateur autorise Nodus.",
+      "无法连接到 Nodus。请确认两台设备位于同一本地网络，且电脑防火墙允许 Nodus。",
+      "無法連線至 Nodus。請確認兩部裝置位於同一個區域網路，且電腦防火牆允許 Nodus。",
+      "Nodus に接続できません。両方のデバイスが同じローカルネットワークに接続され、コンピューターのファイアウォールで Nodus が許可されていることを確認してください。",
+      "Nodus ist nicht erreichbar. Prüfe, ob beide Geräte im selben lokalen Netzwerk sind und die Firewall des Computers Nodus zulässt.",
+      "Impossibile raggiungere Nodus. Verifica che entrambi i dispositivi siano sulla stessa rete locale e che il firewall del computer consenta Nodus.",
+      "Não é possível ligar ao Nodus. Verifica se ambos os dispositivos estão na mesma rede local e se a firewall do computador permite o Nodus."
+    ],
+    "On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network.": [
+      "En Mac, mantén Wi-Fi activado para el enlace directo. En Windows y Linux, conecta ambos dispositivos a la misma red local.",
+      "Sur Mac, gardez le Wi-Fi activé pour la liaison directe. Sur Windows et Linux, connectez les deux appareils au même réseau local.",
+      "在 Mac 上，请保持 Wi-Fi 开启以使用直接连接。在 Windows 和 Linux 上，请将两台设备连接到同一本地网络。",
+      "在 Mac 上，請保持 Wi-Fi 開啟以使用直接連線。在 Windows 和 Linux 上，請將兩部裝置連線至同一個區域網路。",
+      "Mac では直接接続のために Wi-Fi をオンにしてください。Windows と Linux では両方のデバイスを同じローカルネットワークに接続してください。",
+      "Lass auf dem Mac WLAN für die direkte Verbindung eingeschaltet. Verbinde unter Windows und Linux beide Geräte mit demselben lokalen Netzwerk.",
+      "Su Mac, mantieni il Wi-Fi attivo per il collegamento diretto. Su Windows e Linux, collega entrambi i dispositivi alla stessa rete locale.",
+      "No Mac, mantém o Wi-Fi ligado para a ligação direta. No Windows e Linux, liga ambos os dispositivos à mesma rede local."
+    ],
+    "Scan Nodus’s QR code to connect your controller to your computer.": [
+      "Escanea el QR de Nodus para conectar el mando con tu ordenador.",
+      "Scannez le code QR de Nodus pour connecter la télécommande à votre ordinateur.",
+      "扫描 Nodus 的二维码，将遥控器连接到电脑。",
+      "掃描 Nodus 的 QR 碼，將遙控器連線至電腦。",
+      "Nodus の QR コードを読み取り、コントローラーをコンピューターに接続します。",
+      "Scanne den QR-Code von Nodus, um die Fernbedienung mit deinem Computer zu verbinden.",
+      "Scansiona il QR di Nodus per collegare il telecomando al tuo computer.",
+      "Lê o QR do Nodus para ligar o comando ao teu computador."
+    ],
+    "Connect to Nodus on your computer to control the presentation over the local network.": [
+      "Conecta con Nodus en tu ordenador para controlar la presentación a través de la red local.",
+      "Connectez-vous à Nodus sur votre ordinateur pour contrôler la présentation via le réseau local.",
+      "通过本地网络连接到电脑上的 Nodus，以控制演示。",
+      "透過區域網路連線至電腦上的 Nodus，以控制簡報。",
+      "ローカルネットワーク経由でコンピューターの Nodus に接続し、プレゼンテーションを操作します。",
+      "Verbinde dich über das lokale Netzwerk mit Nodus auf deinem Computer, um die Präsentation zu steuern.",
+      "Connettiti a Nodus sul tuo computer per controllare la presentazione tramite la rete locale.",
+      "Liga ao Nodus no teu computador para controlar a apresentação através da rede local."
     ]
   }
 }
