@@ -1,4 +1,4 @@
-Présentez avec vos notes à portée de main. Nodus Presenter transforme votre iPhone ou iPad en télécommande native pour PDF Presenter dans Nodus Research sur votre Mac.
+Présentez avec vos notes à portée de main. Nodus Presenter transforme votre iPhone ou iPad en télécommande native pour PDF Presenter dans Nodus Research sur Mac, Windows ou Linux.
 
 Scannez le QR App iPhone–iPad dans Nodus pour associer les appareils.
 
@@ -6,14 +6,14 @@ Scannez le QR App iPhone–iPad dans Nodus pour associer les appareils.
 • Ajustez l’espace des notes et de la diapositive, ainsi que la taille du texte.
 • Lisez la suite en privé sans modifier l’écran du public. Affichez ou masquez l’aperçu suivant.
 • Utilisez le pointeur, Spotlight, le dessin et la loupe.
-• Lancez ou mettez en pause une vidéo et réglez le volume de sortie du Mac. Ces commandes apparaissent uniquement sur les diapositives avec vidéo ; la lecture se fait sur le Mac.
+• Lancez ou mettez en pause une vidéo et réglez le volume. Ces commandes apparaissent uniquement sur les diapositives avec vidéo ; la lecture se fait sur l’ordinateur. Sur Mac, le volume concerne la sortie du système ; sur Windows et Linux, la vidéo de la présentation.
 • Touchez le chronomètre pour démarrer ou suspendre ; maintenez-le pour le réinitialiser.
 • Masquez l’écran du public et rétablissez-le d’un toucher.
 • Choisissez neuf couleurs d’accent et l’apparence Système, Clair ou Sombre. Liquid Glass natif sur iOS et iPadOS 26.
-• Essayez la démo locale sans connecter de Mac.
+• Essayez la démo locale sans connecter d’ordinateur.
 
 Neuf langues : anglais, espagnol, français, allemand, italien, portugais, japonais, chinois simplifié et traditionnel. La langue du système est utilisée, avec l’anglais par défaut.
 
-Nécessite iOS ou iPadOS 18 ou ultérieur. Les présentations réelles nécessitent Nodus Research pour macOS avec l’association native de Presenter. Gardez le Wi-Fi activé sur les deux appareils. La liaison directe peut fonctionner sans le routeur de la salle, selon les appareils et l’environnement.
+Nécessite iOS ou iPadOS 18 ou ultérieur et une version de Nodus Research avec l’association native de Presenter. Sur Mac, gardez le Wi-Fi activé sur les deux appareils : la liaison directe existante peut fonctionner sans le routeur de la salle, selon les appareils et l’environnement. Sur Windows et Linux, les deux appareils doivent pouvoir communiquer sur le même réseau local.
 
-Sans compte dans l’app, publicité ni analyse d’usage. Les données sont échangées entre les appareils associés. La démo simule les commandes sans modifier le volume du Mac.
+100 % gratuite, sans achats, abonnements, compte dans l’app, publicité ni analyse d’usage. Les données sont échangées entre les appareils associés. La démo simule les commandes sans modifier le volume de l’ordinateur.

@@ -15,12 +15,12 @@ struct VideoVolumeControl: View {
                 .font(.system(size: 17)).frame(width: 44, height: 44).contentShape(Rectangle())
                 .background(preferences.theme.color.opacity(0.08), in: Circle())
         }.buttonStyle(.plain).foregroundStyle(preferences.theme.color).disabled(!session.canControl)
-            .accessibilityLabel(L10n.text("Mac volume")).accessibilityValue("\(Int(session.volume)) %")
+            .accessibilityLabel(session.volumeTitle).accessibilityValue("\(Int(session.volume)) %")
             .accessibilityIdentifier("videoVolume")
             .popover(isPresented: $isOpen) {
                 VStack(spacing: 8) {
                     HStack {
-                        Text(L10n.text("Mac volume")).font(.subheadline.weight(.semibold))
+                        Text(session.volumeTitle).font(.subheadline.weight(.semibold))
                         Spacer()
                         Button { isOpen = false } label: {
                             Image(systemName: "xmark").frame(width: 44, height: 44).contentShape(Rectangle())
@@ -31,7 +31,7 @@ struct VideoVolumeControl: View {
                         Slider(value: $draft, in: 0...100, step: 1, onEditingChanged: { value in
                             editing = value
                             if !value { sendVolume(force: true) }
-                        }) { Text(L10n.text("Mac volume")) }.accessibilityIdentifier("videoVolumeSlider")
+                        }) { Text(session.volumeTitle) }.accessibilityIdentifier("videoVolumeSlider")
                             .frame(minHeight: 44)
                         Text("\(Int(draft)) %").font(.caption.monospacedDigit()).foregroundStyle(.secondary).frame(width: 44)
                     }

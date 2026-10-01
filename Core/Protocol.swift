@@ -30,22 +30,54 @@ public enum JSONValue: Codable, Equatable, Sendable {
 
 public typealias Message = [String: JSONValue]
 
+public struct LANPairing: Equatable, Sendable {
+    public let hosts: [String]
+    public let port: UInt16
+    public let fingerprint: Data
+}
+
 public struct Pairing: Equatable, Sendable {
     public static let serviceType = "_nodus-presenter._tcp"
     public let service: String
     public let key: Data
     public let name: String
+    public let lan: LANPairing?
     public init(url: URL) throws {
         guard url.scheme == "nodus-presenter", url.host == "pair", url.absoluteString.count <= 2048,
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let items = components.queryItems else { throw ProtocolError.invalidPairing }
         let values = Dictionary(items.map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { _, _ in "" })
-        guard values["version"] == "1", let service = values["service"],
+        guard ["1", "2"].contains(values["version"] ?? ""), let service = values["service"],
               service.range(of: "^nodus-[a-f0-9-]{36}$", options: .regularExpression) != nil,
               let encoded = values["key"], let key = Data(base64Encoded: encoded), key.count == 32
         else { throw ProtocolError.invalidPairing }
         self.service = service; self.key = key
         self.name = String((values["name"] ?? "Nodus").prefix(100))
+        if values["version"] == "2" {
+            guard values["transport"] == "lan", let portText = values["port"],
+                  let port = UInt16(portText), port > 0, let rawHosts = values["hosts"],
+                  let hex = values["fingerprint"], hex.range(of: "^[a-f0-9]{64}$", options: .regularExpression) != nil
+            else { throw ProtocolError.invalidPairing }
+            let hosts = rawHosts.components(separatedBy: ",")
+            guard !hosts.isEmpty, hosts.count <= 8, Set(hosts).count == hosts.count,
+                  hosts.allSatisfy(Self.validIPv4) else { throw ProtocolError.invalidPairing }
+            var fingerprint = Data()
+            for offset in stride(from: 0, to: 64, by: 2) {
+                let start = hex.index(hex.startIndex, offsetBy: offset)
+                fingerprint.append(UInt8(hex[start..<hex.index(start, offsetBy: 2)], radix: 16)!)
+            }
+            self.lan = LANPairing(hosts: hosts, port: port, fingerprint: fingerprint)
+        } else { self.lan = nil }
+    }
+    private static func validIPv4(_ host: String) -> Bool {
+        let parts = host.components(separatedBy: ".")
+        guard parts.count == 4 else { return false }
+        let numbers = parts.compactMap { part -> Int? in
+            guard part.range(of: "^(0|[1-9][0-9]{0,2})$", options: .regularExpression) != nil,
+                  let value = Int(part), value <= 255 else { return nil }
+            return value
+        }
+        return numbers.count == 4 && numbers[0] > 0 && numbers[0] < 224
     }
 }
 

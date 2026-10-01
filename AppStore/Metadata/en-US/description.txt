@@ -1,18 +1,18 @@
-Present with room to think. Nodus Presenter turns your iPhone or iPad into a native remote for PDF Presenter in Nodus Research on your Mac.
+Present with room to think. Nodus Presenter turns your iPhone or iPad into a native remote for PDF Presenter in Nodus Research on Mac, Windows or Linux.
 
 Scan the App iPhone–iPad QR code in Nodus to pair. See the current slide, keep your presenter notes close, and move through your presentation with buttons, taps or the slide grid.
 
 • Give your notes the space they need: adjust the slide/notes split and text size.
 • Read ahead privately without changing what your audience sees. Show or hide the next-slide preview.
 • Guide attention with a pointer, Spotlight, drawing and a magnifier. Adjust active tools beside the slide controls.
-• Play or pause an embedded video and change the Mac’s output volume. These controls appear only on slides with video; playback takes place on the Mac.
+• Play or pause an embedded video and adjust its volume. These controls appear only on slides with video; playback takes place on the computer. On Mac, volume controls the system output; on Windows and Linux, it controls the presentation video.
 • Track your timing: tap the timer to start or pause, or hold to reset.
 • Blank the audience screen and restore it with a tap.
 • Choose from nine accent colors and System, Light or Dark appearance. Enjoy native Liquid Glass on iOS and iPadOS 26.
-• Try the built-in local demo before pairing a Mac.
+• Try the built-in local demo before pairing a computer.
 
 The app follows your device’s language: English, Spanish, French, German, Italian, Portuguese, Japanese, Simplified Chinese and Traditional Chinese. Other languages fall back to English.
 
-Requires iOS or iPadOS 18 or later. Real presentations require Nodus Research for macOS with native Presenter pairing enabled. Keep Wi-Fi enabled on both devices. The direct connection can work without the room’s router; availability depends on your devices and environment.
+Requires iOS or iPadOS 18 or later and a version of Nodus Research with native Presenter pairing. On Mac, keep Wi-Fi enabled on both devices; the existing direct connection can work without the room’s router, depending on the devices and environment. Windows and Linux require both devices to be reachable on the same local network.
 
-No app account, ads or analytics. Presentation data travels between your paired devices. The demo simulates remote controls and does not change your Mac’s volume.
+100% free, with no purchases, subscriptions, app account, ads or analytics. Presentation data travels between your paired devices. The demo simulates remote controls and does not change the computer’s volume.

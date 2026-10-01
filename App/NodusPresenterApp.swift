@@ -68,13 +68,14 @@ struct RootView: View {
                                 ConnectionBadge()
                                 if session.isPairing { Button(L10n.text("Cancel connection"), role: .cancel) { session.disconnect() } }
                                 Label(L10n.text("Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair."), systemImage: "qrcode")
-                                Label(L10n.text("The direct link can work without the room’s router. Keep Wi-Fi enabled on both devices."), systemImage: "antenna.radiowaves.left.and.right")
+                                Label(L10n.text("On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network."), systemImage: "antenna.radiowaves.left.and.right")
                                 Button { scanning = true } label: { Label(L10n.text("Scan QR code"), systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity).padding(.vertical, 6) }
                                     .buttonStyle(.borderedProminent).accessibilityIdentifier("scanQR")
                             }.padding(24).modifier(GlassPanel())
                             Button { session.enterDemo() } label: { Label(L10n.text("Try demo"), systemImage: "play.circle.fill") }
                                 .buttonStyle(.bordered).accessibilityIdentifier("demo")
                             Button(L10n.text("Paste session link")) { manual = true }.font(.footnote)
+                            PresenterPrivacyLink().font(.footnote)
                         }.frame(maxWidth: 520).padding(24).frame(maxWidth: .infinity)
                     }
                 }
@@ -93,5 +94,14 @@ struct RootView: View {
                 Button(L10n.text("OK")) { session.errorMessage = nil }
             } message: { Text(session.errorMessage ?? "") }
         }
+    }
+}
+
+struct PresenterPrivacyLink: View {
+    private let policyURL = URL(string: "https://nodusresearch.com/presenter/privacy/")!
+    var body: some View {
+        Link(destination: policyURL) {
+            Label(L10n.text("Privacy policy"), systemImage: "hand.raised")
+        }.accessibilityIdentifier("privacyPolicy")
     }
 }

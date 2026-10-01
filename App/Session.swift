@@ -42,6 +42,7 @@ struct InkStroke: Identifiable {
     private var generation = UUID()
     private var reconnectTask: Task<Void, Never>?
     private var retries = 0
+    private var lanCandidates: [FramedConnection] = []
     private var heartbeat: Timer?
     private var lastReceipt = Date()
     private let deviceID = UUID().uuidString
@@ -69,6 +70,12 @@ struct InkStroke: Identifiable {
             Task { @MainActor in self?.tick() }
         }
         let args = ProcessInfo.processInfo.arguments
+        #if DEBUG && targetEnvironment(simulator)
+        // An ignored, private file lets connected QA avoid putting QR secrets in argv/logs.
+        if let index = args.firstIndex(of: "--simulator-pair-file"), args.count > index + 1,
+           let text = try? String(contentsOfFile: args[index + 1], encoding: .utf8),
+           let url = URL(string: text.trimmingCharacters(in: .whitespacesAndNewlines)) { connect(url: url) }
+        #endif
         if let index = args.firstIndex(of: "--pair"), args.count > index + 1, let url = URL(string: args[index + 1]) { connect(url: url) }
         if args.contains("--demo") {
             enterDemo()
@@ -84,6 +91,8 @@ struct InkStroke: Identifiable {
     var timerText: String { String(format: "%02d:%02d", state.timerSeconds / 60, state.timerSeconds % 60) }
     var selectedTool: Tool? { state.toolMode.flatMap(Tool.init(rawValue:)) }
     var hasCurrentVideo: Bool { videos[String(state.currentSlide)] != nil }
+    var isLANConnection: Bool { pairing?.lan != nil }
+    var volumeTitle: String { isLANConnection ? L10n.text("Video volume") : L10n.text("Mac volume") }
 
     func enterDemo() {
         disconnect()
@@ -106,6 +115,7 @@ struct InkStroke: Identifiable {
     func disconnect() {
         generation = UUID(); reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
         browser?.cancel(); browser = nil; control?.cancel(); assets?.cancel(); control = nil; assets = nil
+        lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
         assetsReady = false; connected = false; isDemo = false; pairing = nil
         state = PresenterState(); deckName = ""; notes = [:]; videos = [:]; pdfDocument = nil
         imageCache.removeAllObjects(); pendingImages.removeAll(); strokes = []
@@ -120,6 +130,7 @@ struct InkStroke: Identifiable {
             generation = UUID(); connected = false; status = L10n.text("Not connected · App in background")
             reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
             browser?.cancel(); browser = nil; control?.cancel(); control = nil; assets?.cancel(); assets = nil; assetsReady = false
+            lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
             try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false
         }
         if phase == .active, pairing != nil, !connected, reconnectTask == nil { beginDiscovery() }
@@ -134,6 +145,10 @@ struct InkStroke: Identifiable {
         guard let pairing else { return }
         let token = UUID(); generation = token
         connected = false; status = retries == 0 ? L10n.text("Looking for Nodus…") : L10n.text("Reconnecting to Nodus…")
+        if let lan = pairing.lan {
+            beginLAN(pairing: pairing, lan: lan, token: token)
+            return
+        }
         #if DEBUG
         // Simulator Bonjour cannot always discover a service on its host Mac.
         // Connected verification still uses the QR's real TLS key and protocol.
@@ -175,6 +190,74 @@ struct InkStroke: Identifiable {
             self.scheduleReconnect()
         }
     }
+    private func beginLAN(pairing: Pairing, lan: LANPairing, token: UUID) {
+        status = L10n.text("Connecting to Nodus…")
+        // Race the authenticated control connections so a VPN/virtual interface cannot
+        // make scanning the QR wait through successive endpoint timeouts.
+        var remaining = lan.hosts.count
+        for host in lan.hosts {
+            let endpoint = NWEndpoint.hostPort(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: lan.port)!)
+            let candidate = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.lanParameters(fingerprint: lan.fingerprint)))
+            lanCandidates.append(candidate)
+            candidate.onState = { [weak self, weak candidate] value in
+                guard let self, let candidate, self.generation == token else { return }
+                switch value {
+                case .ready:
+                    candidate.send(["kind": .string("hello"), "version": .number(1), "channel": .string("control"),
+                                    "deviceId": .string(self.deviceID), "key": .string(pairing.key.base64EncodedString())])
+                case .failed, .cancelled:
+                    remaining -= 1
+                    if remaining == 0 && self.control == nil { self.scheduleReconnect() }
+                default: break
+                }
+            }
+            candidate.onMessage = { [weak self, weak candidate] message in
+                guard let self, let candidate, self.generation == token, self.control == nil,
+                      message["kind"]?.string == "update", let raw = message["state"],
+                      (try? PresenterState.decode(raw)) != nil else { return }
+                self.control = candidate
+                self.lanCandidates.filter { $0 !== candidate }.forEach { $0.cancel() }
+                self.lanCandidates.removeAll()
+                candidate.onMessage = { [weak self] message in
+                    guard let self, self.generation == token else { return }; self.receive(message, channel: "control")
+                }
+                candidate.onState = { [weak self] state in
+                    guard let self, self.generation == token else { return }
+                    if case .failed = state { self.scheduleReconnect() }
+                    if case .cancelled = state { self.scheduleReconnect() }
+                }
+                self.receive(message, channel: "control")
+                self.openLANAssets(endpoint: endpoint, pairing: pairing, lan: lan, token: token)
+            }
+            candidate.start(queue: .main)
+        }
+        discoveryTimeout?.cancel()
+        discoveryTimeout = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(8))
+            guard !Task.isCancelled, let self, self.generation == token, !self.connected else { return }
+            self.errorMessage = L10n.text("Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus.")
+            self.scheduleReconnect()
+        }
+    }
+    private func openLANAssets(endpoint: NWEndpoint, pairing: Pairing, lan: LANPairing, token: UUID) {
+        let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.lanParameters(fingerprint: lan.fingerprint)))
+        assets = connection
+        connection.onState = { [weak self, weak connection] value in
+            guard let self, self.generation == token else { return }
+            switch value {
+            case .ready:
+                connection?.send(["kind": .string("hello"), "version": .number(1), "channel": .string("assets"),
+                                  "deviceId": .string(self.deviceID), "key": .string(pairing.key.base64EncodedString())])
+                self.assetsReady = true; self.pendingImages.removeAll(); self.refreshVisibleImages()
+            case .failed, .cancelled: self.scheduleReconnect()
+            default: break
+            }
+        }
+        connection.onMessage = { [weak self] message in
+            guard let self, self.generation == token else { return }; self.receive(message, channel: "assets")
+        }
+        connection.start(queue: .main)
+    }
     private func open(endpoint: NWEndpoint, pairing: Pairing, token: UUID) {
         status = L10n.text("Connecting to Nodus…")
         for channel in ["control", "assets"] {
@@ -201,6 +284,7 @@ struct InkStroke: Identifiable {
         discoveryTimeout?.cancel(); discoveryTimeout = nil
         generation = UUID(); connected = false; status = L10n.text("Reconnecting to Nodus…")
         browser?.cancel(); browser = nil; control?.cancel(); assets?.cancel(); control = nil; assets = nil; assetsReady = false
+        lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
         try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false; pendingImages.removeAll(); drawing = false
         UIApplication.shared.isIdleTimerDisabled = false
         let delay = min(8, 1 << min(retries, 3)); retries += 1

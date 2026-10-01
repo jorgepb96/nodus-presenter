@@ -463,7 +463,7 @@ struct ToolsSheet: View {
                 }.disabled(!session.canControl)
                 if session.hasCurrentVideo && !session.localPreview {
                     Section(L10n.text("Audio")) {
-                        Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100, step: 1) { Text(L10n.text("Mac volume")) }
+                        Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100, step: 1) { Text(session.volumeTitle) }
                             .accessibilityIdentifier("macVolumeSlider").disabled(!session.canControl)
                     }
                     Section(L10n.text("Slide video")) {
@@ -471,6 +471,9 @@ struct ToolsSheet: View {
                         HStack { TextField(L10n.text("Seconds"), value: $seek, format: .number).keyboardType(.decimalPad); Button(L10n.text("Go")) { session.send(["type": .string("videoSeek"), "time": .number(max(0, seek))]) } }
                         if session.isDemo { Text(L10n.text("The demo simulates the video state.")).font(.caption).foregroundStyle(.secondary) }
                     }.disabled(!session.canControl)
+                }
+                Section(L10n.text("About")) {
+                    PresenterPrivacyLink()
                 }
             }.onAppear { layoutDraft = PresenterLayout.clamp(preferences.slideShare, to: layoutRange) }
                 .onChange(of: layoutRange) { _, range in layoutDraft = PresenterLayout.clamp(layoutDraft, to: range) }

@@ -4,11 +4,13 @@ Aplicación nativa para iPhone y iPad que controla el PDF Presenter de Nodus. Sw
 
 ## Usar
 
-En Nodus para macOS, inicia una presentación, abre el QR y selecciona **App iPhone–iPad**. Escanéalo desde esta app. El QR contiene una clave efímera para esa presentación: no lo compartas. El acceso **Navegador web** de Nodus continúa disponible con su PIN.
+En Nodus Research para Mac, Windows o Linux, inicia una presentación, abre el QR y selecciona **App iPhone–iPad**. Escanéalo desde esta app. El QR contiene una clave efímera para esa presentación: no lo compartas. El acceso **Navegador web** de Nodus continúa disponible con su PIN.
 
-El enlace admite Wi-Fi entre dispositivos Apple (`includePeerToPeer`) sin crear un hotspot ni cambiar la red del Mac. Ambos dispositivos deben mantener Wi-Fi encendido y autorizar el acceso a la red local. El sistema elige la ruta disponible; la interfaz no presenta una conexión como directa si no puede comprobarla. No necesita internet para PDF, notas o controles. Los vídeos externos siguen necesitando conexión a su proveedor.
+En Mac, el enlace admite Wi-Fi entre dispositivos Apple (`includePeerToPeer`) sin crear un hotspot ni cambiar la red del Mac. Ambos dispositivos deben mantener Wi-Fi encendido y autorizar el acceso a la red local. El sistema elige la ruta disponible; la interfaz no presenta una conexión como directa si no puede comprobarla. No necesita internet para PDF, notas o controles. Los vídeos externos siguen necesitando conexión a su proveedor.
 
-La demo funciona sin Mac, sin cámara y sin red. Genera un PDF local de ocho diapositivas, notas y estado de vídeo simulado. El punto verde indica un estado recibido de Nodus en una sesión autenticada; la demo y la reconexión muestran rojo, además de texto.
+En Windows y Linux, el ordenador y el móvil deben estar en la misma red local; el ordenador puede usar Ethernet. El QR configura automáticamente los extremos y verifica el certificado de sesión con TLS 1.3. No hay que escribir direcciones ni PIN en la app. El permiso de red local y el firewall deben permitir la conexión. La app y el navegador pueden usarse a la vez. Este enlace necesita la integración LAN de Nodus y la nueva versión del cliente móvil.
+
+La demo funciona sin ordenador, sin cámara y sin red. Genera un PDF local de ocho diapositivas, notas y estado de vídeo simulado. El punto verde indica un estado recibido de Nodus en una sesión autenticada; la demo y la reconexión muestran rojo, además de texto.
 
 ## Controles
 
@@ -18,9 +20,9 @@ En Ajustes → Tema, selecciona **Sistema**, **Claro** u **Oscuro**. La aparienc
 
 Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izquierda para retroceder y la derecha para avanzar, o usa el deslizamiento y la cuadrícula de miniaturas. Una herramienta activa recibe esos toques sin cambiar de diapositiva; su color, tamaño y borrado aparecen entre las flechas. Amplía o reduce la diapositiva con los botones o el gesto de pinza; arrastra una diapositiva ampliada para desplazarte por ella. El ojo permite leer la siguiente diapositiva en privado: tiene un área de 44 × 44 puntos y toda la fila de vista previa admite el toque. El botón para volver a la pantalla del público también tiene 44 puntos de alto. El cronómetro está en la cabecera: un toque pausa o inicia, y mantenerlo pulsado lo reinicia.
 
-Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. La lectura privada permanece activa al pulsar una herramienta o la luna/sol. Sus acciones se aplican a la pantalla del público sin cambiar de diapositiva ni cancelar la lectura del móvil; solo pulsar de nuevo el libro vuelve a la diapositiva proyectada. Otro toque en una herramienta seleccionada la desactiva. También hay botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
+Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. La lectura privada permanece activa al pulsar una herramienta o la luna/sol. Sus acciones se aplican a la pantalla del público sin cambiar de diapositiva ni cancelar la lectura del móvil; solo pulsar de nuevo el libro vuelve a la diapositiva proyectada. Otro toque en una herramienta seleccionada la desactiva. También hay botones de fuente de 44 puntos separados, volumen y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
 
-Si la diapositiva proyectada tiene vídeo, la franja bajo ella muestra reproducción/pausa a la izquierda y volumen a la derecha, con las flechas centradas. El volumen abre un popover con slider: controla el audio del Mac y comparte su valor con Ajustes. Las herramientas conservan sus controles entre las flechas. En columnas de menos de 340 puntos, los botones multimedia pasan junto al contador para evitar solapamientos. Se ocultan durante la lectura privada. Ajustes mantiene el salto a un segundo concreto. En la demo, la diapositiva 4 simula la reproducción sin reproducir audio ni cambiar el volumen del Mac.
+Si la diapositiva proyectada tiene vídeo, la franja bajo ella muestra reproducción/pausa a la izquierda y volumen a la derecha, con las flechas centradas. El volumen abre un popover con slider: controla el audio del sistema en Mac y el volumen del vídeo de la presentación en Windows/Linux, y comparte su valor con Ajustes. Las herramientas conservan sus controles entre las flechas. En columnas de menos de 340 puntos, los botones multimedia pasan junto al contador para evitar solapamientos. Se ocultan durante la lectura privada. Ajustes mantiene el salto a un segundo concreto. En la demo, la diapositiva 4 simula la reproducción sin reproducir audio ni cambiar el volumen del Mac.
 
 ## Idiomas
 
@@ -38,7 +40,7 @@ xcodebuild -project NodusPresenter.xcodeproj -scheme NodusPresenter \
   -destination 'platform=iOS Simulator,name=Nodus — iPhone 16 Pro Max' CODE_SIGNING_ALLOWED=NO test
 ```
 
-Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --video` (abre la diapositiva 4), `--demo --tools`, `--demo --slides`. `--reset-preferences` restaura los ajustes visuales para las pruebas. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos.
+Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --video` (abre la diapositiva 4), `--demo --tools`, `--demo --slides`. `--reset-preferences` restaura los ajustes visuales para las pruebas. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos. En Debug del simulador, `--simulator-pair-file <ruta>` lee un QR de pruebas desde un archivo privado sin exponer su clave en argumentos o logs.
 
 Para revisar el diseño en el Mac, compila con destino **Mac Catalyst** y ejecuta la app con `--demo`. Esta vista permite probar el mismo código SwiftUI; la validación final de gestos y conexión debe hacerse en iPhone/iPad.
 

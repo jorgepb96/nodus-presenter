@@ -59,3 +59,15 @@ Fuentes oficiales consultadas:
 - [onHingeChange](https://developer.apple.com/documentation/swiftui/view/onhingechange(isenabled:_:))
 - [includePeerToPeer](https://developer.apple.com/documentation/network/nwparameters/includepeertopeer)
 - [TN3151: Choosing the right networking API](https://developer.apple.com/documentation/technotes/tn3151-choosing-the-right-networking-api)
+
+
+## Paridad Windows/Linux — 1 de octubre de 2026
+
+- Core: doce pruebas pasan, con validación adicional de QR v2, endpoints IPv4, puerto, fingerprint y campos duplicados; QR v1 sigue seleccionando el transporte original del Mac.
+- iPhone 16 Pro Max, iOS 26.3: seis XCUITests de Demo pasan, incluidas navegación, lectura privada, herramientas/pantalla negra, controles de vídeo y volumen, apariencia/icono, ojo y reparto de paneles. Build de Simulator compilada correctamente.
+- TLS 1.3 real de Electron hacia la app de Simulator: sesión autenticada con una dirección inaccesible antes de loopback; estado verde, PDF descargado y notas, navegación, play, volumen 27, lectura privada a la página 3 con público en 2, puntero y pantalla negra comprobados contra el estado del servidor. El fixture es de pruebas y no sustituye una sesión con una máquina Windows/Linux física.
+- Certificado alterado en el QR: la app real del simulador rechaza la conexión, conserva el punto rojo y no muestra la presentación.
+- Las nuevas etiquetas, errores y permisos tienen recursos completos en los nueve idiomas. Los parámetros TLS-PSK del Mac y su helper no se han modificado; pasan sus pruebas TLS/clave errónea/preview/PDF.
+- CI específico aprobado en Windows y Ubuntu bajo Electron 43.4: TLS real, comandos, renderizado JPEG nativo y PDF completo/reanudado. [Run 36918699670](https://github.com/Drakonis96/nodus/actions/runs/36918699670).
+- La build firmada `0.2.0 (9)` se ha subido y está **En pruebas** en el grupo interno existente, con instrucciones guardadas. La build 9 de Simulator se ha relanzado conectada en iPhone 16 Pro Max iOS 26.3: [captura real](../Screenshots/Connectivity/iphone16promax-lan-build9.png). El argumento de QA `--simulator-pair-file` no está en el ejecutable Release firmado.
+- Reconexión al volver desde la pantalla de inicio del dispositivo comprobada con la app real; recupera el estado del público, volumen y color del puntero. La validación de LAN/firewalls con una máquina Windows/Linux y un iPhone físicos queda pendiente.

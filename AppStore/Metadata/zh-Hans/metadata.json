@@ -1,8 +1,8 @@
 {
   "name": "Nodus Presenter",
   "subtitle": "幻灯片、演讲备注与遥控工具",
-  "promotionalText": "演示尽在掌握。在iPhone和iPad上查看幻灯片与演讲备注，精准控制Mac上的Nodus Research。",
-  "description": "把演讲备注放在手边，从容演示。Nodus Presenter将你的iPhone或iPad变为原生遥控器，控制Mac版Nodus Research中的PDF Presenter。\n\n扫描Nodus中App iPhone–iPad选项的二维码即可配对。\n\n• 使用箭头、轻点或幻灯片网格切换页面。\n• 调整幻灯片与备注的空间比例和文字大小。\n• 私下预览后续内容，不改变观众屏幕。显示或隐藏下一张幻灯片。\n• 使用指针、Spotlight、绘图和放大镜引导注意力。\n• 播放或暂停视频，调整Mac的输出音量。控件仅在含视频的幻灯片上显示，视频在Mac上播放。\n• 轻点计时器开始或暂停，长按重置。\n• 将观众屏幕切换为黑屏，再轻点恢复。\n• 选择九种强调色及系统、浅色或深色外观。iOS和iPadOS 26支持原生Liquid Glass。\n• 无需连接Mac即可试用本地演示。\n\n支持英语、西班牙语、法语、德语、意大利语、葡萄牙语、日语、简体中文和繁体中文，自动跟随设备语言；其他语言使用英语。\n\n需要iOS或iPadOS 18及以上版本。实际演示需要支持Presenter原生配对的Mac版Nodus Research。请保持两台设备的Wi-Fi开启。直接连接可在不依赖会场路由器的情况下工作，具体取决于设备与环境。\n\n无需应用账户，无广告或使用分析。演示数据在配对的设备间传输。本地演示仅模拟操作，不会改变Mac音量。",
+  "promotionalText": "演示尽在掌握。在iPhone和iPad上查看幻灯片与演讲备注，精准控制Mac、Windows或Linux上的Nodus Research。",
+  "description": "把演讲备注放在手边，从容演示。Nodus Presenter将你的iPhone或iPad变为原生遥控器，控制Mac、Windows或Linux版Nodus Research中的PDF Presenter。\n\n扫描Nodus中App iPhone–iPad选项的二维码即可配对。\n\n• 使用箭头、轻点或幻灯片网格切换页面。\n• 调整幻灯片与备注的空间比例和文字大小。\n• 私下预览后续内容，不改变观众屏幕。显示或隐藏下一张幻灯片。\n• 使用指针、Spotlight、绘图和放大镜引导注意力。\n• 播放或暂停视频，调整音量。控件仅在含视频的幻灯片上显示，视频在电脑上播放。Mac上调整系统输出音量；Windows和Linux上调整演示视频的音量。\n• 轻点计时器开始或暂停，长按重置。\n• 将观众屏幕切换为黑屏，再轻点恢复。\n• 选择九种强调色及系统、浅色或深色外观。iOS和iPadOS 26支持原生Liquid Glass。\n• 无需连接电脑即可试用本地演示。\n\n支持英语、西班牙语、法语、德语、意大利语、葡萄牙语、日语、简体中文和繁体中文，自动跟随设备语言；其他语言使用英语。\n\n需要iOS或iPadOS 18及以上版本，以及支持Presenter原生配对的Nodus Research。Mac上请保持两台设备的Wi-Fi开启；现有直接连接可在不依赖会场路由器的情况下工作，具体取决于设备与环境。Windows和Linux要求两台设备能通过同一局域网通信。\n\n完全免费，无内购、订阅、应用账户、广告或使用分析。演示数据在配对的设备间传输。本地演示仅模拟操作，不会改变电脑音量。",
   "keywords": "演示,遥控,幻灯片,PDF,演讲备注,聚光灯,指针,绘图,放大镜,Mac,iPad,计时器",
-  "whatsNew": "可调节的幻灯片与备注布局、更易使用的备注控件、九种强调色、原生Liquid Glass与二维码配对。视频播放及Mac音量控件仅在含视频的幻灯片上显示。改进导航、私下阅读与触控区域，完整支持九种语言。"
+  "whatsNew": "支持与Mac、Windows或Linux版Nodus Research配对。Windows和Linux使用局域网，Mac现有连接方式保持不变。视频控件仅在含视频的幻灯片上显示。"
 }

@@ -1,8 +1,8 @@
 {
   "name": "Nodus Presenter",
   "subtitle": "投影片、講者備註與遙控工具",
-  "promotionalText": "簡報盡在掌握。在iPhone和iPad上查看投影片與講者備註，精準控制Mac上的Nodus Research。",
-  "description": "把講者備註放在手邊，從容簡報。Nodus Presenter將你的iPhone或iPad變為原生遙控器，控制Mac版Nodus Research中的PDF Presenter。\n\n掃描Nodus中App iPhone–iPad選項的QR碼即可配對。\n\n• 使用箭頭、點按或投影片網格切換頁面。\n• 調整投影片與備註的空間比例和文字大小。\n• 私下預覽後續內容，不改變觀眾螢幕。顯示或隱藏下一張投影片。\n• 使用指標、Spotlight、繪圖和放大鏡引導注意力。\n• 播放或暫停影片，調整Mac的輸出音量。控制項僅在含影片的投影片上顯示，影片在Mac上播放。\n• 點按計時器開始或暫停，長按重設。\n• 將觀眾螢幕切換為黑畫面，再點按恢復。\n• 選擇九種強調色及系統、淺色或深色外觀。iOS和iPadOS 26支援原生Liquid Glass。\n• 無需連接Mac即可試用本機示範。\n\n支援英語、西班牙語、法語、德語、義大利語、葡萄牙語、日語、簡體中文和繁體中文，自動跟隨裝置語言；其他語言使用英語。\n\n需要iOS或iPadOS 18及以上版本。實際簡報需要支援Presenter原生配對的Mac版Nodus Research。請保持兩台裝置的Wi-Fi開啟。直接連線可在不依賴會場路由器的情況下運作，具體取決於裝置與環境。\n\n無需App帳號，無廣告或使用分析。簡報資料在配對的裝置間傳輸。本機示範僅模擬操作，不會改變Mac音量。",
+  "promotionalText": "簡報盡在掌握。在iPhone和iPad上查看投影片與講者備註，精準控制Mac、Windows或Linux上的Nodus Research。",
+  "description": "把講者備註放在手邊，從容簡報。Nodus Presenter將你的iPhone或iPad變為原生遙控器，控制Mac、Windows或Linux版Nodus Research中的PDF Presenter。\n\n掃描Nodus中App iPhone–iPad選項的QR碼即可配對。\n\n• 使用箭頭、點按或投影片網格切換頁面。\n• 調整投影片與備註的空間比例和文字大小。\n• 私下預覽後續內容，不改變觀眾螢幕。顯示或隱藏下一張投影片。\n• 使用指標、Spotlight、繪圖和放大鏡引導注意力。\n• 播放或暫停影片，調整音量。控制項僅在含影片的投影片上顯示，影片在電腦上播放。Mac上調整系統輸出音量；Windows和Linux上調整簡報影片的音量。\n• 點按計時器開始或暫停，長按重設。\n• 將觀眾螢幕切換為黑畫面，再點按恢復。\n• 選擇九種強調色及系統、淺色或深色外觀。iOS和iPadOS 26支援原生Liquid Glass。\n• 無需連接電腦即可試用本機示範。\n\n支援英語、西班牙語、法語、德語、義大利語、葡萄牙語、日語、簡體中文和繁體中文，自動跟隨裝置語言；其他語言使用英語。\n\n需要iOS或iPadOS 18及以上版本，以及支援Presenter原生配對的Nodus Research。Mac上請保持兩台裝置的Wi-Fi開啟；現有直接連線可在不依賴會場路由器的情況下運作，具體取決於裝置與環境。Windows和Linux要求兩台裝置能透過同一區域網路通訊。\n\n完全免費，無App內購買、訂閱、App帳號、廣告或使用分析。簡報資料在配對的裝置間傳輸。本機示範僅模擬操作，不會改變電腦音量。",
   "keywords": "簡報,遙控,投影片,PDF,講者備註,聚光燈,指標,繪圖,放大鏡,Mac,iPad,計時器",
-  "whatsNew": "可調整的投影片與備註版面、更易使用的備註控制項、九種強調色、原生Liquid Glass與QR碼配對。影片播放及Mac音量控制項僅在含影片的投影片上顯示。改善導覽、私下閱讀與觸控區域，完整支援九種語言。"
+  "whatsNew": "支援與Mac、Windows或Linux版Nodus Research配對。Windows和Linux使用區域網路，Mac現有連線方式保持不變。影片控制項僅在含影片的投影片上顯示。"
 }

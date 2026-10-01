@@ -1,1 +1,1 @@
-Anpassbarer Arbeitsbereich, größere Notizbedienelemente, neun Akzentfarben, Liquid Glass, QR-Kopplung und Video- sowie Mac-Lautstärkesteuerung nur bei Folien mit Video. Verbesserte Navigation, privates Vorauslesen und Touch-Ziele. Neun Sprachen.
+Kopplung mit Nodus Research auf Mac, Windows oder Linux. Windows und Linux nutzen das lokale Netzwerk; die bestehende Mac-Verbindung bleibt erhalten. Videosteuerung nur bei Folien mit Video.
