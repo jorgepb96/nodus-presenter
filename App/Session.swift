@@ -13,7 +13,7 @@ struct InkStroke: Identifiable {
 
 @MainActor final class PresenterSession: ObservableObject {
     @Published var state = PresenterState()
-    @Published var status = "Sin conexión"
+    @Published var status = L10n.text("Not connected")
     @Published var connected = false
     @Published var isDemo = false
     @Published var deckName = ""
@@ -85,8 +85,8 @@ struct InkStroke: Identifiable {
 
     func enterDemo() {
         disconnect()
-        isDemo = true; connected = false; status = "Demo · Sin conexión a Nodus"
-        macName = "Mac de demostración"; deckName = "Redes de conocimiento"
+        isDemo = true; connected = false; status = L10n.text("Demo · Not connected to Nodus")
+        macName = L10n.text("Demo Mac"); deckName = L10n.text("Knowledge networks")
         pdfDocument = DemoDeck.make()
         state = PresenterState(); state.presenting = true; state.pdfId = "demo"
         state.totalSlides = pdfDocument?.pageCount ?? 8; state.currentSlide = 3; state.timerSeconds = 522
@@ -99,7 +99,7 @@ struct InkStroke: Identifiable {
             let newPairing = try Pairing(url: url)
             disconnect(); pairing = newPairing; macName = newPairing.name
             retries = 0; beginDiscovery()
-        } catch { errorMessage = "Este QR no corresponde a una sesión de la app Nodus Presenter. En Nodus elige App iPhone–iPad." }
+        } catch { errorMessage = L10n.text("This QR code is not a Nodus Presenter app session. Choose App iPhone–iPad in Nodus.") }
     }
     func disconnect() {
         generation = UUID(); reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
@@ -108,14 +108,14 @@ struct InkStroke: Identifiable {
         state = PresenterState(); deckName = ""; notes = [:]; videos = [:]; pdfDocument = nil
         imageCache.removeAllObjects(); pendingImages.removeAll(); strokes = []
         try? pdfFile?.close(); pdfFile = nil; pdfURL = nil; pdfOffset = 0; downloadVersion = ""; downloadInFlight = false
-        localPreview = false; showTools = false; showSlides = false; status = "Sin conexión"
+        localPreview = false; showTools = false; showSlides = false; status = L10n.text("Not connected")
         UIApplication.shared.isIdleTimerDisabled = false
     }
     func sceneChanged(_ phase: ScenePhase) {
         UIApplication.shared.isIdleTimerDisabled = phase == .active && (connected || isDemo)
         foreground = phase != .background
         if phase == .background, pairing != nil {
-            generation = UUID(); connected = false; status = "Sin conexión · App en segundo plano"
+            generation = UUID(); connected = false; status = L10n.text("Not connected · App in background")
             reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
             browser?.cancel(); browser = nil; control?.cancel(); control = nil; assets?.cancel(); assets = nil; assetsReady = false
             try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false
@@ -131,15 +131,15 @@ struct InkStroke: Identifiable {
     private func beginDiscovery() {
         guard let pairing else { return }
         let token = UUID(); generation = token
-        connected = false; status = retries == 0 ? "Buscando Nodus…" : "Reconectando con Nodus…"
+        connected = false; status = retries == 0 ? L10n.text("Looking for Nodus…") : L10n.text("Reconnecting to Nodus…")
         let parameters = NWParameters.tcp; parameters.includePeerToPeer = true
         let browser = NWBrowser(for: .bonjour(type: Pairing.serviceType, domain: nil), using: parameters)
         self.browser = browser
         browser.stateUpdateHandler = { [weak self] value in
             Task { @MainActor in
             guard let self, self.generation == token else { return }
-            if case .failed(let error) = value {
-                self.errorMessage = "No se puede buscar Nodus. Comprueba el permiso de red local y que Wi-Fi esté encendido. \(error.localizedDescription)"
+            if case .failed = value {
+                self.errorMessage = L10n.text("Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled.")
                 self.scheduleReconnect()
             }
             }
@@ -164,7 +164,7 @@ struct InkStroke: Identifiable {
         }
     }
     private func open(endpoint: NWEndpoint, pairing: Pairing, token: UUID) {
-        status = "Conectando con Nodus…"
+        status = L10n.text("Connecting to Nodus…")
         for channel in ["control", "assets"] {
             let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
             if channel == "control" { control = connection } else { assets = connection }
@@ -187,7 +187,7 @@ struct InkStroke: Identifiable {
     private func scheduleReconnect() {
         guard foreground, pairing != nil, reconnectTask == nil else { return }
         discoveryTimeout?.cancel(); discoveryTimeout = nil
-        generation = UUID(); connected = false; status = "Reconectando con Nodus…"
+        generation = UUID(); connected = false; status = L10n.text("Reconnecting to Nodus…")
         browser?.cancel(); browser = nil; control?.cancel(); assets?.cancel(); control = nil; assets = nil; assetsReady = false
         try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false; pendingImages.removeAll(); drawing = false
         UIApplication.shared.isIdleTimerDisabled = false
@@ -208,10 +208,10 @@ struct InkStroke: Identifiable {
             let oldSlide = state.currentSlide, oldID = state.pdfId
             state = newState
             discoveryTimeout?.cancel(); discoveryTimeout = nil
-            connected = true; retries = 0; status = "Conectado a Nodus"; errorMessage = nil
+            connected = true; retries = 0; status = L10n.text("Connected to Nodus"); errorMessage = nil
             UIApplication.shared.isIdleTimerDisabled = true
             if let deck = message["deck"]?.object {
-                deckName = deck["name"]?.string ?? "Presentación"
+                deckName = deck["name"]?.string ?? L10n.text("Presentation")
                 notes = deck["notes"]?.object?.compactMapValues(\.string) ?? [:]
                 videos = deck["videos"]?.object ?? [:]
                 let version = deck["assetVersion"]?.string ?? ""
@@ -236,7 +236,7 @@ struct InkStroke: Identifiable {
         case "assetError":
             if message["page"] == nil { downloadInFlight = false }
             if let page = message["page"]?.number { pendingImages.remove(imageKey(Int(page))) }
-            errorMessage = message["message"]?.string ?? "No se pudo cargar la diapositiva."
+            errorMessage = L10n.text("The presentation resource could not be loaded.")
         case "pdfBegin": beginPDF(message)
         case "pdfChunk":
             guard message["assetVersion"]?.string == downloadVersion,
@@ -245,7 +245,7 @@ struct InkStroke: Identifiable {
                   pdfOffset + data.count <= expectedPDFSize, let file = pdfFile else { return }
             do { try file.write(contentsOf: data); pdfOffset += data.count } catch { try? file.close(); pdfFile = nil }
         case "pdfEnd": finishPDF(message)
-        case "ended": disconnect(); status = "Presentación finalizada"
+        case "ended": disconnect(); status = L10n.text("Presentation ended")
         default: break
         }
     }
@@ -306,7 +306,7 @@ struct InkStroke: Identifiable {
             let actual = hasher.finalize().map { String(format: "%02x", $0) }.joined()
             guard actual == expected else {
                 try? FileManager.default.removeItem(at: url)
-                await MainActor.run { if self.assetVersion == version { self.downloadInFlight = false; self.errorMessage = "La descarga no se pudo verificar. Se reintentará." } }; return
+                await MainActor.run { if self.assetVersion == version { self.downloadInFlight = false; self.errorMessage = L10n.text("The download could not be verified. It will be retried.") } }; return
             }
             let final = url.deletingPathExtension().appendingPathExtension("pdf")
             try? FileManager.default.removeItem(at: final)

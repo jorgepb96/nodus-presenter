@@ -85,7 +85,7 @@ public enum Tool: String, Codable, CaseIterable, Identifiable {
         switch self { case .pointer: return "cursorarrow"; case .flashlight: return "sun.max"; case .draw: return "pencil.tip"; case .zoom: return "plus.magnifyingglass" }
     }
     public var title: String {
-        switch self { case .pointer: return "Puntero"; case .flashlight: return "Spotlight"; case .draw: return "Dibujo"; case .zoom: return "Lupa" }
+        switch self { case .pointer: return L10n.text("Pointer"); case .flashlight: return L10n.text("Spotlight"); case .draw: return L10n.text("Drawing"); case .zoom: return L10n.text("Magnifier") }
     }
     public var range: ClosedRange<Double> {
         switch self { case .pointer: return 5...50; case .flashlight: return 5...40; case .draw: return 1...20; case .zoom: return 100...400 }

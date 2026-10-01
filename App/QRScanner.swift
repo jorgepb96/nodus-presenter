@@ -1,3 +1,4 @@
+import PresenterCore
 import SwiftUI
 import AVFoundation
 
@@ -16,19 +17,19 @@ final class ScannerController: UIViewController, AVCaptureMetadataOutputObjectsD
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     override func viewDidLoad() {
         super.viewDidLoad(); view.backgroundColor = .black
-        let close = UIButton(type: .system); close.setTitle("Cerrar", for: .normal); close.tintColor = .white
+        let close = UIButton(type: .system); close.setTitle(L10n.text("Close"), for: .normal); close.tintColor = .white
         close.addTarget(self, action: #selector(closeScanner), for: .touchUpInside)
         close.translatesAutoresizingMaskIntoConstraints = false; view.addSubview(close)
         NSLayoutConstraint.activate([close.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20), close.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)])
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             guard let self else { return }
             if granted { self.queue.async { self.configure() } }
-            else { DispatchQueue.main.async { self.showMessage("Permite el acceso a la cámara en Ajustes para escanear el QR de Nodus.") } }
+            else { DispatchQueue.main.async { self.showMessage(L10n.text("Allow camera access in Settings to scan Nodus’s QR code.")) } }
         }
     }
     private func configure() {
         guard let device = AVCaptureDevice.default(for: .video), let input = try? AVCaptureDeviceInput(device: device), camera.canAddInput(input) else {
-            DispatchQueue.main.async { self.showMessage("No hay cámara disponible. Puedes pegar el enlace de sesión desde la pantalla de inicio.") }; return
+            DispatchQueue.main.async { self.showMessage(L10n.text("No camera is available. You can paste the session link on the home screen.")) }; return
         }
         camera.addInput(input)
         let output = AVCaptureMetadataOutput(); guard camera.canAddOutput(output) else { return }

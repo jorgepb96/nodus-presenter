@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+python3 "$(dirname "$0")/generate-localizations.py"
 # Compile the documented hinge APIs only with an SDK which declares them.
 sdk_version=$(xcrun --sdk iphoneos --show-sdk-version)
 xcodegen generate

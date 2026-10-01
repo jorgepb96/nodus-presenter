@@ -1,21 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0"><dict>
-<key>CFBundleDisplayName</key><string>Nodus Presenter</string>
-<key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-<key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
-<key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
-<key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
-<key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
-<key>LSRequiresIPhoneOS</key><true/>
-<key>NSCameraUsageDescription</key><string>Escanea el QR de Nodus para conectar el mando con tu Mac.</string>
-<key>NSLocalNetworkUsageDescription</key><string>Conecta con Nodus en tu Mac para controlar la presentación, también sin router.</string>
-<key>NSBonjourServices</key><array><string>_nodus-presenter._tcp</string></array>
-<key>CFBundleURLTypes</key><array><dict><key>CFBundleURLName</key><string>com.nodusresearch.presenter.pair</string><key>CFBundleURLSchemes</key><array><string>nodus-presenter</string></array></dict></array>
-<key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
-<key>UISupportedInterfaceOrientations~ipad</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationPortraitUpsideDown</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
-<key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
-<key>UILaunchScreen</key><dict/>
-<key>ITSAppUsesNonExemptEncryption</key><false/>
-</dict></plist>
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Nodus Presenter</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Scan Nodus’s QR code to connect your controller to your Mac.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Connect to Nodus on your Mac to control the presentation, including without a router.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_nodus-presenter._tcp</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.nodusresearch.presenter.pair</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nodus-presenter</string>
+			</array>
+		</dict>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+		<string>fr</string>
+		<string>zh-Hans</string>
+		<string>zh-Hant</string>
+		<string>ja</string>
+		<string>de</string>
+		<string>it</string>
+		<string>pt</string>
+	</array>
+</dict>
+</plist>

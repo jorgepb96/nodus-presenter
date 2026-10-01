@@ -1,3 +1,4 @@
+import PresenterCore
 import SwiftUI
 
 /// The original connected N inside a display, rendered at the current size and accent.
@@ -39,7 +40,7 @@ struct NodusLogo: View {
             }.frame(width: size, height: size)
         }.aspectRatio(1, contentMode: .fit)
             .accessibilityElement(children: .ignore).accessibilityAddTraits(.isImage)
-            .accessibilityLabel("Logo de Nodus").accessibilityIdentifier("brandLogo")
-            .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? "Oscuro" : "Claro")")
+            .accessibilityLabel(L10n.text("Nodus logo")).accessibilityIdentifier("brandLogo")
+            .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? L10n.text("Dark") : L10n.text("Light"))")
     }
 }

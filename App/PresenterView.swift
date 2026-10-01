@@ -44,14 +44,14 @@ struct PresenterView: View {
                             .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2)).offset(x: 2, y: 2)
                     }
             }.accessibilityLabel("Nodus Presenter. \(session.status)").accessibilityIdentifier("connectionStatus")
-                .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? "Oscuro" : "Claro")")
+                .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? L10n.text("Dark") : L10n.text("Light"))")
             Text(session.deckName).foregroundStyle(Color.primary).font(.subheadline.weight(.semibold)).lineLimit(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             timerControl
             Button { session.showSlides = true } label: { Image(systemName: "square.grid.2x2").frame(width: 40, height: 44).contentShape(Rectangle()) }
-                .accessibilityLabel("Diapositivas").accessibilityIdentifier("slides")
+                .accessibilityLabel(L10n.text("Slides")).accessibilityIdentifier("slides")
             Button { session.showTools = true } label: { Image(systemName: "slider.horizontal.3").frame(width: 40, height: 44).contentShape(Rectangle()) }
-                .accessibilityLabel("Ajustes y herramientas").accessibilityIdentifier("tools")
+                .accessibilityLabel(L10n.text("Settings and tools")).accessibilityIdentifier("tools")
         }.font(.system(size: 18)).foregroundStyle(preferences.theme.color).buttonStyle(.plain).padding(.horizontal, 16).padding(.vertical, 4)
     }
     private var timerControl: some View {
@@ -67,11 +67,11 @@ struct PresenterView: View {
                 }
             })
             .accessibilityElement(children: .ignore).accessibilityAddTraits(.isButton)
-            .accessibilityLabel("Cronómetro").accessibilityValue("\(session.timerText), \(session.state.timerRunning ? "En marcha" : "Pausado")")
-            .accessibilityHint("Toca para pausar o iniciar. Mantén pulsado para reiniciar.")
+            .accessibilityLabel(L10n.text("Timer")).accessibilityValue("\(session.timerText), \(session.state.timerRunning ? L10n.text("Running") : L10n.text("Paused"))")
+            .accessibilityHint(L10n.text("Tap to pause or start. Press and hold to reset."))
             .accessibilityIdentifier("timer")
             .accessibilityAction { session.send(["type": .string("timerToggle")]) }
-            .accessibilityAction(named: "Reiniciar cronómetro") { session.send(["type": .string("timerReset")]) }
+            .accessibilityAction(named: L10n.text("Reset timer")) { session.send(["type": .string("timerReset")]) }
             .opacity(session.canControl ? 1 : 0.45)
     }
     private var connectionDetails: some View {
@@ -79,15 +79,15 @@ struct PresenterView: View {
             VStack(alignment: .leading, spacing: 24) {
                 ConnectionBadge()
                 if session.isDemo {
-                    Label("Demo local. Los controles no están conectados a un Mac.", systemImage: "play.circle")
+                    Label(L10n.text("Local demo. The controls are not connected to a Mac."), systemImage: "play.circle")
                 } else if !session.connected {
-                    Label("Última vista recibida. Puedes seguir leyendo las notas descargadas mientras se recupera la conexión.", systemImage: "arrow.triangle.2.circlepath")
+                    Label(L10n.text("Last received view. You can keep reading downloaded notes while the connection recovers."), systemImage: "arrow.triangle.2.circlepath")
                 } else { Label(session.macName, systemImage: "desktopcomputer") }
-                Button("Desconectar", role: .destructive) { showConnection = false; session.disconnect() }.buttonStyle(.bordered)
+                Button(L10n.text("Disconnect"), role: .destructive) { showConnection = false; session.disconnect() }.buttonStyle(.bordered)
                 Spacer()
-            }.padding(24).navigationTitle("Conexión").navigationBarTitleDisplayMode(.inline)
+            }.padding(24).navigationTitle(L10n.text("Connection")).navigationBarTitleDisplayMode(.inline)
                 .toolbar(.visible, for: .navigationBar)
-                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Listo") { showConnection = false } } }
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { showConnection = false } } }
         }
     }
     @ViewBuilder private func adjustableContent(size: CGSize) -> some View {
@@ -119,8 +119,8 @@ struct PresenterView: View {
                 let delta = vertical ? value.translation.width : value.translation.height
                 preferences.slideShare = min(0.72, max(0.24, (dividerStart ?? 0.42) + Double(delta / length)))
             }.onEnded { _ in dividerStart = nil })
-            .accessibilityElement().accessibilityLabel("Reparto entre diapositiva y notas")
-            .accessibilityValue("Diapositiva \(Int(preferences.slideShare * 100)) por ciento")
+            .accessibilityElement().accessibilityLabel(L10n.text("Slide and notes split"))
+            .accessibilityValue(L10n.text("Slide %d percent", Int(preferences.slideShare * 100)))
             .accessibilityIdentifier("panelDivider")
             .accessibilityAdjustableAction { direction in
                 preferences.slideShare = min(0.72, max(0.24, preferences.slideShare + (direction == .increment ? 0.05 : -0.05)))
@@ -139,7 +139,7 @@ struct PresenterView: View {
                     Spacer()
                     Button { session.togglePreview() } label: {
                         Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 32).contentShape(Rectangle())
-                    }.accessibilityLabel(session.localPreview ? "Volver a la diapositiva en pantalla" : "Leer sin cambiar la pantalla")
+                    }.accessibilityLabel(session.localPreview ? L10n.text("Return to the slide on screen") : L10n.text("Read without changing the screen"))
                         .accessibilityIdentifier("preview")
                 }.buttonStyle(.plain).foregroundStyle(preferences.theme.color)
                 Spacer(minLength: 0)
@@ -147,14 +147,14 @@ struct PresenterView: View {
                 HStack(spacing: 8) {
                     Button { session.send(["type": .string("prev")]) } label: {
                         Image(systemName: "chevron.left").frame(width: 44, height: 44).contentShape(Rectangle())
-                    }.accessibilityLabel("Anterior").accessibilityIdentifier("previous")
+                    }.accessibilityLabel(L10n.text("Previous")).accessibilityIdentifier("previous")
                         .disabled(session.displayedSlide <= 1 || (!session.canControl && !session.localPreview))
                     if let tool = session.selectedTool, !session.localPreview {
                         ActiveToolControls(tool: tool).id(tool.rawValue).frame(width: min(248, max(100, geometry.size.width - 104)))
                     } else { zoomControls }
                     Button { session.send(["type": .string("next")]) } label: {
                         Image(systemName: "chevron.right").frame(width: 44, height: 44).contentShape(Rectangle())
-                    }.accessibilityLabel("Siguiente").accessibilityIdentifier("next")
+                    }.accessibilityLabel(L10n.text("Next")).accessibilityIdentifier("next")
                         .disabled(session.displayedSlide >= session.state.totalSlides || (!session.canControl && !session.localPreview))
                 }.font(.system(size: 18)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
                     .frame(maxWidth: .infinity).frame(height: 50)
@@ -166,12 +166,12 @@ struct PresenterView: View {
                             SlideCanvas(page: session.displayedSlide + 1, interactive: false, renderWidth: 240)
                                 .frame(width: 90, height: 50).allowsHitTesting(false).accessibilityHidden(true)
                             VStack(alignment: .leading, spacing: 3) {
-                                Text("Siguiente").font(.caption).foregroundStyle(.secondary)
+                                Text(L10n.text("Next")).font(.caption).foregroundStyle(.secondary)
                                 Text("\(session.displayedSlide + 1) / \(session.state.totalSlides)").font(.caption.monospacedDigit())
                             }
                             Spacer(); Image(systemName: "eye")
                         }.frame(height: 54).padding(.horizontal, 4).contentShape(Rectangle())
-                    }.buttonStyle(.plain).accessibilityLabel("Leer la siguiente diapositiva en privado")
+                    }.buttonStyle(.plain).accessibilityLabel(L10n.text("Read the next slide privately"))
                         .accessibilityIdentifier("nextSlidePreview")
                 }
                 Spacer(minLength: 0)
@@ -181,11 +181,11 @@ struct PresenterView: View {
     private var zoomControls: some View {
         HStack(spacing: 2) {
             Button { session.adjustSlideZoom(by: -0.25) } label: { Image(systemName: "minus.magnifyingglass").frame(width: 38, height: 44).contentShape(Rectangle()) }
-                .accessibilityLabel("Reducir zoom").accessibilityIdentifier("zoomOut").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale <= 1)
+                .accessibilityLabel(L10n.text("Zoom out")).accessibilityIdentifier("zoomOut").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale <= 1)
             Text("\(Int(session.state.slideZoom.scale * 100)) %").font(.system(size: 11, design: .monospaced)).foregroundStyle(Color.primary)
-                .accessibilityIdentifier("slideZoomValue").accessibilityLabel("Zoom \(Int(session.state.slideZoom.scale * 100)) por ciento")
+                .accessibilityIdentifier("slideZoomValue").accessibilityLabel(L10n.text("Zoom %d percent", Int(session.state.slideZoom.scale * 100)))
             Button { session.adjustSlideZoom(by: 0.25) } label: { Image(systemName: "plus.magnifyingglass").frame(width: 38, height: 44).contentShape(Rectangle()) }
-                .accessibilityLabel("Ampliar zoom").accessibilityIdentifier("zoomIn").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale >= 5)
+                .accessibilityLabel(L10n.text("Zoom in")).accessibilityIdentifier("zoomIn").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale >= 5)
         }.font(.system(size: 16)).foregroundStyle(preferences.theme.color).buttonStyle(.plain).padding(.horizontal, 3)
     }
     private var toolDock: some View {
@@ -205,27 +205,27 @@ struct PresenterView: View {
             Button { session.send(["type": .string("blackScreen")]) } label: {
                 Image(systemName: session.state.blackScreen ? "sun.max.fill" : "moon.fill").frame(maxWidth: .infinity).frame(height: 44).contentShape(Rectangle())
                     .background(session.state.blackScreen ? preferences.theme.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 19))
-            }.accessibilityLabel("Pantalla negra").accessibilityIdentifier("blackScreen")
-                .accessibilityValue(session.state.blackScreen ? "Activada" : "Desactivada").disabled(!session.canControl)
+            }.accessibilityLabel(L10n.text("Black screen")).accessibilityIdentifier("blackScreen")
+                .accessibilityValue(session.state.blackScreen ? L10n.text("On") : L10n.text("Off")).disabled(!session.canControl)
         }.font(.system(size: 20)).foregroundStyle(preferences.theme.color).buttonStyle(.plain).padding(5).modifier(GlassPanel(radius: 28))
     }
     private var notes: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 12) {
-                Label("Notas", systemImage: "text.alignleft").font(.headline)
+                Label(L10n.text("Notes"), systemImage: "text.alignleft").font(.headline)
                 Spacer(minLength: 0)
                 HStack(spacing: 12) {
                     Button { session.notesFont = max(13, session.notesFont - 2) } label: { Image(systemName: "textformat.size.smaller").frame(width: 44, height: 44).contentShape(Rectangle()) }
-                        .accessibilityLabel("Reducir texto").accessibilityIdentifier("notesFontDecrease").disabled(session.notesFont <= 13)
+                        .accessibilityLabel(L10n.text("Decrease text size")).accessibilityIdentifier("notesFontDecrease").disabled(session.notesFont <= 13)
                     Button { session.notesFont = min(32, session.notesFont + 2) } label: { Image(systemName: "textformat.size.larger").frame(width: 44, height: 44).contentShape(Rectangle()) }
-                        .accessibilityLabel("Ampliar texto").accessibilityIdentifier("notesFontIncrease").disabled(session.notesFont >= 32)
+                        .accessibilityLabel(L10n.text("Increase text size")).accessibilityIdentifier("notesFontIncrease").disabled(session.notesFont >= 32)
                 }.font(.system(size: 20)).foregroundStyle(preferences.theme.color).buttonStyle(.plain)
             }
             ScrollView {
-                Text(session.note.isEmpty ? "Esta diapositiva no tiene notas." : session.note)
+                Text(session.note.isEmpty ? L10n.text("This slide has no notes.") : session.note)
                     .font(.system(size: session.notesFont)).lineSpacing(6).textSelection(.enabled)
                     .frame(maxWidth: .infinity, alignment: .leading).padding(.bottom, 8)
-                    .accessibilityIdentifier("presenterNotes").accessibilityValue("Fuente \(Int(session.notesFont))")
+                    .accessibilityIdentifier("presenterNotes").accessibilityValue(L10n.text("Font %d", Int(session.notesFont)))
             }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).id(session.displayedSlide)
         }.padding(.horizontal, 16).padding(.top, 6).padding(.bottom, 10)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -281,7 +281,7 @@ struct SlideCanvas: View {
                             context.stroke(path, with: .color(Color(hex: stroke.color)), style: StrokeStyle(lineWidth: stroke.width, lineCap: .round, lineJoin: .round))
                         }
                     }
-                    if session.state.blackScreen { Color.black; Label("Pantalla negra activa", systemImage: "moon.fill").foregroundStyle(.white).font(.caption) }
+                    if session.state.blackScreen { Color.black; Label(L10n.text("Black screen is active"), systemImage: "moon.fill").foregroundStyle(.white).font(.caption) }
                 }
             }.clipped().contentShape(Rectangle())
                 .gesture(DragGesture(minimumDistance: session.selectedTool == nil || session.localPreview ? 15 : 0)
@@ -331,7 +331,7 @@ struct SlideCanvas: View {
                 }, including: interactive ? .all : .none)
         }.aspectRatio(ratio, contentMode: .fit).clipShape(RoundedRectangle(cornerRadius: 14)).shadow(color: .black.opacity(0.12), radius: 12, y: 5)
             .onAppear { session.requestImage(page) }.onChange(of: page) { _, value in session.requestImage(value) }
-            .accessibilityLabel("Diapositiva \(page)")
+            .accessibilityLabel(L10n.text("Slide %d", page))
     }
 }
 
@@ -350,10 +350,10 @@ struct SlidesSheet: View {
                         } label: {
                             VStack { SlideCanvas(page: page, interactive: false, renderWidth: 320).allowsHitTesting(false).accessibilityHidden(true); Text("\(page)").font(.caption.monospacedDigit()) }.padding(7).contentShape(Rectangle())
                                 .background(page == session.displayedSlide ? preferences.theme.color.opacity(0.15) : .clear, in: RoundedRectangle(cornerRadius: 18))
-                        }.buttonStyle(.plain).accessibilityLabel("Diapositiva \(page)").accessibilityIdentifier("slide-cell-\(page)").disabled(!session.canControl && !session.localPreview)
+                        }.buttonStyle(.plain).accessibilityLabel(L10n.text("Slide %d", page)).accessibilityIdentifier("slide-cell-\(page)").disabled(!session.canControl && !session.localPreview)
                     }
                 }.padding(20)
-            }.navigationTitle("Diapositivas").toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button("Cerrar") { dismiss() } } }
+            }.navigationTitle(L10n.text("Slides")).toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Close")) { dismiss() } } }
         }
     }
 }
@@ -367,22 +367,22 @@ struct ToolsSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Distribución") {
-                    Toggle("Mostrar siguiente diapositiva", isOn: $preferences.showNextSlide).accessibilityIdentifier("showNextSlide")
+                Section(L10n.text("Layout")) {
+                    Toggle(L10n.text("Show next slide"), isOn: $preferences.showNextSlide).accessibilityIdentifier("showNextSlide")
                     VStack(spacing: 12) {
-                        HStack { Text("Diapositiva \(Int(layoutDraft * 100)) %"); Spacer(); Text("Notas \(100 - Int(layoutDraft * 100)) %") }.font(.caption).foregroundStyle(.secondary)
+                        HStack { Text(L10n.text("Slide %d%%", Int(layoutDraft * 100))); Spacer(); Text(L10n.text("Notes %d%%", 100 - Int(layoutDraft * 100))) }.font(.caption).foregroundStyle(.secondary)
                         Slider(value: $layoutDraft, in: 0.24...0.72, onEditingChanged: { editing in
                             if !editing { preferences.slideShare = layoutDraft }
-                        }) { Text("Espacio de diapositiva y notas") }
+                        }) { Text(L10n.text("Slide and notes space")) }
                             .accessibilityIdentifier("layoutSlider")
                     }.padding(.vertical, 6)
                 }
-                Section("Tema") {
-                    Picker("Apariencia", selection: $preferences.appearance) {
+                Section(L10n.text("Theme")) {
+                    Picker(L10n.text("Appearance"), selection: $preferences.appearance) {
                         ForEach(PresenterAppearance.allCases) { appearance in Text(appearance.title).tag(appearance) }
                     }.pickerStyle(.segmented).accessibilityIdentifier("appearancePicker")
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                        ForEach(PresenterTheme.allCases) { theme in
+                        ForEach(PresenterTheme.selectableCases) { theme in
                             Button { preferences.theme = theme } label: {
                                 HStack(spacing: 8) {
                                     Circle().fill(theme.color).frame(width: 18, height: 18)
@@ -395,37 +395,37 @@ struct ToolsSheet: View {
                         }
                     }.padding(.vertical, 6)
                 }
-                Section("En pantalla") {
-                    Picker("Herramienta", selection: Binding(get: { session.state.toolMode ?? "none" }, set: { session.send(["type": .string("setTool"), "tool": $0 == "none" ? .null : .string($0)]) })) {
-                        Text("Ninguna").tag("none")
+                Section(L10n.text("On screen")) {
+                    Picker(L10n.text("Tool"), selection: Binding(get: { session.state.toolMode ?? "none" }, set: { session.send(["type": .string("setTool"), "tool": $0 == "none" ? .null : .string($0)]) })) {
+                        Text(L10n.text("None")).tag("none")
                         ForEach(Tool.allCases, id: \.self) { tool in Label(tool.title, systemImage: tool.symbol).tag(tool.rawValue) }
                     }
                     if let tool = session.selectedTool {
-                        Slider(value: Binding(get: { session.state.toolSizes[tool.rawValue] ?? 15 }, set: { session.send(["type": .string("setToolSize"), "tool": .string(tool.rawValue), "size": .number($0)]) }), in: tool.range) { Text("Tamaño") }
-                        if tool == .zoom { Slider(value: Binding(get: { session.state.zoomFactor }, set: { session.send(["type": .string("setZoomFactor"), "factor": .number($0)]) }), in: 1.5...3) { Text("Ampliación") } }
+                        Slider(value: Binding(get: { session.state.toolSizes[tool.rawValue] ?? 15 }, set: { session.send(["type": .string("setToolSize"), "tool": .string(tool.rawValue), "size": .number($0)]) }), in: tool.range) { Text(L10n.text("Size")) }
+                        if tool == .zoom { Slider(value: Binding(get: { session.state.zoomFactor }, set: { session.send(["type": .string("setZoomFactor"), "factor": .number($0)]) }), in: 1.5...3) { Text(L10n.text("Magnification")) } }
                     }
                     HStack {
-                        Text("Color"); Spacer()
+                        Text(L10n.text("Color")); Spacer()
                         ForEach(["#8b5cf6", "#ef4444", "#f59e0b", "#22c55e", "#3b82f6"], id: \.self) { hex in
                             Button { session.send(["type": .string("setToolColor"), "color": .string(hex)]) } label: {
                                 Circle().fill(Color(hex: hex)).frame(width: 28, height: 28).overlay(Circle().strokeBorder(session.state.toolColor == hex ? Color.primary : .clear, lineWidth: 3))
-                            }.buttonStyle(.plain).accessibilityLabel("Color \(hex)")
+                            }.buttonStyle(.plain).accessibilityLabel(L10n.text("Color %@", hex))
                         }
                     }
-                    Button("Borrar trazos") { session.send(["type": .string("clearDraw")]) }
-                    Button("Restablecer zoom de la diapositiva") { session.send(["type": .string("slideZoom"), "data": .object(["scale": .number(1), "originX": .number(50), "originY": .number(50)])]) }
+                    Button(L10n.text("Clear drawings")) { session.send(["type": .string("clearDraw")]) }
+                    Button(L10n.text("Reset slide zoom")) { session.send(["type": .string("slideZoom"), "data": .object(["scale": .number(1), "originX": .number(50), "originY": .number(50)])]) }
                 }.disabled(!session.canControl)
-                Section("Audio") {
-                    Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100) { Text("Volumen del Mac") }.disabled(!session.canControl)
+                Section(L10n.text("Audio")) {
+                    Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100) { Text(L10n.text("Mac volume")) }.disabled(!session.canControl)
                 }
                 if session.videos[String(session.state.currentSlide)] != nil {
-                    Section("Vídeo de la diapositiva") {
-                        Button(session.state.videoPlaying ? "Pausar vídeo" : "Reproducir vídeo") { session.send(["type": .string("videoToggle")]) }
-                        HStack { TextField("Segundos", value: $seek, format: .number).keyboardType(.decimalPad); Button("Ir") { session.send(["type": .string("videoSeek"), "time": .number(max(0, seek))]) } }
-                        if session.isDemo { Text("La demo simula el estado del vídeo.").font(.caption).foregroundStyle(.secondary) }
+                    Section(L10n.text("Slide video")) {
+                        Button(session.state.videoPlaying ? L10n.text("Pause video") : L10n.text("Play video")) { session.send(["type": .string("videoToggle")]) }
+                        HStack { TextField(L10n.text("Seconds"), value: $seek, format: .number).keyboardType(.decimalPad); Button(L10n.text("Go")) { session.send(["type": .string("videoSeek"), "time": .number(max(0, seek))]) } }
+                        if session.isDemo { Text(L10n.text("The demo simulates the video state.")).font(.caption).foregroundStyle(.secondary) }
                     }.disabled(!session.canControl)
                 }
-            }.onAppear { layoutDraft = preferences.slideShare }.onDisappear { preferences.slideShare = layoutDraft }.navigationTitle("Herramientas").toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button("Listo") { dismiss() } } }
+            }.onAppear { layoutDraft = preferences.slideShare }.onDisappear { preferences.slideShare = layoutDraft }.navigationTitle(L10n.text("Settings")).toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() }.accessibilityIdentifier("dismissTools") } }
         }
     }
 }

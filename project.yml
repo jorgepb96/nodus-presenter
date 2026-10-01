@@ -1,5 +1,6 @@
 name: NodusPresenter
 options:
+  developmentLanguage: en
   bundleIdPrefix: com.nodusresearch
   deploymentTarget:
     iOS: '18.0'

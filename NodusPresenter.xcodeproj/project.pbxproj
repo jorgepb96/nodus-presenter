@@ -13,9 +13,11 @@
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
 		6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C219F692896CD41609D737 /* ActiveToolControls.swift */; };
 		864B8D85EB9D201CF156AE69 /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6E3A8BB4D9B5062031965E98 /* PresenterCore */; };
+		90F2FD0CCE45143857FDCD7D /* LocalizationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */; };
 		96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */; };
 		B4586321986780B5EF967AEB /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79177523994F808ACBAF15D6 /* QRScanner.swift */; };
 		BE605160C7BD8A13048DA77A /* NodusLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570BC6DEF33C4F03A11366BA /* NodusLogo.swift */; };
+		BF3E821676DAC886833B30C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 209B846EA3E80CFD772A2A60 /* InfoPlist.strings */; };
 		F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259C218F33EA401A89D72E7B /* PresenterPreferences.swift */; };
 		F9D84ABED46A659BC7DCEAE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAB7CC16AA850024143A15EE /* Assets.xcassets */; };
 		FABB2C50D715E6AB2BD10756 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */; };
@@ -36,17 +38,27 @@
 		259C218F33EA401A89D72E7B /* PresenterPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterPreferences.swift; sourceTree = "<group>"; };
 		2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDeck.swift; sourceTree = "<group>"; };
 		358815F48093128F50406B7A /* NodusPresenter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NodusPresenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUITests.swift; sourceTree = "<group>"; };
 		45CB3308739BC1B3A207915D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4D6D379F98A88A82AC77DED9 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		54EA287CA826B8B1E050CAF2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		570BC6DEF33C4F03A11366BA /* NodusLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodusLogo.swift; sourceTree = "<group>"; };
 		5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodusPresenterApp.swift; sourceTree = "<group>"; };
+		78DE8F5FE1E3A10E4764F252 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		79177523994F808ACBAF15D6 /* QRScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanner.swift; sourceTree = "<group>"; };
 		7D34D5AC08DCBA9BD1E6E6CB /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		8008FC7FCDC575194ACA95C0 /* nodus-presenter-mobile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "nodus-presenter-mobile"; path = .; sourceTree = SOURCE_ROOT; };
+		81ABC3C776B5EE3A31999FCF /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		950A6049B379E84CA227FA83 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NodusPresenterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C219F692896CD41609D737 /* ActiveToolControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveToolControls.swift; sourceTree = "<group>"; };
 		BAB7CC16AA850024143A15EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D753CB81588A327D8179987C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		E2B66731865A085B40F65E63 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		F5983C45869A326E418E6C17 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB2C4462680B6A823C85647A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */,
+				360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */,
 			);
 			name = UI;
 			path = Tests/UI;
@@ -104,6 +117,7 @@
 				BAB7CC16AA850024143A15EE /* Assets.xcassets */,
 				2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */,
 				45CB3308739BC1B3A207915D /* Info.plist */,
+				209B846EA3E80CFD772A2A60 /* InfoPlist.strings */,
 				570BC6DEF33C4F03A11366BA /* NodusLogo.swift */,
 				5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */,
 				259C218F33EA401A89D72E7B /* PresenterPreferences.swift */,
@@ -182,7 +196,15 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				de,
 				en,
+				es,
+				fr,
+				it,
+				ja,
+				pt,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 4DFDD2733240DAB94F956B95;
 			minimizedProjectReferenceProxies = 1;
@@ -205,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9D84ABED46A659BC7DCEAE0 /* Assets.xcassets in Resources */,
+				BF3E821676DAC886833B30C2 /* InfoPlist.strings in Resources */,
 				FABB2C50D715E6AB2BD10756 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */,
+				90F2FD0CCE45143857FDCD7D /* LocalizationUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +268,25 @@
 			targetProxy = C0F2E606546991D95D7E564C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		209B846EA3E80CFD772A2A60 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				54EA287CA826B8B1E050CAF2 /* de */,
+				78DE8F5FE1E3A10E4764F252 /* en */,
+				950A6049B379E84CA227FA83 /* es */,
+				E2B66731865A085B40F65E63 /* fr */,
+				81ABC3C776B5EE3A31999FCF /* it */,
+				F5983C45869A326E418E6C17 /* ja */,
+				4D6D379F98A88A82AC77DED9 /* pt */,
+				D753CB81588A327D8179987C /* zh-Hans */,
+				FB2C4462680B6A823C85647A /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		009F5A9ADE89681F6776EABE /* Release */ = {

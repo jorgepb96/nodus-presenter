@@ -1,3 +1,4 @@
+import PresenterCore
 import SwiftUI
 import UIKit
 
@@ -6,18 +7,20 @@ enum PresenterTheme: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .original: return "Nodus Presenter"
-        case .academic: return "Académico"
-        case .primarySources: return "Fuentes primarias"
-        case .testimonios: return "Testimonios"
-        case .databases: return "Bases de datos"
-        case .docencia: return "Docencia"
-        case .estudio: return "Estudio"
-        case .genealogy: return "Genealogía"
-        case .prosopography: return "Prosopografía"
-        case .worldbuilding: return "Worldbuilding"
+        case .original: return L10n.text("Violet")
+        case .academic, .primarySources: return L10n.text("Indigo")
+        case .testimonios: return L10n.text("Cyan")
+        case .databases: return L10n.text("Crimson")
+        case .docencia: return L10n.text("Orange")
+        case .estudio: return L10n.text("Teal")
+        case .genealogy: return L10n.text("Amber")
+        case .prosopography: return L10n.text("Blue")
+        case .worldbuilding: return L10n.text("Purple")
         }
     }
+    // Keep stored identifiers compatible while presenting each distinct color once.
+    static var selectableCases: [Self] { allCases.filter { $0 != .primarySources } }
+
     // Canonical palette: nodus/shared/vaultColors.ts. Original preserves the first mobile accent.
     var hex: String {
         switch self {
@@ -36,7 +39,7 @@ enum PresenterTheme: String, CaseIterable, Identifiable {
         let value = UInt64(hex.dropFirst(), radix: 16) ?? 0x8b5cf6
         let components = [Double((value >> 16) & 255), Double((value >> 8) & 255), Double(value & 255)].map { $0 / 255 }
         return Color(uiColor: UIColor { traits in
-            // Keep the vault hue; lift dark accents so controls remain readable on dark surfaces.
+            // Keep the accent hue; lift dark accents so controls remain readable on dark surfaces.
             let lift = traits.userInterfaceStyle == .dark ? 0.32 : 0.0
             return UIColor(red: components[0] + (1 - components[0]) * lift,
                            green: components[1] + (1 - components[1]) * lift,
@@ -48,7 +51,7 @@ enum PresenterTheme: String, CaseIterable, Identifiable {
 enum PresenterAppearance: String, CaseIterable, Identifiable {
     case system, light, dark
     var id: String { rawValue }
-    var title: String { self == .system ? "Sistema" : self == .light ? "Claro" : "Oscuro" }
+    var title: String { self == .system ? L10n.text("System") : self == .light ? L10n.text("Light") : L10n.text("Dark") }
     var colorScheme: ColorScheme? { self == .system ? nil : self == .light ? .light : .dark }
 }
 
@@ -63,7 +66,8 @@ enum PresenterAppearance: String, CaseIterable, Identifiable {
         if CommandLine.arguments.contains("--reset-preferences") {
             ["presenter.theme", "presenter.appearance", "presenter.slideShare", "presenter.showNextSlide"].forEach { defaults.removeObject(forKey: $0) }
         }
-        theme = PresenterTheme(rawValue: defaults.string(forKey: "presenter.theme") ?? "") ?? .original
+        let savedTheme = PresenterTheme(rawValue: defaults.string(forKey: "presenter.theme") ?? "") ?? .original
+        theme = savedTheme == .primarySources ? .academic : savedTheme
         appearance = PresenterAppearance(rawValue: defaults.string(forKey: "presenter.appearance") ?? "") ?? .system
         let saved = defaults.object(forKey: "presenter.slideShare") as? Double ?? 0.42
         slideShare = saved.isFinite ? min(0.72, max(0.24, saved)) : 0.42

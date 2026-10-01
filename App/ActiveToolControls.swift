@@ -18,27 +18,27 @@ struct ActiveToolControls: View {
                 Button { showColors = true } label: {
                     Circle().fill(Color(hex: session.state.toolColor)).frame(width: 20, height: 20)
                         .frame(width: 32, height: 44).contentShape(Rectangle())
-                }.accessibilityLabel("Color de la herramienta").accessibilityIdentifier("toolColor")
+                }.accessibilityLabel(L10n.text("Tool color")).accessibilityIdentifier("toolColor")
                     .popover(isPresented: $showColors) {
                         HStack(spacing: 10) {
                             ForEach([preferences.theme.hex, "#ef4444", "#f59e0b", "#22c55e", "#3b82f6"], id: \.self) { color in
                                 Button { session.send(["type": .string("setToolColor"), "color": .string(color)]); showColors = false } label: {
                                     Circle().fill(Color(hex: color)).frame(width: 30, height: 30).frame(width: 36, height: 44).contentShape(Rectangle())
-                                }.accessibilityLabel("Color \(color)")
+                                }.accessibilityLabel(L10n.text("Color %@", color))
                             }
                         }.padding(12).presentationCompactAdaptation(.popover)
                     }
             }
             if tool == .zoom {
                 HStack(spacing: 10) {
-                    VStack(spacing: 0) { Text("Radio").font(.caption2).foregroundStyle(Color.secondary); sizeSlider }
-                    VStack(spacing: 0) { Text(String(format: "%.1f×", factor)).font(.caption2.monospacedDigit()).foregroundStyle(Color.secondary); factorSlider }
+                    VStack(spacing: 0) { Text(L10n.text("Radius")).font(.caption2).foregroundStyle(Color.secondary); sizeSlider }
+                    VStack(spacing: 0) { Text(L10n.text("%.1f×", factor)).font(.caption2.monospacedDigit()).foregroundStyle(Color.secondary); factorSlider }
                 }
             } else { sizeSlider }
             if tool == .draw {
                 Button { session.send(["type": .string("clearDraw")]) } label: {
                     Image(systemName: "trash").frame(width: 32, height: 44).contentShape(Rectangle())
-                }.accessibilityLabel("Borrar trazos").accessibilityIdentifier("clearDraw")
+                }.accessibilityLabel(L10n.text("Clear drawings")).accessibilityIdentifier("clearDraw")
             }
         }.buttonStyle(.plain).disabled(!session.canControl)
             .onAppear { size = session.state.toolSizes[tool.rawValue] ?? 15; factor = session.state.zoomFactor }
@@ -52,14 +52,14 @@ struct ActiveToolControls: View {
         Slider(value: $size, in: tool.range, onEditingChanged: { editing in
             editingSize = editing
             if !editing { sendSize(force: true) }
-        }) { Text(tool == .draw ? "Grosor" : tool == .flashlight ? "Radio de Spotlight" : "Tamaño") }
+        }) { Text(tool == .draw ? L10n.text("Thickness") : tool == .flashlight ? L10n.text("Spotlight radius") : L10n.text("Size")) }
             .accessibilityIdentifier("activeToolSize")
     }
     private var factorSlider: some View {
         Slider(value: $factor, in: 1.5...3, onEditingChanged: { editing in
             editingFactor = editing
             if !editing { sendFactor(force: true) }
-        }) { Text("Ampliación de la lupa") }.accessibilityIdentifier("activeZoomFactor")
+        }) { Text(L10n.text("Magnifier zoom")) }.accessibilityIdentifier("activeZoomFactor")
     }
     private func sendSize(force: Bool = false) {
         guard force || Date().timeIntervalSince(lastSizeSent) >= 1.0 / 30 else { return }

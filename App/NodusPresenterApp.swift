@@ -1,3 +1,4 @@
+import PresenterCore
 import SwiftUI
 
 @main struct NodusPresenterApp: App {
@@ -8,6 +9,7 @@ import SwiftUI
         WindowGroup {
             RootView().environmentObject(session).environmentObject(preferences).tint(preferences.theme.color)
                 .preferredColorScheme(preferences.appearance.colorScheme)
+                .environment(\.locale, L10n.locale)
                 .onOpenURL { session.connect(url: $0) }
                 .onChange(of: phase) { _, value in session.sceneChanged(value) }
         }
@@ -60,19 +62,19 @@ struct RootView: View {
                                 .padding(.top, 48)
                             VStack(spacing: 10) {
                                 Text("Nodus Presenter").font(.largeTitle.bold())
-                                Text("Tu presentación, en tus manos.").font(.title3).foregroundStyle(.secondary)
+                                Text(L10n.text("Your presentation, in your hands.")).font(.title3).foregroundStyle(.secondary)
                             }
                             VStack(alignment: .leading, spacing: 20) {
                                 ConnectionBadge()
-                                if session.isPairing { Button("Cancelar conexión", role: .cancel) { session.disconnect() } }
-                                Label("Abre Presenter en Nodus y elige App iPhone–iPad. Escanea su QR para enlazar.", systemImage: "qrcode")
-                                Label("El enlace directo puede funcionar sin el router de la sala. Mantén Wi-Fi encendido en ambos dispositivos.", systemImage: "antenna.radiowaves.left.and.right")
-                                Button { scanning = true } label: { Label("Escanear QR", systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity).padding(.vertical, 6) }
+                                if session.isPairing { Button(L10n.text("Cancel connection"), role: .cancel) { session.disconnect() } }
+                                Label(L10n.text("Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair."), systemImage: "qrcode")
+                                Label(L10n.text("The direct link can work without the room’s router. Keep Wi-Fi enabled on both devices."), systemImage: "antenna.radiowaves.left.and.right")
+                                Button { scanning = true } label: { Label(L10n.text("Scan QR code"), systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity).padding(.vertical, 6) }
                                     .buttonStyle(.borderedProminent).accessibilityIdentifier("scanQR")
                             }.padding(24).modifier(GlassPanel())
-                            Button { session.enterDemo() } label: { Label("Probar demo", systemImage: "play.circle.fill") }
+                            Button { session.enterDemo() } label: { Label(L10n.text("Try demo"), systemImage: "play.circle.fill") }
                                 .buttonStyle(.bordered).accessibilityIdentifier("demo")
-                            Button("Pegar enlace de sesión") { manual = true }.font(.footnote)
+                            Button(L10n.text("Paste session link")) { manual = true }.font(.footnote)
                         }.frame(maxWidth: 520).padding(24).frame(maxWidth: .infinity)
                     }
                 }
@@ -82,13 +84,13 @@ struct RootView: View {
                 }.ignoresSafeArea()
             }
             .sheet(isPresented: $scanning) { QRScanner { url in scanning = false; session.connect(url: url) } }
-            .alert("Enlazar con Nodus", isPresented: $manual) {
+            .alert(L10n.text("Pair with Nodus"), isPresented: $manual) {
                 TextField("nodus-presenter://pair…", text: $pairingText).textInputAutocapitalization(.never)
-                Button("Conectar") { if let url = URL(string: pairingText) { session.connect(url: url) } }
-                Button("Cancelar", role: .cancel) {}
+                Button(L10n.text("Connect")) { if let url = URL(string: pairingText) { session.connect(url: url) } }
+                Button(L10n.text("Cancel"), role: .cancel) {}
             }
             .alert("Nodus Presenter", isPresented: Binding(get: { session.errorMessage != nil }, set: { if !$0 { session.errorMessage = nil } })) {
-                Button("Aceptar") { session.errorMessage = nil }
+                Button(L10n.text("OK")) { session.errorMessage = nil }
             } message: { Text(session.errorMessage ?? "") }
         }
     }

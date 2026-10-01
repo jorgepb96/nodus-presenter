@@ -12,13 +12,19 @@ La demo funciona sin Mac, sin cámara y sin red. Genera un PDF local de ocho dia
 
 ## Controles
 
-Las notas tienen su propio panel de lectura. Ajusta el reparto entre diapositiva y notas con el separador o el slider de Ajustes; en este último, el tamaño se aplica al soltar para mantener estable la hoja. La siguiente diapositiva se puede mostrar u ocultar. El tema, el reparto y esta opción se conservan al cerrar la app. Hay diez temas: el original y los acentos de los nueve vaults de Nodus.
+Las notas tienen su propio panel de lectura. Ajusta el reparto entre diapositiva y notas con el separador o el slider de Ajustes; en este último, el tamaño se aplica al soltar para mantener estable la hoja. La siguiente diapositiva se puede mostrar u ocultar. El tema, el reparto y esta opción se conservan al cerrar la app. Hay nueve acentos, nombrados solo por su color: Violeta, Índigo, Cian, Carmesí, Naranja, Verde azulado, Ámbar, Azul y Púrpura. Los identificadores anteriores se conservan para mantener tus preferencias.
 
-En Ajustes → Tema, selecciona **Sistema**, **Claro** u **Oscuro**. La apariencia se guarda junto con el tema. El logo de la cabecera y la pantalla inicial es vectorial: tanto su superficie como el símbolo adoptan la apariencia y el acento seleccionado. En oscuro, los acentos se aclaran conservando el tono del vault; texto y superficies usan los colores semánticos del sistema, y Liquid Glass adapta sus materiales automáticamente.
+En Ajustes → Tema, selecciona **Sistema**, **Claro** u **Oscuro**. La apariencia se guarda junto con el tema. El logo de la cabecera y la pantalla inicial es vectorial: tanto su superficie como el símbolo adoptan la apariencia y el acento seleccionado. En oscuro, los acentos se aclaran conservando su tono; texto y superficies usan los colores semánticos del sistema, y Liquid Glass adapta sus materiales automáticamente.
 
 Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izquierda para retroceder y la derecha para avanzar, o usa el deslizamiento y la cuadrícula de miniaturas. Una herramienta activa recibe esos toques sin cambiar de diapositiva; su color, tamaño y borrado aparecen entre las flechas. Amplía o reduce la diapositiva con los botones o el gesto de pinza; arrastra una diapositiva ampliada para desplazarte por ella. El cronómetro está en la cabecera: un toque pausa o inicia, y mantenerlo pulsado lo reinicia.
 
 Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. También hay lectura privada, botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
+
+## Idiomas
+
+La interfaz, la demo, los errores, los permisos y las etiquetas de accesibilidad están disponibles en inglés, español, francés, chino simplificado y tradicional, japonés, alemán, italiano y portugués. La app usa automáticamente el idioma principal del dispositivo. Las variantes regionales comparten traducción; el chino distingue escritura simplificada/tradicional y las regiones de Taiwán, Hong Kong y Macao. Un idioma principal no disponible usa inglés. No modifica los PDF ni las notas enviados desde Nodus.
+
+El catálogo está en `Localization/translations.json`. Ejecuta `python3 Scripts/generate-localizations.py` después de editarlo para regenerar los recursos nativos `.strings` y los mensajes de permisos. El generador y los tests comprueban cobertura y argumentos de formato. XCUITest arranca cada idioma mediante `-AppleLanguages`, sin cambiar el idioma del dispositivo, y comprueba también el fallback desde ruso.
 
 ## Construir y comprobar
 

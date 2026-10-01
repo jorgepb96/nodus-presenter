@@ -1,0 +1,1269 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "zh-Hans",
+    "zh-Hant",
+    "ja",
+    "de",
+    "it",
+    "pt"
+  ],
+  "permissions": {
+    "NSCameraUsageDescription": "Scan Nodus’s QR code to connect your controller to your Mac.",
+    "NSLocalNetworkUsageDescription": "Connect to Nodus on your Mac to control the presentation, including without a router."
+  },
+  "strings": {
+    "Violet": [
+      "Violeta",
+      "Violet",
+      "紫罗兰",
+      "紫羅蘭",
+      "バイオレット",
+      "Violett",
+      "Viola",
+      "Violeta"
+    ],
+    "Indigo": [
+      "Índigo",
+      "Indigo",
+      "靛蓝",
+      "靛藍",
+      "インディゴ",
+      "Indigo",
+      "Indaco",
+      "Índigo"
+    ],
+    "Cyan": [
+      "Cian",
+      "Cyan",
+      "青色",
+      "青色",
+      "シアン",
+      "Cyan",
+      "Ciano",
+      "Ciano"
+    ],
+    "Crimson": [
+      "Carmesí",
+      "Cramoisi",
+      "深红",
+      "緋紅",
+      "深紅",
+      "Karminrot",
+      "Cremisi",
+      "Carmesim"
+    ],
+    "Orange": [
+      "Naranja",
+      "Orange",
+      "橙色",
+      "橙色",
+      "オレンジ",
+      "Orange",
+      "Arancione",
+      "Laranja"
+    ],
+    "Teal": [
+      "Verde azulado",
+      "Bleu canard",
+      "蓝绿色",
+      "藍綠色",
+      "ティール",
+      "Petrol",
+      "Verde petrolio",
+      "Verde azulado"
+    ],
+    "Amber": [
+      "Ámbar",
+      "Ambre",
+      "琥珀",
+      "琥珀",
+      "琥珀色",
+      "Bernstein",
+      "Ambra",
+      "Âmbar"
+    ],
+    "Blue": [
+      "Azul",
+      "Bleu",
+      "蓝色",
+      "藍色",
+      "ブルー",
+      "Blau",
+      "Blu",
+      "Azul"
+    ],
+    "Purple": [
+      "Púrpura",
+      "Pourpre",
+      "紫色",
+      "紫色",
+      "パープル",
+      "Purpur",
+      "Porpora",
+      "Púrpura"
+    ],
+    "System": [
+      "Sistema",
+      "Système",
+      "跟随系统",
+      "跟隨系統",
+      "システム",
+      "System",
+      "Sistema",
+      "Sistema"
+    ],
+    "Light": [
+      "Claro",
+      "Clair",
+      "浅色",
+      "淺色",
+      "ライト",
+      "Hell",
+      "Chiaro",
+      "Claro"
+    ],
+    "Dark": [
+      "Oscuro",
+      "Sombre",
+      "深色",
+      "深色",
+      "ダーク",
+      "Dunkel",
+      "Scuro",
+      "Escuro"
+    ],
+    "Your presentation, in your hands.": [
+      "Tu presentación, en tus manos.",
+      "Votre présentation, entre vos mains.",
+      "演示尽在掌握。",
+      "簡報盡在掌握。",
+      "プレゼンテーションを、あなたの手に。",
+      "Deine Präsentation, in deinen Händen.",
+      "La tua presentazione, nelle tue mani.",
+      "A tua apresentação, nas tuas mãos."
+    ],
+    "Cancel connection": [
+      "Cancelar conexión",
+      "Annuler la connexion",
+      "取消连接",
+      "取消連線",
+      "接続をキャンセル",
+      "Verbindung abbrechen",
+      "Annulla connessione",
+      "Cancelar ligação"
+    ],
+    "Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair.": [
+      "Abre Presenter en Nodus y elige App iPhone–iPad. Escanea su QR para enlazar.",
+      "Ouvrez Presenter dans Nodus et choisissez App iPhone–iPad. Scannez son code QR pour l’associer.",
+      "在 Nodus 中打开 Presenter，选择 App iPhone–iPad，然后扫描二维码进行配对。",
+      "在 Nodus 中開啟 Presenter，選擇 App iPhone–iPad，然後掃描 QR 碼進行配對。",
+      "Nodus で Presenter を開き、App iPhone–iPad を選択します。QR コードを読み取ってペアリングしてください。",
+      "Öffne Presenter in Nodus und wähle App iPhone–iPad. Scanne den QR-Code zum Koppeln.",
+      "Apri Presenter in Nodus e scegli App iPhone–iPad. Scansiona il codice QR per abbinare i dispositivi.",
+      "Abre o Presenter no Nodus e escolhe App iPhone–iPad. Lê o código QR para emparelhar."
+    ],
+    "The direct link can work without the room’s router. Keep Wi-Fi enabled on both devices.": [
+      "El enlace directo puede funcionar sin el router de la sala. Mantén Wi-Fi encendido en ambos dispositivos.",
+      "La liaison directe peut fonctionner sans le routeur de la salle. Gardez le Wi-Fi activé sur les deux appareils.",
+      "直连可在没有现场路由器的情况下工作。请保持两台设备的 Wi-Fi 开启。",
+      "直連可在沒有現場路由器的情況下運作。請保持兩台裝置的 Wi-Fi 開啟。",
+      "会場のルーターがなくても直接接続できます。両方のデバイスで Wi-Fi をオンにしてください。",
+      "Die direkte Verbindung kann ohne den Router im Raum funktionieren. Lass WLAN auf beiden Geräten eingeschaltet.",
+      "Il collegamento diretto può funzionare senza il router della sala. Mantieni il Wi-Fi attivo su entrambi i dispositivi.",
+      "A ligação direta pode funcionar sem o router da sala. Mantém o Wi-Fi ligado nos dois dispositivos."
+    ],
+    "Scan QR code": [
+      "Escanear QR",
+      "Scanner le code QR",
+      "扫描二维码",
+      "掃描 QR 碼",
+      "QR コードを読み取る",
+      "QR-Code scannen",
+      "Scansiona QR",
+      "Ler código QR"
+    ],
+    "Try demo": [
+      "Probar demo",
+      "Essayer la démo",
+      "体验演示",
+      "體驗示範",
+      "デモを試す",
+      "Demo ausprobieren",
+      "Prova la demo",
+      "Experimentar demonstração"
+    ],
+    "Paste session link": [
+      "Pegar enlace de sesión",
+      "Coller le lien de session",
+      "粘贴会话链接",
+      "貼上工作階段連結",
+      "セッションリンクを貼り付け",
+      "Sitzungslink einfügen",
+      "Incolla il link della sessione",
+      "Colar ligação da sessão"
+    ],
+    "Pair with Nodus": [
+      "Enlazar con Nodus",
+      "Associer à Nodus",
+      "与 Nodus 配对",
+      "與 Nodus 配對",
+      "Nodus とペアリング",
+      "Mit Nodus koppeln",
+      "Abbina a Nodus",
+      "Emparelhar com o Nodus"
+    ],
+    "Connect": [
+      "Conectar",
+      "Connecter",
+      "连接",
+      "連線",
+      "接続",
+      "Verbinden",
+      "Connetti",
+      "Ligar"
+    ],
+    "Cancel": [
+      "Cancelar",
+      "Annuler",
+      "取消",
+      "取消",
+      "キャンセル",
+      "Abbrechen",
+      "Annulla",
+      "Cancelar"
+    ],
+    "OK": [
+      "Aceptar",
+      "OK",
+      "确定",
+      "確定",
+      "OK",
+      "OK",
+      "OK",
+      "OK"
+    ],
+    "Close": [
+      "Cerrar",
+      "Fermer",
+      "关闭",
+      "關閉",
+      "閉じる",
+      "Schließen",
+      "Chiudi",
+      "Fechar"
+    ],
+    "Allow camera access in Settings to scan Nodus’s QR code.": [
+      "Permite el acceso a la cámara en Ajustes para escanear el QR de Nodus.",
+      "Autorisez l’accès à l’appareil photo dans Réglages pour scanner le code QR de Nodus.",
+      "请在设置中允许使用相机，以扫描 Nodus 的二维码。",
+      "請在設定中允許使用相機，以掃描 Nodus 的 QR 碼。",
+      "Nodus の QR コードを読み取るには、設定でカメラへのアクセスを許可してください。",
+      "Erlaube in den Einstellungen den Kamerazugriff, um den QR-Code von Nodus zu scannen.",
+      "Consenti l’accesso alla fotocamera nelle Impostazioni per scansionare il QR di Nodus.",
+      "Permite o acesso à câmara nas Definições para ler o código QR do Nodus."
+    ],
+    "No camera is available. You can paste the session link on the home screen.": [
+      "No hay cámara disponible. Puedes pegar el enlace de sesión desde la pantalla de inicio.",
+      "Aucun appareil photo disponible. Vous pouvez coller le lien de session sur l’écran d’accueil.",
+      "相机不可用。你可以在应用首页粘贴会话链接。",
+      "相機無法使用。你可以在應用程式首頁貼上工作階段連結。",
+      "カメラを利用できません。ホーム画面からセッションリンクを貼り付けられます。",
+      "Keine Kamera verfügbar. Du kannst den Sitzungslink auf der Startseite einfügen.",
+      "Nessuna fotocamera disponibile. Puoi incollare il link della sessione nella schermata iniziale.",
+      "Não há câmara disponível. Podes colar a ligação da sessão no ecrã inicial."
+    ],
+    "Tool color": [
+      "Color de la herramienta",
+      "Couleur de l’outil",
+      "工具颜色",
+      "工具顏色",
+      "ツールの色",
+      "Werkzeugfarbe",
+      "Colore dello strumento",
+      "Cor da ferramenta"
+    ],
+    "Color %@": [
+      "Color %@",
+      "Couleur %@",
+      "颜色 %@",
+      "顏色 %@",
+      "色 %@",
+      "Farbe %@",
+      "Colore %@",
+      "Cor %@"
+    ],
+    "Radius": [
+      "Radio",
+      "Rayon",
+      "半径",
+      "半徑",
+      "半径",
+      "Radius",
+      "Raggio",
+      "Raio"
+    ],
+    "%.1f×": [
+      "%.1f×",
+      "%.1f×",
+      "%.1f×",
+      "%.1f×",
+      "%.1f×",
+      "%.1f×",
+      "%.1f×",
+      "%.1f×"
+    ],
+    "Clear drawings": [
+      "Borrar trazos",
+      "Effacer les tracés",
+      "清除绘图",
+      "清除繪圖",
+      "描画を消去",
+      "Zeichnungen löschen",
+      "Cancella i tratti",
+      "Apagar traços"
+    ],
+    "Thickness": [
+      "Grosor",
+      "Épaisseur",
+      "粗细",
+      "粗細",
+      "太さ",
+      "Strichstärke",
+      "Spessore",
+      "Espessura"
+    ],
+    "Spotlight radius": [
+      "Radio de Spotlight",
+      "Rayon du projecteur",
+      "聚光灯半径",
+      "聚光燈半徑",
+      "スポットライトの半径",
+      "Spotlight-Radius",
+      "Raggio del riflettore",
+      "Raio do foco"
+    ],
+    "Size": [
+      "Tamaño",
+      "Taille",
+      "大小",
+      "大小",
+      "サイズ",
+      "Größe",
+      "Dimensione",
+      "Tamanho"
+    ],
+    "Magnifier zoom": [
+      "Ampliación de la lupa",
+      "Grossissement de la loupe",
+      "放大镜倍率",
+      "放大鏡倍率",
+      "ルーペの倍率",
+      "Lupenvergrößerung",
+      "Ingrandimento della lente",
+      "Ampliação da lupa"
+    ],
+    "Pointer": [
+      "Puntero",
+      "Pointeur",
+      "指针",
+      "指標",
+      "ポインター",
+      "Zeiger",
+      "Puntatore",
+      "Ponteiro"
+    ],
+    "Spotlight": [
+      "Spotlight",
+      "Projecteur",
+      "聚光灯",
+      "聚光燈",
+      "スポットライト",
+      "Spotlight",
+      "Riflettore",
+      "Foco"
+    ],
+    "Drawing": [
+      "Dibujo",
+      "Dessin",
+      "绘图",
+      "繪圖",
+      "描画",
+      "Zeichnen",
+      "Disegno",
+      "Desenho"
+    ],
+    "Magnifier": [
+      "Lupa",
+      "Loupe",
+      "放大镜",
+      "放大鏡",
+      "ルーペ",
+      "Lupe",
+      "Lente",
+      "Lupa"
+    ],
+    "Nodus logo": [
+      "Logo de Nodus",
+      "Logo Nodus",
+      "Nodus 标志",
+      "Nodus 標誌",
+      "Nodus ロゴ",
+      "Nodus-Logo",
+      "Logo di Nodus",
+      "Logótipo do Nodus"
+    ],
+    "Not connected": [
+      "Sin conexión",
+      "Non connecté",
+      "未连接",
+      "未連線",
+      "未接続",
+      "Nicht verbunden",
+      "Non connesso",
+      "Sem ligação"
+    ],
+    "Demo · Not connected to Nodus": [
+      "Demo · Sin conexión a Nodus",
+      "Démo · Non connecté à Nodus",
+      "演示 · 未连接到 Nodus",
+      "示範 · 未連線至 Nodus",
+      "デモ · Nodus に未接続",
+      "Demo · Nicht mit Nodus verbunden",
+      "Demo · Non connesso a Nodus",
+      "Demonstração · Sem ligação ao Nodus"
+    ],
+    "Demo Mac": [
+      "Mac de demostración",
+      "Mac de démonstration",
+      "演示 Mac",
+      "示範 Mac",
+      "デモ用 Mac",
+      "Demo-Mac",
+      "Mac dimostrativo",
+      "Mac de demonstração"
+    ],
+    "This QR code is not a Nodus Presenter app session. Choose App iPhone–iPad in Nodus.": [
+      "Este QR no corresponde a una sesión de la app Nodus Presenter. En Nodus elige App iPhone–iPad.",
+      "Ce code QR ne correspond pas à une session de l’app Nodus Presenter. Choisissez App iPhone–iPad dans Nodus.",
+      "此二维码不是 Nodus Presenter 应用会话。请在 Nodus 中选择 App iPhone–iPad。",
+      "此 QR 碼不是 Nodus Presenter 應用程式的工作階段。請在 Nodus 中選擇 App iPhone–iPad。",
+      "この QR コードは Nodus Presenter アプリのセッションではありません。Nodus で App iPhone–iPad を選択してください。",
+      "Dieser QR-Code gehört nicht zu einer Sitzung der Nodus Presenter-App. Wähle in Nodus App iPhone–iPad.",
+      "Questo QR non corrisponde a una sessione dell’app Nodus Presenter. Scegli App iPhone–iPad in Nodus.",
+      "Este QR não corresponde a uma sessão da app Nodus Presenter. Escolhe App iPhone–iPad no Nodus."
+    ],
+    "Not connected · App in background": [
+      "Sin conexión · App en segundo plano",
+      "Non connecté · App en arrière-plan",
+      "未连接 · 应用在后台",
+      "未連線 · 應用程式在背景執行",
+      "未接続 · アプリはバックグラウンド",
+      "Nicht verbunden · App im Hintergrund",
+      "Non connesso · App in background",
+      "Sem ligação · App em segundo plano"
+    ],
+    "Looking for Nodus…": [
+      "Buscando Nodus…",
+      "Recherche de Nodus…",
+      "正在查找 Nodus…",
+      "正在尋找 Nodus…",
+      "Nodus を検索中…",
+      "Nodus wird gesucht…",
+      "Ricerca di Nodus…",
+      "A procurar o Nodus…"
+    ],
+    "Reconnecting to Nodus…": [
+      "Reconectando con Nodus…",
+      "Reconnexion à Nodus…",
+      "正在重新连接 Nodus…",
+      "正在重新連線至 Nodus…",
+      "Nodus に再接続中…",
+      "Verbindung mit Nodus wird wiederhergestellt…",
+      "Riconnessione a Nodus…",
+      "A restabelecer a ligação ao Nodus…"
+    ],
+    "Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled.": [
+      "No se puede buscar Nodus. Comprueba el permiso de red local y que Wi-Fi esté encendido.",
+      "Impossible de trouver Nodus. Vérifiez l’autorisation du réseau local et que le Wi-Fi est activé.",
+      "无法找到 Nodus。请检查本地网络权限，并确认 Wi-Fi 已开启。",
+      "無法找到 Nodus。請檢查區域網路權限，並確認 Wi-Fi 已開啟。",
+      "Nodus が見つかりません。ローカルネットワークのアクセス許可と Wi-Fi がオンになっていることを確認してください。",
+      "Nodus konnte nicht gefunden werden. Prüfe die Berechtigung für das lokale Netzwerk und ob WLAN eingeschaltet ist.",
+      "Impossibile trovare Nodus. Controlla l’autorizzazione alla rete locale e che il Wi-Fi sia attivo.",
+      "Não foi possível encontrar o Nodus. Verifica a permissão de rede local e se o Wi-Fi está ligado."
+    ],
+    "Connecting to Nodus…": [
+      "Conectando con Nodus…",
+      "Connexion à Nodus…",
+      "正在连接 Nodus…",
+      "正在連線至 Nodus…",
+      "Nodus に接続中…",
+      "Verbindung mit Nodus wird hergestellt…",
+      "Connessione a Nodus…",
+      "A ligar ao Nodus…"
+    ],
+    "Connected to Nodus": [
+      "Conectado a Nodus",
+      "Connecté à Nodus",
+      "已连接到 Nodus",
+      "已連線至 Nodus",
+      "Nodus に接続済み",
+      "Mit Nodus verbunden",
+      "Connesso a Nodus",
+      "Ligado ao Nodus"
+    ],
+    "Presentation": [
+      "Presentación",
+      "Présentation",
+      "演示文稿",
+      "簡報",
+      "プレゼンテーション",
+      "Präsentation",
+      "Presentazione",
+      "Apresentação"
+    ],
+    "The presentation resource could not be loaded.": [
+      "No se pudo cargar el recurso de la presentación.",
+      "Impossible de charger la ressource de la présentation.",
+      "无法加载演示资源。",
+      "無法載入簡報資源。",
+      "プレゼンテーションのリソースを読み込めませんでした。",
+      "Die Präsentationsressource konnte nicht geladen werden.",
+      "Impossibile caricare la risorsa della presentazione.",
+      "Não foi possível carregar o recurso da apresentação."
+    ],
+    "Presentation ended": [
+      "Presentación finalizada",
+      "Présentation terminée",
+      "演示已结束",
+      "簡報已結束",
+      "プレゼンテーションが終了しました",
+      "Präsentation beendet",
+      "Presentazione terminata",
+      "Apresentação terminada"
+    ],
+    "The download could not be verified. It will be retried.": [
+      "La descarga no se pudo verificar. Se reintentará.",
+      "Le téléchargement n’a pas pu être vérifié. Une nouvelle tentative sera effectuée.",
+      "无法验证下载内容。将重新尝试。",
+      "無法驗證下載內容。將重新嘗試。",
+      "ダウンロードを検証できませんでした。再試行します。",
+      "Der Download konnte nicht überprüft werden. Er wird erneut versucht.",
+      "Impossibile verificare il download. Verrà riprovato.",
+      "Não foi possível verificar a transferência. Será tentada novamente."
+    ],
+    "Slides": [
+      "Diapositivas",
+      "Diapositives",
+      "幻灯片",
+      "投影片",
+      "スライド",
+      "Folien",
+      "Diapositive",
+      "Diapositivos"
+    ],
+    "Settings and tools": [
+      "Ajustes y herramientas",
+      "Réglages et outils",
+      "设置与工具",
+      "設定與工具",
+      "設定とツール",
+      "Einstellungen und Werkzeuge",
+      "Impostazioni e strumenti",
+      "Definições e ferramentas"
+    ],
+    "Timer": [
+      "Cronómetro",
+      "Chronomètre",
+      "计时器",
+      "計時器",
+      "タイマー",
+      "Stoppuhr",
+      "Cronometro",
+      "Cronómetro"
+    ],
+    "Running": [
+      "En marcha",
+      "En cours",
+      "运行中",
+      "執行中",
+      "計測中",
+      "Läuft",
+      "In corso",
+      "Em curso"
+    ],
+    "Paused": [
+      "Pausado",
+      "En pause",
+      "已暂停",
+      "已暫停",
+      "一時停止",
+      "Pausiert",
+      "In pausa",
+      "Em pausa"
+    ],
+    "Tap to pause or start. Press and hold to reset.": [
+      "Toca para pausar o iniciar. Mantén pulsado para reiniciar.",
+      "Touchez pour mettre en pause ou démarrer. Maintenez appuyé pour réinitialiser.",
+      "轻点可暂停或开始，长按可重置。",
+      "點一下可暫停或開始，長按可重設。",
+      "タップで一時停止または開始。長押しでリセットします。",
+      "Tippe zum Pausieren oder Starten. Halte gedrückt, um zurückzusetzen.",
+      "Tocca per mettere in pausa o avviare. Tieni premuto per azzerare.",
+      "Toca para pausar ou iniciar. Mantém premido para reiniciar."
+    ],
+    "Reset timer": [
+      "Reiniciar cronómetro",
+      "Réinitialiser le chronomètre",
+      "重置计时器",
+      "重設計時器",
+      "タイマーをリセット",
+      "Stoppuhr zurücksetzen",
+      "Azzera cronometro",
+      "Reiniciar cronómetro"
+    ],
+    "Local demo. The controls are not connected to a Mac.": [
+      "Demo local. Los controles no están conectados a un Mac.",
+      "Démo locale. Les commandes ne sont pas connectées à un Mac.",
+      "本地演示。控件未连接到 Mac。",
+      "本機示範。控制項未連線至 Mac。",
+      "ローカルデモです。コントロールは Mac に接続されていません。",
+      "Lokale Demo. Die Steuerung ist nicht mit einem Mac verbunden.",
+      "Demo locale. I comandi non sono collegati a un Mac.",
+      "Demonstração local. Os controlos não estão ligados a um Mac."
+    ],
+    "Last received view. You can keep reading downloaded notes while the connection recovers.": [
+      "Última vista recibida. Puedes seguir leyendo las notas descargadas mientras se recupera la conexión.",
+      "Dernière vue reçue. Vous pouvez continuer à lire les notes téléchargées pendant le rétablissement de la connexion.",
+      "显示最后收到的画面。连接恢复期间，你可以继续阅读已下载的备注。",
+      "顯示最後收到的畫面。連線恢復期間，你可以繼續閱讀已下載的備忘稿。",
+      "最後に受信した画面です。接続が復旧するまで、ダウンロード済みのノートを読み続けられます。",
+      "Zuletzt empfangene Ansicht. Du kannst heruntergeladene Notizen weiterlesen, während die Verbindung wiederhergestellt wird.",
+      "Ultima vista ricevuta. Puoi continuare a leggere le note scaricate mentre la connessione viene ripristinata.",
+      "Última vista recebida. Podes continuar a ler as notas transferidas enquanto a ligação é restabelecida."
+    ],
+    "Disconnect": [
+      "Desconectar",
+      "Déconnecter",
+      "断开连接",
+      "中斷連線",
+      "切断",
+      "Trennen",
+      "Disconnetti",
+      "Desligar"
+    ],
+    "Connection": [
+      "Conexión",
+      "Connexion",
+      "连接",
+      "連線",
+      "接続",
+      "Verbindung",
+      "Connessione",
+      "Ligação"
+    ],
+    "Done": [
+      "Listo",
+      "Terminé",
+      "完成",
+      "完成",
+      "完了",
+      "Fertig",
+      "Fine",
+      "Concluído"
+    ],
+    "Slide and notes split": [
+      "Reparto entre diapositiva y notas",
+      "Répartition entre diapositive et notes",
+      "幻灯片与备注的空间分配",
+      "投影片與備忘稿的空間分配",
+      "スライドとノートの表示比率",
+      "Aufteilung zwischen Folie und Notizen",
+      "Ripartizione tra diapositiva e note",
+      "Divisão entre diapositivo e notas"
+    ],
+    "Slide %d percent": [
+      "Diapositiva %d por ciento",
+      "Diapositive %d pour cent",
+      "幻灯片占百分之 %d",
+      "投影片佔百分之 %d",
+      "スライド %d パーセント",
+      "Folie %d Prozent",
+      "Diapositiva %d per cento",
+      "Diapositivo %d por cento"
+    ],
+    "Return to the slide on screen": [
+      "Volver a la diapositiva en pantalla",
+      "Revenir à la diapositive à l’écran",
+      "返回正在展示的幻灯片",
+      "返回正在展示的投影片",
+      "表示中のスライドに戻る",
+      "Zur angezeigten Folie zurückkehren",
+      "Torna alla diapositiva sullo schermo",
+      "Voltar ao diapositivo no ecrã"
+    ],
+    "Read without changing the screen": [
+      "Leer sin cambiar la pantalla",
+      "Lire sans changer l’écran",
+      "阅读而不改变展示画面",
+      "閱讀而不改變展示畫面",
+      "画面を変えずに読む",
+      "Lesen, ohne die Anzeige zu ändern",
+      "Leggi senza cambiare lo schermo",
+      "Ler sem alterar o ecrã"
+    ],
+    "Previous": [
+      "Anterior",
+      "Précédente",
+      "上一张",
+      "上一張",
+      "前へ",
+      "Zurück",
+      "Precedente",
+      "Anterior"
+    ],
+    "Next": [
+      "Siguiente",
+      "Suivante",
+      "下一张",
+      "下一張",
+      "次へ",
+      "Weiter",
+      "Successiva",
+      "Seguinte"
+    ],
+    "Read the next slide privately": [
+      "Leer la siguiente diapositiva en privado",
+      "Lire la diapositive suivante en privé",
+      "私下阅读下一张幻灯片",
+      "私下閱讀下一張投影片",
+      "次のスライドを手元だけで読む",
+      "Die nächste Folie privat lesen",
+      "Leggi la diapositiva successiva in privato",
+      "Ler o diapositivo seguinte em privado"
+    ],
+    "Zoom out": [
+      "Reducir zoom",
+      "Réduire le zoom",
+      "缩小",
+      "縮小",
+      "縮小",
+      "Verkleinern",
+      "Riduci zoom",
+      "Reduzir zoom"
+    ],
+    "Zoom %d percent": [
+      "Zoom %d por ciento",
+      "Zoom %d pour cent",
+      "缩放百分之 %d",
+      "縮放百分之 %d",
+      "ズーム %d パーセント",
+      "Zoom %d Prozent",
+      "Zoom %d per cento",
+      "Zoom %d por cento"
+    ],
+    "Zoom in": [
+      "Ampliar zoom",
+      "Agrandir le zoom",
+      "放大",
+      "放大",
+      "拡大",
+      "Vergrößern",
+      "Aumenta zoom",
+      "Aumentar zoom"
+    ],
+    "Black screen": [
+      "Pantalla negra",
+      "Écran noir",
+      "黑屏",
+      "黑畫面",
+      "ブラックスクリーン",
+      "Schwarzer Bildschirm",
+      "Schermo nero",
+      "Ecrã preto"
+    ],
+    "On": [
+      "Activada",
+      "Activé",
+      "已开启",
+      "已開啟",
+      "オン",
+      "Aktiviert",
+      "Attivo",
+      "Ativado"
+    ],
+    "Off": [
+      "Desactivada",
+      "Désactivé",
+      "已关闭",
+      "已關閉",
+      "オフ",
+      "Deaktiviert",
+      "Disattivo",
+      "Desativado"
+    ],
+    "Notes": [
+      "Notas",
+      "Notes",
+      "备注",
+      "備忘稿",
+      "ノート",
+      "Notizen",
+      "Note",
+      "Notas"
+    ],
+    "Decrease text size": [
+      "Reducir texto",
+      "Réduire le texte",
+      "缩小文字",
+      "縮小文字",
+      "文字を小さく",
+      "Text verkleinern",
+      "Riduci testo",
+      "Reduzir texto"
+    ],
+    "Increase text size": [
+      "Ampliar texto",
+      "Agrandir le texte",
+      "放大文字",
+      "放大文字",
+      "文字を大きく",
+      "Text vergrößern",
+      "Ingrandisci testo",
+      "Aumentar texto"
+    ],
+    "This slide has no notes.": [
+      "Esta diapositiva no tiene notas.",
+      "Cette diapositive n’a pas de notes.",
+      "此幻灯片没有备注。",
+      "此投影片沒有備忘稿。",
+      "このスライドにはノートがありません。",
+      "Diese Folie hat keine Notizen.",
+      "Questa diapositiva non ha note.",
+      "Este diapositivo não tem notas."
+    ],
+    "Font %d": [
+      "Fuente %d",
+      "Police %d",
+      "字号 %d",
+      "字級 %d",
+      "文字サイズ %d",
+      "Schriftgröße %d",
+      "Carattere %d",
+      "Letra %d"
+    ],
+    "Black screen is active": [
+      "Pantalla negra activa",
+      "Écran noir activé",
+      "黑屏已开启",
+      "黑畫面已開啟",
+      "ブラックスクリーンがオンです",
+      "Schwarzer Bildschirm aktiviert",
+      "Schermo nero attivo",
+      "Ecrã preto ativado"
+    ],
+    "Slide %d": [
+      "Diapositiva %d",
+      "Diapositive %d",
+      "幻灯片 %d",
+      "投影片 %d",
+      "スライド %d",
+      "Folie %d",
+      "Diapositiva %d",
+      "Diapositivo %d"
+    ],
+    "Layout": [
+      "Distribución",
+      "Disposition",
+      "布局",
+      "版面配置",
+      "レイアウト",
+      "Aufteilung",
+      "Disposizione",
+      "Disposição"
+    ],
+    "Show next slide": [
+      "Mostrar siguiente diapositiva",
+      "Afficher la diapositive suivante",
+      "显示下一张幻灯片",
+      "顯示下一張投影片",
+      "次のスライドを表示",
+      "Nächste Folie anzeigen",
+      "Mostra diapositiva successiva",
+      "Mostrar diapositivo seguinte"
+    ],
+    "Slide %d%%": [
+      "Diapositiva %d%%",
+      "Diapositive %d%%",
+      "幻灯片 %d%%",
+      "投影片 %d%%",
+      "スライド %d%%",
+      "Folie %d%%",
+      "Diapositiva %d%%",
+      "Diapositivo %d%%"
+    ],
+    "Notes %d%%": [
+      "Notas %d%%",
+      "Notes %d%%",
+      "备注 %d%%",
+      "備忘稿 %d%%",
+      "ノート %d%%",
+      "Notizen %d%%",
+      "Note %d%%",
+      "Notas %d%%"
+    ],
+    "Slide and notes space": [
+      "Espacio de diapositiva y notas",
+      "Espace de la diapositive et des notes",
+      "幻灯片与备注空间",
+      "投影片與備忘稿空間",
+      "スライドとノートのスペース",
+      "Platz für Folie und Notizen",
+      "Spazio di diapositiva e note",
+      "Espaço do diapositivo e das notas"
+    ],
+    "Theme": [
+      "Tema",
+      "Thème",
+      "主题",
+      "主題",
+      "テーマ",
+      "Design",
+      "Tema",
+      "Tema"
+    ],
+    "Appearance": [
+      "Apariencia",
+      "Apparence",
+      "外观",
+      "外觀",
+      "外観",
+      "Darstellung",
+      "Aspetto",
+      "Aspeto"
+    ],
+    "On screen": [
+      "En pantalla",
+      "À l’écran",
+      "展示画面",
+      "展示畫面",
+      "画面上",
+      "Auf dem Bildschirm",
+      "Sullo schermo",
+      "No ecrã"
+    ],
+    "Tool": [
+      "Herramienta",
+      "Outil",
+      "工具",
+      "工具",
+      "ツール",
+      "Werkzeug",
+      "Strumento",
+      "Ferramenta"
+    ],
+    "None": [
+      "Ninguna",
+      "Aucun",
+      "无",
+      "無",
+      "なし",
+      "Keines",
+      "Nessuno",
+      "Nenhuma"
+    ],
+    "Magnification": [
+      "Ampliación",
+      "Grossissement",
+      "放大倍率",
+      "放大倍率",
+      "倍率",
+      "Vergrößerung",
+      "Ingrandimento",
+      "Ampliação"
+    ],
+    "Color": [
+      "Color",
+      "Couleur",
+      "颜色",
+      "顏色",
+      "色",
+      "Farbe",
+      "Colore",
+      "Cor"
+    ],
+    "Reset slide zoom": [
+      "Restablecer zoom de la diapositiva",
+      "Réinitialiser le zoom de la diapositive",
+      "重置幻灯片缩放",
+      "重設投影片縮放",
+      "スライドのズームをリセット",
+      "Folienzoom zurücksetzen",
+      "Ripristina zoom della diapositiva",
+      "Repor zoom do diapositivo"
+    ],
+    "Audio": [
+      "Audio",
+      "Audio",
+      "音频",
+      "音訊",
+      "オーディオ",
+      "Audio",
+      "Audio",
+      "Áudio"
+    ],
+    "Mac volume": [
+      "Volumen del Mac",
+      "Volume du Mac",
+      "Mac 音量",
+      "Mac 音量",
+      "Mac の音量",
+      "Mac-Lautstärke",
+      "Volume del Mac",
+      "Volume do Mac"
+    ],
+    "Slide video": [
+      "Vídeo de la diapositiva",
+      "Vidéo de la diapositive",
+      "幻灯片视频",
+      "投影片影片",
+      "スライドの動画",
+      "Folienvideo",
+      "Video della diapositiva",
+      "Vídeo do diapositivo"
+    ],
+    "Pause video": [
+      "Pausar vídeo",
+      "Mettre la vidéo en pause",
+      "暂停视频",
+      "暫停影片",
+      "動画を一時停止",
+      "Video pausieren",
+      "Metti in pausa il video",
+      "Pausar vídeo"
+    ],
+    "Play video": [
+      "Reproducir vídeo",
+      "Lire la vidéo",
+      "播放视频",
+      "播放影片",
+      "動画を再生",
+      "Video abspielen",
+      "Riproduci video",
+      "Reproduzir vídeo"
+    ],
+    "Seconds": [
+      "Segundos",
+      "Secondes",
+      "秒",
+      "秒",
+      "秒",
+      "Sekunden",
+      "Secondi",
+      "Segundos"
+    ],
+    "Go": [
+      "Ir",
+      "Aller",
+      "跳转",
+      "前往",
+      "移動",
+      "Los",
+      "Vai",
+      "Ir"
+    ],
+    "The demo simulates the video state.": [
+      "La demo simula el estado del vídeo.",
+      "La démo simule l’état de la vidéo.",
+      "演示模式会模拟视频状态。",
+      "示範模式會模擬影片狀態。",
+      "デモでは動画の状態をシミュレートします。",
+      "Die Demo simuliert den Videostatus.",
+      "La demo simula lo stato del video.",
+      "A demonstração simula o estado do vídeo."
+    ],
+    "Settings": [
+      "Ajustes",
+      "Réglages",
+      "设置",
+      "設定",
+      "設定",
+      "Einstellungen",
+      "Impostazioni",
+      "Definições"
+    ],
+    "Ideas connect us": [
+      "Las ideas nos conectan",
+      "Les idées nous relient",
+      "思想让我们相连",
+      "思想讓我們相連",
+      "アイデアが私たちをつなぐ",
+      "Ideen verbinden uns",
+      "Le idee ci uniscono",
+      "As ideias ligam-nos"
+    ],
+    "A map to guide us": [
+      "Un mapa para orientarnos",
+      "Une carte pour nous guider",
+      "指引方向的地图",
+      "指引方向的地圖",
+      "道しるべとなる地図",
+      "Eine Karte zur Orientierung",
+      "Una mappa per orientarci",
+      "Um mapa para nos orientar"
+    ],
+    "Knowledge networks": [
+      "Redes de conocimiento",
+      "Réseaux de connaissances",
+      "知识网络",
+      "知識網絡",
+      "知識のネットワーク",
+      "Wissensnetzwerke",
+      "Reti di conoscenza",
+      "Redes de conhecimento"
+    ],
+    "Communities that transform": [
+      "Comunidades que transforman",
+      "Des communautés qui transforment",
+      "推动变革的社群",
+      "推動變革的社群",
+      "変革をもたらすコミュニティ",
+      "Gemeinschaften, die verändern",
+      "Comunità che trasformano",
+      "Comunidades que transformam"
+    ],
+    "From question to discovery": [
+      "De la pregunta al hallazgo",
+      "De la question à la découverte",
+      "从问题到发现",
+      "從問題到發現",
+      "問いから発見へ",
+      "Von der Frage zur Entdeckung",
+      "Dalla domanda alla scoperta",
+      "Da pergunta à descoberta"
+    ],
+    "Conversations that matter": [
+      "Conversaciones que importan",
+      "Des conversations qui comptent",
+      "有意义的对话",
+      "有意義的對話",
+      "大切な対話",
+      "Gespräche, die zählen",
+      "Conversazioni che contano",
+      "Conversas que importam"
+    ],
+    "Connect to understand": [
+      "Conectar para comprender",
+      "Se relier pour comprendre",
+      "连接以理解",
+      "連結以理解",
+      "つながって理解する",
+      "Verbinden, um zu verstehen",
+      "Connettersi per comprendere",
+      "Ligar para compreender"
+    ],
+    "What we build together": [
+      "Lo que construimos juntos",
+      "Ce que nous construisons ensemble",
+      "我们共同构建的未来",
+      "我們共同構建的未來",
+      "私たちが共に築くもの",
+      "Was wir gemeinsam aufbauen",
+      "Ciò che costruiamo insieme",
+      "O que construímos juntos"
+    ],
+    "Knowledge networks let us connect people, ideas and opportunities in meaningful ways.": [
+      "Las redes de conocimiento nos permiten conectar personas, ideas y oportunidades de forma significativa.",
+      "Les réseaux de connaissances nous permettent de relier les personnes, les idées et les opportunités de manière significative.",
+      "知识网络让我们能够有意义地连接人、思想和机遇。",
+      "知識網絡讓我們能夠有意義地連結人、思想和機遇。",
+      "知識のネットワークは、人、アイデア、機会を意味のある形で結びつけます。",
+      "Wissensnetzwerke ermöglichen es uns, Menschen, Ideen und Chancen sinnvoll miteinander zu verbinden.",
+      "Le reti di conoscenza ci permettono di collegare persone, idee e opportunità in modo significativo.",
+      "As redes de conhecimento permitem-nos ligar pessoas, ideias e oportunidades de forma significativa."
+    ],
+    "In an increasingly connected world, real progress comes from sharing, collaborating and learning together.": [
+      "En un mundo cada vez más interconectado, el verdadero avance surge cuando compartimos, colaboramos y aprendemos juntos.",
+      "Dans un monde de plus en plus connecté, le véritable progrès naît du partage, de la collaboration et de l’apprentissage collectif.",
+      "在日益互联的世界中，真正的进步源于分享、协作和共同学习。",
+      "在日益互聯的世界中，真正的進步源於分享、協作和共同學習。",
+      "つながりが深まる世界で、真の進歩は分かち合い、協力し、共に学ぶことから生まれます。",
+      "In einer zunehmend vernetzten Welt entsteht echter Fortschritt, wenn wir teilen, zusammenarbeiten und gemeinsam lernen.",
+      "In un mondo sempre più interconnesso, il vero progresso nasce quando condividiamo, collaboriamo e impariamo insieme.",
+      "Num mundo cada vez mais interligado, o verdadeiro progresso surge quando partilhamos, colaboramos e aprendemos juntos."
+    ],
+    "Highlight the connections with Spotlight. The audience sees exactly where the focus is.": [
+      "Señala las conexiones con Spotlight. La audiencia ve exactamente dónde está el foco.",
+      "Mettez les connexions en évidence avec le projecteur. Le public voit exactement où se trouve le point d’attention.",
+      "用聚光灯突出连接，让观众清楚看到焦点所在。",
+      "用聚光燈突顯連結，讓觀眾清楚看到焦點所在。",
+      "スポットライトでつながりを強調しましょう。聴衆には注目する場所がはっきり伝わります。",
+      "Hebe die Verbindungen mit Spotlight hervor. Das Publikum sieht genau, wo der Fokus liegt.",
+      "Evidenzia i collegamenti con il riflettore. Il pubblico vede esattamente dove si trova il focus.",
+      "Destaca as ligações com o foco. O público vê exatamente onde está o centro da atenção."
+    ],
+    "Pause before moving to the next idea and leave room for a question.": [
+      "Haz una pausa antes de pasar a la siguiente idea y deja espacio para una pregunta.",
+      "Faites une pause avant de passer à l’idée suivante et laissez la place à une question.",
+      "转到下一个想法前稍作停顿，留出提问的时间。",
+      "轉到下一個想法前稍作停頓，留出提問的時間。",
+      "次のアイデアに移る前に一息つき、質問のための時間を取りましょう。",
+      "Mach eine Pause, bevor du zur nächsten Idee übergehst, und lass Raum für eine Frage.",
+      "Fai una pausa prima di passare all’idea successiva e lascia spazio a una domanda.",
+      "Faz uma pausa antes de passar à ideia seguinte e deixa espaço para uma pergunta."
+    ],
+    "NODUS / IDEAS IN MOTION": [
+      "NODUS / IDEAS EN MOVIMIENTO",
+      "NODUS / IDÉES EN MOUVEMENT",
+      "NODUS / 思想在行动",
+      "NODUS / 思想在行動",
+      "NODUS / 動き出すアイデア",
+      "NODUS / IDEEN IN BEWEGUNG",
+      "NODUS / IDEE IN MOVIMENTO",
+      "NODUS / IDEIAS EM MOVIMENTO"
+    ],
+    "People, ideas and opportunities\nin a more connected world.": [
+      "Personas, ideas y oportunidades\nen un mundo más conectado.",
+      "Personnes, idées et opportunités\ndans un monde plus connecté.",
+      "人、思想和机遇，\n汇聚于更紧密相连的世界。",
+      "人、思想和機遇，\n匯聚於更緊密相連的世界。",
+      "人、アイデア、機会が\nよりつながる世界で。",
+      "Menschen, Ideen und Chancen\nin einer stärker vernetzten Welt.",
+      "Persone, idee e opportunità\nin un mondo più connesso.",
+      "Pessoas, ideias e oportunidades\nnum mundo mais ligado."
+    ],
+    "Research · Collaboration · Impact": [
+      "Investigación · Colaboración · Impacto",
+      "Recherche · Collaboration · Impact",
+      "研究 · 协作 · 影响",
+      "研究 · 協作 · 影響",
+      "研究 · 協力 · インパクト",
+      "Forschung · Zusammenarbeit · Wirkung",
+      "Ricerca · Collaborazione · Impatto",
+      "Investigação · Colaboração · Impacto"
+    ],
+    "Scan Nodus’s QR code to connect your controller to your Mac.": [
+      "Escanea el QR de Nodus para conectar el mando con tu Mac.",
+      "Scannez le code QR de Nodus pour connecter la télécommande à votre Mac.",
+      "扫描 Nodus 的二维码，将遥控器连接到你的 Mac。",
+      "掃描 Nodus 的 QR 碼，將遙控器連線至你的 Mac。",
+      "Nodus の QR コードを読み取り、コントローラーを Mac に接続します。",
+      "Scanne den QR-Code von Nodus, um die Fernbedienung mit deinem Mac zu verbinden.",
+      "Scansiona il QR di Nodus per collegare il telecomando al tuo Mac.",
+      "Lê o QR do Nodus para ligar o comando ao teu Mac."
+    ],
+    "Connect to Nodus on your Mac to control the presentation, including without a router.": [
+      "Conecta con Nodus en tu Mac para controlar la presentación, también sin router.",
+      "Connectez-vous à Nodus sur votre Mac pour contrôler la présentation, même sans routeur.",
+      "连接到 Mac 上的 Nodus 来控制演示，即使没有路由器也能使用。",
+      "連線至 Mac 上的 Nodus 來控制簡報，即使沒有路由器也能使用。",
+      "Mac の Nodus に接続して、ルーターがなくてもプレゼンテーションを操作します。",
+      "Verbinde dich mit Nodus auf deinem Mac, um die Präsentation auch ohne Router zu steuern.",
+      "Connettiti a Nodus sul tuo Mac per controllare la presentazione, anche senza router.",
+      "Liga ao Nodus no teu Mac para controlar a apresentação, mesmo sem router."
+    ]
+  }
+}
