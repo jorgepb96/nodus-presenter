@@ -85,6 +85,7 @@
 "Reset slide zoom" = "重設投影片縮放";
 "Reset timer" = "重設計時器";
 "Return to the slide on screen" = "返回正在展示的投影片";
+"Returns to the slide on screen before using this control." = "使用此控制項前會返回正在展示的投影片。";
 "Running" = "執行中";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "掃描 Nodus 的 QR 碼，將遙控器連線至你的 Mac。";
 "Scan QR code" = "掃描 QR 碼";

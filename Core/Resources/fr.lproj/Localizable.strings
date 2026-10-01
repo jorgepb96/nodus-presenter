@@ -85,6 +85,7 @@
 "Reset slide zoom" = "Réinitialiser le zoom de la diapositive";
 "Reset timer" = "Réinitialiser le chronomètre";
 "Return to the slide on screen" = "Revenir à la diapositive à l’écran";
+"Returns to the slide on screen before using this control." = "Revient à la diapositive à l’écran avant d’utiliser cette commande.";
 "Running" = "En cours";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "Scannez le code QR de Nodus pour connecter la télécommande à votre Mac.";
 "Scan QR code" = "Scanner le code QR";

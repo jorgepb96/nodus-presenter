@@ -85,6 +85,7 @@
 "Reset slide zoom" = "スライドのズームをリセット";
 "Reset timer" = "タイマーをリセット";
 "Return to the slide on screen" = "表示中のスライドに戻る";
+"Returns to the slide on screen before using this control." = "このコントロールを使う前に、表示中のスライドに戻ります。";
 "Running" = "計測中";
 "Scan Nodus’s QR code to connect your controller to your Mac." = "Nodus の QR コードを読み取り、コントローラーを Mac に接続します。";
 "Scan QR code" = "QR コードを読み取る";

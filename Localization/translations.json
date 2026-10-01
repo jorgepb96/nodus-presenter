@@ -1264,6 +1264,16 @@
       "Verbinde dich mit Nodus auf deinem Mac, um die Präsentation auch ohne Router zu steuern.",
       "Connettiti a Nodus sul tuo Mac per controllare la presentazione, anche senza router.",
       "Liga ao Nodus no teu Mac para controlar a apresentação, mesmo sem router."
+    ],
+    "Returns to the slide on screen before using this control.": [
+      "Vuelve a la diapositiva en pantalla antes de usar este control.",
+      "Revient à la diapositive à l’écran avant d’utiliser cette commande.",
+      "使用此控件前会返回正在展示的幻灯片。",
+      "使用此控制項前會返回正在展示的投影片。",
+      "このコントロールを使う前に、表示中のスライドに戻ります。",
+      "Kehrt vor der Verwendung dieses Steuerelements zur angezeigten Folie zurück.",
+      "Torna alla diapositiva sullo schermo prima di usare questo comando.",
+      "Volta ao diapositivo no ecrã antes de usar este controlo."
     ]
   }
 }

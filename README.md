@@ -18,7 +18,7 @@ En Ajustes → Tema, selecciona **Sistema**, **Claro** u **Oscuro**. La aparienc
 
 Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izquierda para retroceder y la derecha para avanzar, o usa el deslizamiento y la cuadrícula de miniaturas. Una herramienta activa recibe esos toques sin cambiar de diapositiva; su color, tamaño y borrado aparecen entre las flechas. Amplía o reduce la diapositiva con los botones o el gesto de pinza; arrastra una diapositiva ampliada para desplazarte por ella. El cronómetro está en la cabecera: un toque pausa o inicia, y mantenerlo pulsado lo reinicia.
 
-Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. También hay lectura privada, botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
+Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. Al pulsar una herramienta o la luna/sol durante la lectura privada, vuelves a la diapositiva que ve el público y se ejecuta la acción, sin avanzar la presentación. Si esa herramienta ya estaba activa, continúa seleccionada; otro toque la desactiva. También hay botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
 
 ## Idiomas
 

@@ -324,6 +324,10 @@ struct InkStroke: Identifiable {
             localSlide = max(1, min(state.totalSlides, proposed)); requestImage(localSlide); return
         }
         guard canControl else { return }
+        if localPreview && ["setTool", "blackScreen"].contains(action["type"]?.string ?? "") {
+            localPreview = false; localSlide = state.currentSlide; requestImage(displayedSlide)
+            endActiveGesture()
+        }
         if isDemo {
             let oldSlide = state.currentSlide; state.applyDemo(action)
             if oldSlide != state.currentSlide { strokes = [] }
@@ -331,6 +335,13 @@ struct InkStroke: Identifiable {
         }
         applyOverlay(action)
         control?.send(["kind": .string("action"), "commandId": .string(UUID().uuidString), "action": .object(action)])
+    }
+    func toggleTool(_ tool: Tool) {
+        guard canControl else { return }
+        // A tool already selected on the audience slide becomes usable when returning from private reading.
+        let disable = !localPreview && selectedTool == tool
+        endActiveGesture()
+        send(["type": .string("setTool"), "tool": disable ? .null : .string(tool.rawValue)])
     }
     func adjustSlideZoom(by delta: Double) {
         guard !localPreview else { return }

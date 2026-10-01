@@ -1,5 +1,56 @@
 import XCTest
 final class DemoTests: XCTestCase {
+    func testToolsAndBlackScreenFromPrivateReading() {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--demo", "--reset-preferences", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]
+        app.launch()
+        XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))
+        app.buttons["tools"].tap()
+        app.segmentedControls["appearancePicker"].buttons["Oscuro"].tap()
+        app.buttons["theme-estudio"].tap(); app.buttons["dismissTools"].tap()
+        let blackout = app.buttons["blackScreen"]
+        let overlay = app.descendants(matching: .any)["blackScreenOverlay"].firstMatch
+        for tool in ["pointer", "flashlight", "draw", "zoom"] {
+            app.buttons["preview"].tap(); app.buttons["next"].tap()
+            XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8")
+            let button = app.buttons["tool-\(tool)"]
+            XCTAssertTrue(button.isEnabled)
+            XCTAssertTrue(blackout.isEnabled)
+            button.tap()
+            XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
+            XCTAssertEqual(app.buttons["preview"].label, "Leer sin cambiar la pantalla")
+            XCTAssertTrue(button.isSelected)
+            XCTAssertTrue(app.sliders["activeToolSize"].isEnabled)
+            app.sliders["activeToolSize"].adjust(toNormalizedSliderPosition: 0.5)
+            if tool == "draw" { XCTAssertTrue(app.buttons["clearDraw"].isEnabled); app.buttons["clearDraw"].tap() }
+            if tool == "zoom" { XCTAssertTrue(app.sliders["activeZoomFactor"].isEnabled) }
+            // Returning through the same tool keeps it selected; the next ordinary tap disables it.
+            app.buttons["preview"].tap(); app.buttons["next"].tap(); button.tap()
+            XCTAssertTrue(button.isSelected)
+            XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
+            button.tap(); XCTAssertFalse(button.isSelected)
+        }
+        app.buttons["preview"].tap(); app.buttons["next"].tap(); blackout.tap()
+        XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
+        XCTAssertEqual(blackout.value as? String, "Activada")
+        XCTAssertTrue(overlay.exists)
+        let black = XCTAttachment(screenshot: app.screenshot()); black.name = "Moon returns from private reading and blanks screen"; black.lifetime = .keepAlways; add(black)
+        blackout.tap()
+        XCTAssertEqual(blackout.value as? String, "Desactivada")
+        XCTAssertFalse(overlay.exists)
+        // The sun also restores the audience slide when pressed from a private preview.
+        blackout.tap(); app.buttons["preview"].tap(); app.buttons["next"].tap()
+        XCTAssertFalse(overlay.exists)
+        blackout.tap()
+        XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
+        XCTAssertEqual(blackout.value as? String, "Desactivada")
+        XCTAssertFalse(overlay.exists)
+        app.buttons["tool-flashlight"].tap()
+        XCTAssertTrue(app.buttons["tool-flashlight"].isSelected)
+        let tools = XCTAttachment(screenshot: app.screenshot()); tools.name = "Active tool dock after private reading"; tools.lifetime = .keepAlways; add(tools)
+    }
+
     func testSlideSplitStopsAtUsefulSize() {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }

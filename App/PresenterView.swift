@@ -205,14 +205,14 @@ struct PresenterView: View {
         HStack(spacing: 4) {
             ForEach(Tool.allCases) { tool in
                 Button {
-                    session.endActiveGesture()
-                    session.send(["type": .string("setTool"), "tool": session.selectedTool == tool ? .null : .string(tool.rawValue)])
+                    session.toggleTool(tool)
                 } label: {
                     Image(systemName: tool.symbol).frame(maxWidth: .infinity).frame(height: 44).contentShape(Rectangle())
                         .background(session.selectedTool == tool ? preferences.theme.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 19))
                 }.accessibilityLabel(tool.title).accessibilityIdentifier("tool-\(tool.rawValue)")
                     .accessibilityAddTraits(session.selectedTool == tool ? .isSelected : [])
-                    .disabled(!session.canControl || session.localPreview)
+                    .disabled(!session.canControl)
+                    .accessibilityHint(session.localPreview ? L10n.text("Returns to the slide on screen before using this control.") : "")
             }
             Rectangle().fill(Color.secondary.opacity(0.2)).frame(width: 1, height: 22).padding(.horizontal, 3)
             Button { session.send(["type": .string("blackScreen")]) } label: {
@@ -220,6 +220,7 @@ struct PresenterView: View {
                     .background(session.state.blackScreen ? preferences.theme.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 19))
             }.accessibilityLabel(L10n.text("Black screen")).accessibilityIdentifier("blackScreen")
                 .accessibilityValue(session.state.blackScreen ? L10n.text("On") : L10n.text("Off")).disabled(!session.canControl)
+                .accessibilityHint(session.localPreview ? L10n.text("Returns to the slide on screen before using this control.") : "")
         }.font(.system(size: 20)).foregroundStyle(preferences.theme.color).buttonStyle(.plain).padding(5).modifier(GlassPanel(radius: 28))
     }
     private var notes: some View {
@@ -294,7 +295,7 @@ struct SlideCanvas: View {
                             context.stroke(path, with: .color(Color(hex: stroke.color)), style: StrokeStyle(lineWidth: stroke.width, lineCap: .round, lineJoin: .round))
                         }
                     }
-                    if session.state.blackScreen { Color.black; Label(L10n.text("Black screen is active"), systemImage: "moon.fill").foregroundStyle(.white).font(.caption) }
+                    if session.state.blackScreen { Color.black; Label(L10n.text("Black screen is active"), systemImage: "moon.fill").foregroundStyle(.white).font(.caption).accessibilityIdentifier("blackScreenOverlay") }
                 }
             }.clipped().contentShape(Rectangle())
                 .gesture(DragGesture(minimumDistance: session.selectedTool == nil || session.localPreview ? 15 : 0)
