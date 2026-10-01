@@ -157,9 +157,12 @@ struct PresenterView: View {
                         VideoVolumeControl()
                     }
                     Button { session.togglePreview() } label: {
-                        Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 44).contentShape(Rectangle())
+                        Image(systemName: session.localPreview ? "book.fill" : "book").frame(width: 44, height: 44).contentShape(Rectangle())
+                            .background(session.localPreview ? preferences.theme.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 14))
                     }.accessibilityLabel(session.localPreview ? L10n.text("Return to the slide on screen") : L10n.text("Read without changing the screen"))
                         .accessibilityIdentifier("preview")
+                        .accessibilityValue(session.localPreview ? L10n.text("On") : L10n.text("Off"))
+                        .accessibilityAddTraits(session.localPreview ? .isSelected : [])
                 }.frame(height: CGFloat(PresenterLayout.headerHeight)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
                 Spacer(minLength: 0)
                 SlideCanvas(page: session.displayedSlide, interactive: true).frame(maxWidth: .infinity).frame(height: canvasHeight)
@@ -239,15 +242,13 @@ struct PresenterView: View {
                 }.accessibilityLabel(tool.title).accessibilityIdentifier("tool-\(tool.rawValue)")
                     .accessibilityAddTraits(session.selectedTool == tool ? .isSelected : [])
                     .disabled(!session.canControl)
-                    .accessibilityHint(session.localPreview ? L10n.text("Returns to the slide on screen before using this control.") : "")
             }
             Rectangle().fill(Color.secondary.opacity(0.2)).frame(width: 1, height: 22).padding(.horizontal, 3)
-            Button { session.send(["type": .string("blackScreen")]) } label: {
+            Button { session.send(["type": .string("blackScreen"), "enabled": .bool(!session.state.blackScreen)]) } label: {
                 Image(systemName: session.state.blackScreen ? "sun.max.fill" : "moon.fill").frame(maxWidth: .infinity).frame(height: 44).contentShape(Rectangle())
                     .background(session.state.blackScreen ? preferences.theme.color.opacity(0.18) : .clear, in: RoundedRectangle(cornerRadius: 19))
             }.accessibilityLabel(L10n.text("Black screen")).accessibilityIdentifier("blackScreen")
                 .accessibilityValue(session.state.blackScreen ? L10n.text("On") : L10n.text("Off")).disabled(!session.canControl)
-                .accessibilityHint(session.localPreview ? L10n.text("Returns to the slide on screen before using this control.") : "")
         }.font(.system(size: 20)).foregroundStyle(preferences.theme.color).buttonStyle(.plain).padding(5).modifier(GlassPanel(radius: 28))
     }
     private var notes: some View {

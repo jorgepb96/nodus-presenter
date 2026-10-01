@@ -134,6 +134,16 @@ struct InkStroke: Identifiable {
         guard let pairing else { return }
         let token = UUID(); generation = token
         connected = false; status = retries == 0 ? L10n.text("Looking for Nodus…") : L10n.text("Reconnecting to Nodus…")
+        #if DEBUG
+        // Simulator Bonjour cannot always discover a service on its host Mac.
+        // Connected verification still uses the QR's real TLS key and protocol.
+        let args = ProcessInfo.processInfo.arguments
+        if let index = args.firstIndex(of: "--simulator-endpoint"), args.count > index + 2,
+           let port = UInt16(args[index + 2]), let nwPort = NWEndpoint.Port(rawValue: port) {
+            open(endpoint: .hostPort(host: NWEndpoint.Host(args[index + 1]), port: nwPort), pairing: pairing, token: token)
+            return
+        }
+        #endif
         let parameters = NWParameters.tcp; parameters.includePeerToPeer = true
         let browser = NWBrowser(for: .bonjour(type: Pairing.serviceType, domain: nil), using: parameters)
         self.browser = browser
@@ -326,10 +336,6 @@ struct InkStroke: Identifiable {
             localSlide = max(1, min(state.totalSlides, proposed)); requestImage(localSlide); return
         }
         guard canControl else { return }
-        if localPreview && ["setTool", "blackScreen"].contains(action["type"]?.string ?? "") {
-            localPreview = false; localSlide = state.currentSlide; requestImage(displayedSlide)
-            endActiveGesture()
-        }
         if isDemo {
             let oldSlide = state.currentSlide; state.applyDemo(action)
             if oldSlide != state.currentSlide { strokes = [] }
@@ -340,8 +346,8 @@ struct InkStroke: Identifiable {
     }
     func toggleTool(_ tool: Tool) {
         guard canControl else { return }
-        // A tool already selected on the audience slide becomes usable when returning from private reading.
-        let disable = !localPreview && selectedTool == tool
+        // Global controls never cancel private reading. Only the book returns to the live slide.
+        let disable = selectedTool == tool
         endActiveGesture()
         send(["type": .string("setTool"), "tool": disable ? .null : .string(tool.rawValue)])
     }
