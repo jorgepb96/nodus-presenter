@@ -4,7 +4,7 @@ Store name: **Nodus Presenter**. Nodus Research is the companion Mac application
 
 `Metadata` contains descriptions, subtitles, promotional text, keywords and release notes for en-US, es-ES, fr-FR, de-DE, it, pt-PT, ja, zh-Hans and zh-Hant. Fields were checked against App Store Connect character limits. The initial App Store submission has no “What's New” field; these files are retained for subsequent releases.
 
-All screenshots are **in English** and show the actual local demo of build 5. No composited device frames or generated interface mockups are used.
+The fourteen store screenshots are **in English** and show the actual local demo of build 5. Build 8 updates the small header logo and welcome mark; separate native brand validation captures are available in `Screenshots/Brand`. No composited device frames or generated interface mockups are used.
 
 | Set | Device and runtime | Pixels |
 | --- | --- | --- |
@@ -17,6 +17,6 @@ Captures are reproducible with `StoreScreenshotTests/testEnglishStoreScreenshots
 
 The video on demo slide 4 and the volume changes are simulated. Real playback and volume changes occur on the paired Mac, and the controls are hidden for slides without a video and while reading privately.
 
-App Store Connect status, 1 October 2026: all nine descriptions and subtitles are saved under **Nodus Presenter**, and build **0.2.0 (7)** is associated with the draft and the existing internal TestFlight group. Seven iPhone and seven iPad images have finished uploading. One additional, obsolete iPhone screenshot reservation remains stuck processing; its replacement has uploaded successfully, but Apple's UI currently exposes no removal control for the unfinished reservation. The public listing has not been submitted for review.
+App Store Connect status, 1 October 2026: all nine descriptions and subtitles are saved under **Nodus Presenter**, and build **0.2.0 (8)** is associated with the draft and the existing internal TestFlight group. Seven iPhone and seven iPad images have finished uploading. One additional, obsolete iPhone screenshot reservation remains stuck processing; its replacement has uploaded successfully, but Apple's UI currently exposes no removal control for the unfinished reservation. The public listing has not been submitted for review.
 
 Apple reference: [Screenshot specifications](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/).

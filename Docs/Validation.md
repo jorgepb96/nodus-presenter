@@ -6,7 +6,7 @@
 
 - La N se dibuja mediante un único renderer CoreGraphics para el logo SwiftUI, el AppIcon claro/oscuro y su previsualización. Usa la geometría normalizada y el algoritmo de cuatro tonos del repositorio principal; mantiene los nodos opacos y el degradado diagonal con sus tres paradas.
 - Comprobación de píxeles del AppIcon: los cuatro centros coinciden exactamente con los tonos canónicos para Violeta (`#cbb6fb`, `#8b5cf6`, `#764ed1`, `#533794`), todos con alfa 255. El generador usa sRGB explícito para evitar cambios de color al exportar el PNG.
-- XCUITest existente de apariencia adaptativa aprobado en iPhone 16 Pro Max con iOS 26.3: Naranja/Claro, Verde azulado/Oscuro y persistencia tras relanzar. Capturas nativas [claro](../Screenshots/Brand/iphone16promax-build8-light.png) y [oscuro](../Screenshots/Brand/iphone16promax-build8-dark.png). AppIcon compilado e instalado; archivo iOS firmado `0.2.0 (8)` completado.
+- XCUITest existente de apariencia adaptativa aprobado en iPhone 16 Pro Max con iOS 26.3: Naranja/Claro, Verde azulado/Oscuro y persistencia tras relanzar. Capturas nativas [claro](../Screenshots/Brand/iphone16promax-build8-light.png) y [oscuro](../Screenshots/Brand/iphone16promax-build8-dark.png). AppIcon compilado e instalado; comprobación visual adicional en la [pantalla inicial](../Screenshots/Brand/iphone16promax-build8-welcome.png), en [oscuro](../Screenshots/Brand/iphone16promax-build8-welcome-dark.png) y en la [pantalla de inicio del sistema](../Screenshots/Brand/iphone16promax-build8-home.png). Archivo iOS firmado `0.2.0 (8)` y upload a Apple completados. App Store Connect confirma **En pruebas** en el grupo interno existente, instrucciones de prueba guardadas y build 8 asociada al borrador 0.2.0.
 
 ### Correcciones de la build 7
 
