@@ -1,0 +1,1 @@
+presentation,remote,slides,pdf,speaker,notes,spotlight,controller,mac,ipad

@@ -20,6 +20,8 @@ Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izqui
 
 Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. Al pulsar una herramienta o la luna/sol durante la lectura privada, vuelves a la diapositiva que ve el público y se ejecuta la acción, sin avanzar la presentación. Si esa herramienta ya estaba activa, continúa seleccionada; otro toque la desactiva. También hay botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
 
+Si la diapositiva proyectada tiene vídeo, la franja bajo ella muestra reproducción/pausa a la izquierda y volumen a la derecha, con las flechas centradas. El volumen abre un popover con slider: controla el audio del Mac y comparte su valor con Ajustes. Las herramientas conservan sus controles entre las flechas. En columnas de menos de 340 puntos, los botones multimedia pasan junto al contador para evitar solapamientos. Se ocultan durante la lectura privada. Ajustes mantiene el salto a un segundo concreto. En la demo, la diapositiva 4 simula la reproducción sin reproducir audio ni cambiar el volumen del Mac.
+
 ## Idiomas
 
 La interfaz, la demo, los errores, los permisos y las etiquetas de accesibilidad están disponibles en inglés, español, francés, chino simplificado y tradicional, japonés, alemán, italiano y portugués. La app usa automáticamente el idioma principal del dispositivo. Las variantes regionales comparten traducción; el chino distingue escritura simplificada/tradicional y las regiones de Taiwán, Hong Kong y Macao. Un idioma principal no disponible usa inglés. No modifica los PDF ni las notas enviados desde Nodus.
@@ -36,7 +38,7 @@ xcodebuild -project NodusPresenter.xcodeproj -scheme NodusPresenter \
   -destination 'platform=iOS Simulator,name=Nodus — iPhone 16 Pro Max' CODE_SIGNING_ALLOWED=NO test
 ```
 
-Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --tools`, `--demo --slides`. `--reset-preferences` restaura los ajustes visuales para las pruebas. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos.
+Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --video` (abre la diapositiva 4), `--demo --tools`, `--demo --slides`. `--reset-preferences` restaura los ajustes visuales para las pruebas. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos.
 
 Para revisar el diseño en el Mac, compila con destino **Mac Catalyst** y ejecuta la app con `--demo`. Esta vista permite probar el mismo código SwiftUI; la validación final de gestos y conexión debe hacerse en iPhone/iPad.
 

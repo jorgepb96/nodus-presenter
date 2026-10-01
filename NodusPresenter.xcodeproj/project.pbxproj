@@ -10,6 +10,7 @@
 		00B990B45A020EFFBAB304EF /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34D5AC08DCBA9BD1E6E6CB /* Session.swift */; };
 		213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */; };
 		2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAC4203728044DA6998C7B /* PresenterView.swift */; };
+		60E66E07A7495CA9586D6317 /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */; };
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
 		6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C219F692896CD41609D737 /* ActiveToolControls.swift */; };
 		864B8D85EB9D201CF156AE69 /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6E3A8BB4D9B5062031965E98 /* PresenterCore */; };
@@ -18,6 +19,7 @@
 		B4586321986780B5EF967AEB /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79177523994F808ACBAF15D6 /* QRScanner.swift */; };
 		BE605160C7BD8A13048DA77A /* NodusLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570BC6DEF33C4F03A11366BA /* NodusLogo.swift */; };
 		BF3E821676DAC886833B30C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 209B846EA3E80CFD772A2A60 /* InfoPlist.strings */; };
+		E7224CC7E0C3376304A081D9 /* VideoVolumeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */; };
 		F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259C218F33EA401A89D72E7B /* PresenterPreferences.swift */; };
 		F9D84ABED46A659BC7DCEAE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAB7CC16AA850024143A15EE /* Assets.xcassets */; };
 		FABB2C50D715E6AB2BD10756 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */; };
@@ -54,10 +56,12 @@
 		A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NodusPresenterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C219F692896CD41609D737 /* ActiveToolControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveToolControls.swift; sourceTree = "<group>"; };
 		BAB7CC16AA850024143A15EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVolumeControl.swift; sourceTree = "<group>"; };
 		D753CB81588A327D8179987C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E2B66731865A085B40F65E63 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F5983C45869A326E418E6C17 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
 		FB2C4462680B6A823C85647A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 			children = (
 				A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */,
 				360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */,
+				F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */,
 			);
 			name = UI;
 			path = Tests/UI;
@@ -125,6 +130,7 @@
 				E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */,
 				79177523994F808ACBAF15D6 /* QRScanner.swift */,
 				7D34D5AC08DCBA9BD1E6E6CB /* Session.swift */,
+				BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 			files = (
 				6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */,
 				90F2FD0CCE45143857FDCD7D /* LocalizationUITests.swift in Sources */,
+				60E66E07A7495CA9586D6317 /* StoreScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +263,7 @@
 				2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */,
 				B4586321986780B5EF967AEB /* QRScanner.swift in Sources */,
 				00B990B45A020EFFBAB304EF /* Session.swift in Sources */,
+				E7224CC7E0C3376304A081D9 /* VideoVolumeControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +387,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -394,7 +402,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -457,7 +465,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -478,7 +486,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

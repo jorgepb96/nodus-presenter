@@ -72,6 +72,7 @@ struct InkStroke: Identifiable {
         if let index = args.firstIndex(of: "--pair"), args.count > index + 1, let url = URL(string: args[index + 1]) { connect(url: url) }
         if args.contains("--demo") {
             enterDemo()
+            if args.contains("--video") { state.currentSlide = 4; localSlide = 4 }
             if args.contains("--tools") { state.toolMode = "flashlight"; showTools = true }
             if args.contains("--slides") { showSlides = true }
             if args.contains("--spotlight") { state.toolMode = "flashlight" }
@@ -82,6 +83,7 @@ struct InkStroke: Identifiable {
     var note: String { notes[String(displayedSlide)] ?? "" }
     var timerText: String { String(format: "%02d:%02d", state.timerSeconds / 60, state.timerSeconds % 60) }
     var selectedTool: Tool? { state.toolMode.flatMap(Tool.init(rawValue:)) }
+    var hasCurrentVideo: Bool { videos[String(state.currentSlide)] != nil }
 
     func enterDemo() {
         disconnect()
@@ -356,8 +358,8 @@ struct InkStroke: Identifiable {
         ])])
     }
     func setVolume(_ value: Double) {
-        guard canControl else { return }; volume = value
-        if !isDemo { control?.send(["kind": .string("volume"), "value": .number(value)]) }
+        guard canControl, value.isFinite else { return }; volume = min(100, max(0, value.rounded()))
+        if !isDemo { control?.send(["kind": .string("volume"), "value": .number(volume)]) }
     }
     func togglePreview() {
         endActiveGesture()

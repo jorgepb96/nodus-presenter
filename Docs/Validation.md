@@ -1,4 +1,14 @@
-# Validación de la primera implementación
+# Validación de Nodus Presenter
+
+## Versión 0.2.0
+
+- Archivo iOS firmado de la build 6 y carga a App Store Connect completados el 1 de octubre de 2026. App Store Connect la muestra En pruebas en el grupo interno existente y asociada al borrador 0.2.0. Las builds 4 y 5 anteriores siguen disponibles.
+- XCUITest del vídeo de la build 6 aprobado: play/pausa en la franja de navegación, volumen 0–100, controles ocultos sin vídeo y en lectura privada tanto en la franja como en Ajustes, sliders compartidos y herramientas de dibujo/lupa conservadas entre las flechas. La demo simula el vídeo y no modifica el audio del Mac. Capturas: [controles](../Screenshots/iphone16promax-video-controls.png), [volumen](../Screenshots/iphone16promax-video-volume.png).
+- Once pruebas de Core y compilación Mac Catalyst aprobadas. El cambio final de nombre no modifica el protocolo ni los controles.
+- Capturas nativas de la build 5 en inglés: siete de iPhone 16 Pro Max y siete de iPad Pro de 13 pulgadas, ambas con runtime 26.3. La exportación normaliza la orientación de la imagen de pantalla completa para evitar el encuadre incorrecto de `app.screenshot()` en iPad horizontal. Ambas ejecuciones de capturas aprobaron.
+- Integración principal actualizada con `main`: helpers nativo y de audio incluidos juntos; prueba TLS real con PSK, PDF/SHA-256 y previsualización aprobada. El build completo de Nodus aprobó. El CI del PR 1028 en `5115ccde` está completamente en verde, incluidas las tres particiones de unit tests y el gate final.
+
+## Historial de la implementación inicial
 
 Comprobaciones realizadas en este Mac el 1 de octubre de 2026:
 

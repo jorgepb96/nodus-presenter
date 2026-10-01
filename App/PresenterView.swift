@@ -145,11 +145,17 @@ struct PresenterView: View {
             let ratio = image.map { $0.size.width / max(1, $0.size.height) } ?? 16 / 9
             let hasNext = preferences.showNextSlide && session.displayedSlide < session.state.totalSlides
             let canvasHeight = min(geometry.size.width / ratio, max(1, geometry.size.height - CGFloat(PresenterLayout.chromeHeight(hasNext: hasNext))))
+            let hasVideo = !session.localPreview && session.hasCurrentVideo
+            let inlineVideo = hasVideo && geometry.size.width >= 340
             VStack(spacing: CGFloat(PresenterLayout.paneSpacing)) {
                 HStack {
                     Text("\(session.displayedSlide) / \(session.state.totalSlides)").font(.caption.monospacedDigit().weight(.semibold))
                         .accessibilityIdentifier("slideCounter").foregroundStyle(Color.secondary)
                     Spacer()
+                    if hasVideo && !inlineVideo {
+                        videoPlayback
+                        VideoVolumeControl()
+                    }
                     Button { session.togglePreview() } label: {
                         Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 44).contentShape(Rectangle())
                     }.accessibilityLabel(session.localPreview ? L10n.text("Return to the slide on screen") : L10n.text("Read without changing the screen"))
@@ -157,20 +163,7 @@ struct PresenterView: View {
                 }.frame(height: CGFloat(PresenterLayout.headerHeight)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
                 Spacer(minLength: 0)
                 SlideCanvas(page: session.displayedSlide, interactive: true).frame(maxWidth: .infinity).frame(height: canvasHeight)
-                HStack(spacing: 8) {
-                    Button { session.send(["type": .string("prev")]) } label: {
-                        Image(systemName: "chevron.left").frame(width: 44, height: 44).contentShape(Rectangle())
-                    }.accessibilityLabel(L10n.text("Previous")).accessibilityIdentifier("previous")
-                        .disabled(session.displayedSlide <= 1 || (!session.canControl && !session.localPreview))
-                    if let tool = session.selectedTool, !session.localPreview {
-                        ActiveToolControls(tool: tool).id(tool.rawValue).frame(width: min(248, max(100, geometry.size.width - 104)))
-                    } else { zoomControls }
-                    Button { session.send(["type": .string("next")]) } label: {
-                        Image(systemName: "chevron.right").frame(width: 44, height: 44).contentShape(Rectangle())
-                    }.accessibilityLabel(L10n.text("Next")).accessibilityIdentifier("next")
-                        .disabled(session.displayedSlide >= session.state.totalSlides || (!session.canControl && !session.localPreview))
-                }.font(.system(size: 18)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
-                    .frame(maxWidth: .infinity).frame(height: CGFloat(PresenterLayout.navigationHeight))
+                navigationControls(width: geometry.size.width, inlineVideo: inlineVideo)
                 if hasNext {
                     Button { session.previewNextSlide() } label: {
                         HStack(spacing: 12) {
@@ -193,6 +186,37 @@ struct PresenterView: View {
                 Spacer(minLength: 0)
             }
         }
+    }
+    private func navigationControls(width: CGFloat, inlineVideo: Bool) -> some View {
+        HStack(spacing: 0) {
+            if inlineVideo { videoPlayback }
+            Spacer(minLength: inlineVideo ? 8 : 0)
+            HStack(spacing: 8) {
+                Button { session.send(["type": .string("prev")]) } label: {
+                    Image(systemName: "chevron.left").frame(width: 44, height: 44).contentShape(Rectangle())
+                }.accessibilityLabel(L10n.text("Previous")).accessibilityIdentifier("previous")
+                    .disabled(session.displayedSlide <= 1 || (!session.canControl && !session.localPreview))
+                if let tool = session.selectedTool, !session.localPreview {
+                    ActiveToolControls(tool: tool).id(tool.rawValue).frame(width: min(248, max(100, width - (inlineVideo ? 208 : 104))))
+                } else { zoomControls }
+                Button { session.send(["type": .string("next")]) } label: {
+                    Image(systemName: "chevron.right").frame(width: 44, height: 44).contentShape(Rectangle())
+                }.accessibilityLabel(L10n.text("Next")).accessibilityIdentifier("next")
+                    .disabled(session.displayedSlide >= session.state.totalSlides || (!session.canControl && !session.localPreview))
+            }
+            Spacer(minLength: inlineVideo ? 8 : 0)
+            if inlineVideo { VideoVolumeControl() }
+        }.font(.system(size: 18)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
+            .frame(maxWidth: .infinity).frame(height: CGFloat(PresenterLayout.navigationHeight))
+    }
+    private var videoPlayback: some View {
+        Button { session.send(["type": .string("videoToggle")]) } label: {
+            Image(systemName: session.state.videoPlaying ? "pause.fill" : "play.fill")
+                .font(.system(size: 17)).frame(width: 44, height: 44).contentShape(Rectangle())
+                .background(preferences.theme.color.opacity(0.12), in: Circle())
+        }.buttonStyle(.plain).foregroundStyle(preferences.theme.color).disabled(!session.canControl)
+            .accessibilityLabel(session.state.videoPlaying ? L10n.text("Pause video") : L10n.text("Play video"))
+            .accessibilityIdentifier("videoPlayback").accessibilityAddTraits(session.state.videoPlaying ? .isSelected : [])
     }
     private var zoomControls: some View {
         HStack(spacing: 2) {
@@ -436,10 +460,11 @@ struct ToolsSheet: View {
                     Button(L10n.text("Clear drawings")) { session.send(["type": .string("clearDraw")]) }
                     Button(L10n.text("Reset slide zoom")) { session.send(["type": .string("slideZoom"), "data": .object(["scale": .number(1), "originX": .number(50), "originY": .number(50)])]) }
                 }.disabled(!session.canControl)
-                Section(L10n.text("Audio")) {
-                    Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100) { Text(L10n.text("Mac volume")) }.disabled(!session.canControl)
-                }
-                if session.videos[String(session.state.currentSlide)] != nil {
+                if session.hasCurrentVideo && !session.localPreview {
+                    Section(L10n.text("Audio")) {
+                        Slider(value: Binding(get: { session.volume }, set: { session.setVolume($0) }), in: 0...100, step: 1) { Text(L10n.text("Mac volume")) }
+                            .accessibilityIdentifier("macVolumeSlider").disabled(!session.canControl)
+                    }
                     Section(L10n.text("Slide video")) {
                         Button(session.state.videoPlaying ? L10n.text("Pause video") : L10n.text("Play video")) { session.send(["type": .string("videoToggle")]) }
                         HStack { TextField(L10n.text("Seconds"), value: $seek, format: .number).keyboardType(.decimalPad); Button(L10n.text("Go")) { session.send(["type": .string("videoSeek"), "time": .number(max(0, seek))]) } }

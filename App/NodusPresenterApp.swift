@@ -61,7 +61,7 @@ struct RootView: View {
                                 .shadow(color: preferences.theme.color.opacity(0.18), radius: 24, y: 10)
                                 .padding(.top, 48)
                             VStack(spacing: 10) {
-                                Text("Nodus Presenter").font(.largeTitle.bold())
+                                Text("Nodus Presenter").font(.largeTitle.bold()).multilineTextAlignment(.center)
                                 Text(L10n.text("Your presentation, in your hands.")).font(.title3).foregroundStyle(.secondary)
                             }
                             VStack(alignment: .leading, spacing: 20) {

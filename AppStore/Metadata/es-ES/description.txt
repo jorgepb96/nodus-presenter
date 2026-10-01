@@ -1,0 +1,18 @@
+Presenta con espacio para pensar. Nodus Presenter convierte tu iPhone o iPad en un mando nativo para PDF Presenter de Nodus Research en tu Mac.
+
+Escanea el QR de App iPhone–iPad en Nodus para enlazar. Consulta la diapositiva actual, lee tus notas y navega con botones, toques o la cuadrícula.
+
+• Ajusta el espacio de la diapositiva y las notas, y el tamaño del texto.
+• Lee por adelantado en privado sin cambiar la pantalla del público. Muestra u oculta la siguiente diapositiva.
+• Usa puntero, Spotlight, dibujo y lupa. Los ajustes de la herramienta activa aparecen junto a las flechas.
+• Reproduce o pausa vídeos y ajusta el volumen de salida del Mac. Estos controles solo aparecen en diapositivas con vídeo; la reproducción sucede en el Mac.
+• Toca el cronómetro para iniciar o pausar; mantén pulsado para reiniciar.
+• Oscurece la pantalla del público y restáurala con un toque.
+• Elige entre nueve colores de acento y apariencia Sistema, Claro u Oscuro. Liquid Glass nativo en iOS y iPadOS 26.
+• Prueba la demo local antes de conectar un Mac.
+
+Se adapta al idioma del dispositivo: inglés, español, francés, alemán, italiano, portugués, japonés, chino simplificado y tradicional. Para otros idiomas utiliza inglés.
+
+Requiere iOS o iPadOS 18 o posterior. Para presentaciones reales necesitas Nodus Research para macOS con el enlace nativo de Presenter. Mantén el Wi-Fi activado en ambos dispositivos. La conexión directa puede funcionar sin el router de la sala; depende de los dispositivos y del entorno.
+
+Sin cuenta en la app, anuncios ni analítica. Los datos de la presentación se intercambian entre los dispositivos enlazados. La demo simula los controles y no modifica el volumen de tu Mac.
