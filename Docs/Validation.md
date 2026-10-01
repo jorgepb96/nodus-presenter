@@ -7,6 +7,8 @@
 - Once pruebas de Core y compilación Mac Catalyst aprobadas. El cambio final de nombre no modifica el protocolo ni los controles.
 - Capturas nativas de la build 5 en inglés: siete de iPhone 16 Pro Max y siete de iPad Pro de 13 pulgadas, ambas con runtime 26.3. La exportación normaliza la orientación de la imagen de pantalla completa para evitar el encuadre incorrecto de `app.screenshot()` en iPad horizontal. Ambas ejecuciones de capturas aprobaron.
 - Integración principal actualizada con `main`: helpers nativo y de audio incluidos juntos; prueba TLS real con PSK, PDF/SHA-256 y previsualización aprobada. El build completo de Nodus aprobó. El CI del PR 1028 en `5115ccde` está completamente en verde, incluidas las tres particiones de unit tests y el gate final.
+- Verificación adicional de vídeo en Nodus para macOS: reproducción efectiva y pausa desde la ventana del presentador, con el vídeo de prueba detenido a los 46 segundos. Se corrigieron dos defectos previos del reproductor: el listener de mapas reemplazaba el de YouTube (error 153), y faltaba iniciar el canal de control del iframe antes de enviar órdenes. Los dos fixes están en el PR 1028; aprobaron el build completo, ESLint de los archivos modificados y 28 pruebas de vídeo/cabeceras. El nuevo CI de `b1246b54` sigue en ejecución.
+- Instancia Electron de pruebas con perfil propio, sin backup, presentación sintética de ocho páginas, notas y vídeo en la cuarta. El QR de App iPhone–iPad queda disponible para probar el dispositivo físico. La build 6 sigue abierta en el simulador iPhone 16 Pro Max con iOS 26.3.
 
 ## Historial de la implementación inicial
 
