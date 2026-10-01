@@ -1,6 +1,6 @@
 # Primera beta interna
 
-Bundle ID `com.nodusresearch.presenter`, versión `0.1.0`, build `1`, equipo `6RPLS9EA4X`. La primera beta es interna para el titular; no se crean grupos externos ni enlaces públicos. El registro de App Store Connect se crea antes de subir el archivo.
+Bundle ID `com.nodusresearch.presenter`, versión `0.1.0`, build `2`, equipo `6RPLS9EA4X`. La primera beta es interna para el titular; no se crean grupos externos ni enlaces públicos. Registro [App Store Connect](https://appstoreconnect.apple.com/apps/6818107823/distribution). Los builds 1 y 2 se subieron correctamente a TestFlight interno. El build 2 separa el watchdog del canal de control del tráfico del PDF para que una descarga no pueda ocultar una pérdida de control.
 
 ```sh
 Scripts/configure-project.sh

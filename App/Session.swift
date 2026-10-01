@@ -179,7 +179,7 @@ struct InkStroke: Identifiable {
                 }
             }
             connection.onMessage = { [weak self] message in
-                guard let self, self.generation == token else { return }; self.receive(message)
+                guard let self, self.generation == token else { return }; self.receive(message, channel: channel)
             }
             connection.start(queue: .main)
         }
@@ -198,10 +198,12 @@ struct InkStroke: Identifiable {
             self.reconnectTask = nil; self.beginDiscovery()
         }
     }
-    private func receive(_ message: Message) {
-        lastReceipt = Date()
+    private func receive(_ message: Message, channel: String) {
+        // A PDF transfer cannot hide an unresponsive control channel.
+        if channel == "control" { lastReceipt = Date() }
         switch message["kind"]?.string {
         case "update":
+            guard channel == "control" else { return }
             guard let rawState = message["state"], let newState = try? PresenterState.decode(rawState) else { return }
             let oldSlide = state.currentSlide, oldID = state.pdfId
             state = newState

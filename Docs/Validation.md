@@ -3,6 +3,7 @@
 Comprobaciones realizadas en este Mac el 1 de octubre de 2026:
 
 - Swift 6.2.3, Xcode 26.2, SDK iOS 26.2. Compilación del proyecto nativo para simulador y archivo iPhone firmado con el equipo existente.
+- Compilación Mac Catalyst y arranque real de la demo en macOS para revisión visual.
 - Cuatro pruebas de protocolo: QR y clave, fragmentación TCP en todos los puntos de corte, frames concatenados/oversize y navegación limitada de la demo.
 - XCUITest: avanzar, lectura privada sin mover la presentación, regresar a la diapositiva en pantalla, demo identificada, pantalla negra, selección de Spotlight y panel de herramientas.
 - Capturas reales de la demo en iPhone 17 Pro y iPad Pro (runtime 26.3), y arranque de la app en iPhone 16 Pro con iOS 18.2. Los conceptos gráficos de Design no se consideran capturas de la app.
