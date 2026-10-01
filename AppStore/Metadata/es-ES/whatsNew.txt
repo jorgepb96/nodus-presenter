@@ -1,1 +1,1 @@
-Panel ajustable, controles de notas más cómodos, nueve colores de acento, Liquid Glass nativo, enlace por QR y controles de vídeo y volumen del Mac visibles solo en diapositivas con vídeo. Mejoras de navegación, lectura privada y áreas táctiles. Traducción completa a nueve idiomas.
+Enlace con Nodus Research en Mac, Windows o Linux. Windows y Linux utilizan la red local; la conexión actual de Mac se mantiene. Los controles de vídeo solo aparecen en diapositivas con vídeo.
