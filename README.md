@@ -12,7 +12,11 @@ La demo funciona sin Mac, sin cámara y sin red. Genera un PDF local de ocho dia
 
 ## Controles
 
-Diapositiva actual y siguiente, navegación con botones/deslizamiento, miniaturas, notas ajustables, lectura privada, cronómetro compartido, pantalla negra, Spotlight, puntero, dibujo, lupa, zoom de diapositiva con gesto, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
+Las notas tienen su propio panel de lectura. Ajusta el reparto entre diapositiva y notas con el separador o el slider de Ajustes; en este último, el tamaño se aplica al soltar para mantener estable la hoja. La siguiente diapositiva se puede mostrar u ocultar. El tema, el reparto y esta opción se conservan al cerrar la app. Hay diez temas: el original y los acentos de los nueve vaults de Nodus.
+
+Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izquierda para retroceder y la derecha para avanzar, o usa el deslizamiento y la cuadrícula de miniaturas. Una herramienta activa recibe esos toques sin cambiar de diapositiva; su color, tamaño y borrado aparecen entre las flechas. Amplía o reduce la diapositiva con los botones o el gesto de pinza; arrastra una diapositiva ampliada para desplazarte por ella. El cronómetro está en la cabecera: un toque pausa o inicia, y mantenerlo pulsado lo reinicia.
+
+Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. También hay lectura privada, botones de fuente de 44 puntos separados, volumen del Mac y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
 
 ## Construir y comprobar
 
@@ -21,10 +25,10 @@ brew install xcodegen
 Scripts/configure-project.sh
 swift test
 xcodebuild -project NodusPresenter.xcodeproj -scheme NodusPresenter \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO test
+  -destination 'platform=iOS Simulator,name=Nodus — iPhone 16 Pro Max' CODE_SIGNING_ALLOWED=NO test
 ```
 
-Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --tools`, `--demo --slides`. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos.
+Abre `NodusPresenter.xcodeproj`. El equipo de firma se puede cambiar en `project.yml`. Argumentos de ejecución: `--demo`, `--demo --tools`, `--demo --slides`. `--reset-preferences` restaura los ajustes visuales para las pruebas. `--pair <url>` se reserva para pruebas locales del protocolo; no uses claves reales en argumentos.
 
 Para revisar el diseño en el Mac, compila con destino **Mac Catalyst** y ejecuta la app con `--demo`. Esta vista permite probar el mismo código SwiftUI; la validación final de gestos y conexión debe hacerse en iPhone/iPad.
 
@@ -36,6 +40,6 @@ Para revisar el diseño en el Mac, compila con destino **Mac Catalyst** y ejecut
 
 [Conceptos generados](Design/) y [capturas reales del simulador](Screenshots/) están separados. El icono dibuja la geometría del logo original de Nodus dentro de una pantalla; `Scripts/generate-icon.swift` permite regenerarlo.
 
-![iPad demo](Screenshots/ipad-demo.png)
+![Panel ajustable con controles de dibujo en iPhone 16 Pro Max](Screenshots/iphone16promax-drawing-build3.png)
 
 Licencia AGPL-3.0; se conserva el archivo LICENSE del repositorio original.

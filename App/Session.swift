@@ -29,7 +29,7 @@ struct InkStroke: Identifiable {
     @Published var strokes: [InkStroke] = []
     @Published var showSlides = false
     @Published var showTools = false
-    @Published var notesFont: Double = 17
+    @Published var notesFont: Double = 18
     @Published var pdfDocument: PDFDocument?
     var isPairing: Bool { pairing != nil }
     private var foreground = true
@@ -251,12 +251,19 @@ struct InkStroke: Identifiable {
     }
     private func imageKey(_ page: Int) -> String { "\(assetVersion):\(page)" }
     func image(for page: Int, width: CGFloat = 1200) -> UIImage? {
-        let key = imageKey(page)
+        let baseKey = imageKey(page)
+        let key = width < 600 ? "\(baseKey):thumb-\(Int(width))" : baseKey
         if let image = imageCache.object(forKey: key as NSString) { return image }
         if let document = pdfDocument, let pdfPage = document.page(at: page - 1) {
             let size = pdfPage.bounds(for: .mediaBox).size
             let image = pdfPage.thumbnail(of: CGSize(width: width, height: width * size.height / max(1, size.width)), for: .mediaBox)
             imageCache.setObject(image, forKey: key as NSString, cost: Int(image.size.width * image.size.height * 4)); return image
+        }
+        if width < 600, let full = imageCache.object(forKey: baseKey as NSString) {
+            let size = CGSize(width: width, height: width * full.size.height / max(1, full.size.width))
+            let format = UIGraphicsImageRendererFormat(); format.scale = 1
+            let image = UIGraphicsImageRenderer(size: size, format: format).image { _ in full.draw(in: CGRect(origin: .zero, size: size)) }
+            imageCache.setObject(image, forKey: key as NSString, cost: Int(size.width * size.height * 4)); return image
         }
         return nil
     }
@@ -324,6 +331,18 @@ struct InkStroke: Identifiable {
         }
         applyOverlay(action)
         control?.send(["kind": .string("action"), "commandId": .string(UUID().uuidString), "action": .object(action)])
+    }
+    func adjustSlideZoom(by delta: Double) {
+        guard !localPreview else { return }
+        setSlideZoom(scale: state.slideZoom.scale + delta, originX: state.slideZoom.originX, originY: state.slideZoom.originY)
+    }
+    func setSlideZoom(scale: Double, originX: Double, originY: Double) {
+        guard !localPreview else { return }
+        send(["type": .string("slideZoom"), "data": .object([
+            "scale": .number(min(5, max(1, scale))),
+            "originX": .number(min(100, max(0, originX))),
+            "originY": .number(min(100, max(0, originY)))
+        ])])
     }
     func setVolume(_ value: Double) {
         guard canControl else { return }; volume = value

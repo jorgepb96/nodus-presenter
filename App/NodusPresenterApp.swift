@@ -2,10 +2,11 @@ import SwiftUI
 
 @main struct NodusPresenterApp: App {
     @StateObject private var session = PresenterSession()
+    @StateObject private var preferences = PresenterPreferences()
     @Environment(\.scenePhase) private var phase
     var body: some Scene {
         WindowGroup {
-            RootView().environmentObject(session).tint(Color(hex: "#8b5cf6"))
+            RootView().environmentObject(session).environmentObject(preferences).tint(preferences.theme.color)
                 .onOpenURL { session.connect(url: $0) }
                 .onChange(of: phase) { _, value in session.sceneChanged(value) }
         }
@@ -42,6 +43,7 @@ struct ConnectionBadge: View {
 
 struct RootView: View {
     @EnvironmentObject var session: PresenterSession
+    @EnvironmentObject var preferences: PresenterPreferences
     @State private var scanning = false
     @State private var pairingText = ""
     @State private var manual = false
@@ -53,7 +55,7 @@ struct RootView: View {
                     ScrollView {
                         VStack(spacing: 28) {
                             Image("AppIconPreview").resizable().scaledToFit().frame(width: 120, height: 120)
-                                .clipShape(RoundedRectangle(cornerRadius: 28)).shadow(color: .purple.opacity(0.18), radius: 24, y: 10)
+                                .clipShape(RoundedRectangle(cornerRadius: 28)).shadow(color: preferences.theme.color.opacity(0.18), radius: 24, y: 10)
                                 .padding(.top, 48)
                             VStack(spacing: 10) {
                                 Text("Nodus Presenter").font(.largeTitle.bold())
@@ -74,7 +76,7 @@ struct RootView: View {
                     }
                 }
             }.background {
-                LinearGradient(colors: [Color.purple.opacity(0.10), Color(.systemBackground), Color.indigo.opacity(0.08)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+                LinearGradient(colors: [preferences.theme.color.opacity(0.10), Color(.systemBackground), preferences.theme.color.opacity(0.04)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             }
             .sheet(isPresented: $scanning) { QRScanner { url in scanning = false; session.connect(url: url) } }
             .alert("Enlazar con Nodus", isPresented: $manual) {

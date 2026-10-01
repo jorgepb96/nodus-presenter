@@ -11,9 +11,11 @@
 		213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */; };
 		2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAC4203728044DA6998C7B /* PresenterView.swift */; };
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
+		6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C219F692896CD41609D737 /* ActiveToolControls.swift */; };
 		864B8D85EB9D201CF156AE69 /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6E3A8BB4D9B5062031965E98 /* PresenterCore */; };
 		96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */; };
 		B4586321986780B5EF967AEB /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79177523994F808ACBAF15D6 /* QRScanner.swift */; };
+		F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259C218F33EA401A89D72E7B /* PresenterPreferences.swift */; };
 		F9D84ABED46A659BC7DCEAE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAB7CC16AA850024143A15EE /* Assets.xcassets */; };
 		FABB2C50D715E6AB2BD10756 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
@@ -30,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		03DAC4203728044DA6998C7B /* PresenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterView.swift; sourceTree = "<group>"; };
+		259C218F33EA401A89D72E7B /* PresenterPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterPreferences.swift; sourceTree = "<group>"; };
 		2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDeck.swift; sourceTree = "<group>"; };
 		358815F48093128F50406B7A /* NodusPresenter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NodusPresenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CB3308739BC1B3A207915D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		8008FC7FCDC575194ACA95C0 /* nodus-presenter-mobile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "nodus-presenter-mobile"; path = .; sourceTree = SOURCE_ROOT; };
 		A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NodusPresenterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4C219F692896CD41609D737 /* ActiveToolControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveToolControls.swift; sourceTree = "<group>"; };
 		BAB7CC16AA850024143A15EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,10 +98,12 @@
 		FC1543680A1F6B4767B3B2F9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B4C219F692896CD41609D737 /* ActiveToolControls.swift */,
 				BAB7CC16AA850024143A15EE /* Assets.xcassets */,
 				2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */,
 				45CB3308739BC1B3A207915D /* Info.plist */,
 				5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */,
+				259C218F33EA401A89D72E7B /* PresenterPreferences.swift */,
 				03DAC4203728044DA6998C7B /* PresenterView.swift */,
 				E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */,
 				79177523994F808ACBAF15D6 /* QRScanner.swift */,
@@ -215,8 +221,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */,
 				96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */,
 				213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */,
+				F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */,
 				2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */,
 				B4586321986780B5EF967AEB /* QRScanner.swift in Sources */,
 				00B990B45A020EFFBAB304EF /* Session.swift in Sources */,
@@ -324,7 +332,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -402,7 +410,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

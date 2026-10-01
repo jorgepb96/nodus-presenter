@@ -1,20 +1,40 @@
-import AppKit
+import CoreGraphics
+import ImageIO
+import UniformTypeIdentifiers
+import Foundation
+
 let output = CommandLine.arguments[1]
-let image = NSImage(size: NSSize(width: 1024, height: 1024))
-let canvas = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1024, pixelsHigh: 1024, bitsPerSample: 8, samplesPerPixel: 3, hasAlpha: false, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
-NSGraphicsContext.saveGraphicsState()
-NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: canvas)
-NSColor(calibratedRed: 0.075, green: 0.06, blue: 0.14, alpha: 1).setFill()
-NSBezierPath(rect: NSRect(x: 0, y: 0, width: 1024, height: 1024)).fill()
-let screen = NSBezierPath(roundedRect: NSRect(x: 142, y: 230, width: 740, height: 578), xRadius: 80, yRadius: 80)
-NSColor(calibratedRed: 0.78, green: 0.68, blue: 1, alpha: 1).setStroke(); screen.lineWidth = 28; screen.stroke()
-let stand = NSBezierPath(); stand.move(to: NSPoint(x: 512, y: 230)); stand.line(to: NSPoint(x: 512, y: 166)); stand.move(to: NSPoint(x: 376, y: 153)); stand.line(to: NSPoint(x: 648, y: 153)); stand.lineWidth = 28; stand.lineCapStyle = .round; stand.stroke()
-// Exact connected-N geometry from Nodus' vector logo, scaled inside the display.
-let points = [NSPoint(x: 338,y: 375), NSPoint(x: 338,y: 695), NSPoint(x: 618,y: 375), NSPoint(x: 618,y: 695)]
-let n = NSBezierPath(); n.move(to: points[0]); n.line(to: points[1]); n.line(to: points[2]); n.line(to: points[3]); n.lineWidth = 65; n.lineCapStyle = .round; n.lineJoinStyle = .round
-NSColor(calibratedRed: 0.63, green: 0.43, blue: 0.98, alpha: 1).setStroke(); n.stroke()
-NSColor(calibratedRed: 0.82, green: 0.73, blue: 1, alpha: 1).setFill()
-for p in points { NSBezierPath(ovalIn: NSRect(x: p.x - 42, y: p.y - 42, width: 84, height: 84)).fill() }
-NSGraphicsContext.restoreGraphicsState()
-let bitmap = canvas
-try bitmap.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: output))
+let context = CGContext(data: nil, width: 1024, height: 1024, bitsPerComponent: 8,
+                        bytesPerRow: 1024 * 4, space: CGColorSpaceCreateDeviceRGB(),
+                        bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
+func color(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> CGColor {
+    CGColor(red: red, green: green, blue: blue, alpha: 1)
+}
+let background = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
+    colors: [color(0.99, 0.98, 1), color(0.91, 0.88, 0.98)] as CFArray, locations: [0, 1])!
+context.drawLinearGradient(background, start: CGPoint(x: 150, y: 1024), end: CGPoint(x: 850, y: 0), options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
+context.setStrokeColor(color(0.54, 0.36, 0.96)); context.setLineWidth(25)
+context.addPath(CGPath(roundedRect: CGRect(x: 160, y: 248, width: 704, height: 540), cornerWidth: 64, cornerHeight: 64, transform: nil))
+context.strokePath()
+context.setLineCap(.round)
+context.move(to: CGPoint(x: 512, y: 248)); context.addLine(to: CGPoint(x: 512, y: 184))
+context.move(to: CGPoint(x: 376, y: 177)); context.addLine(to: CGPoint(x: 648, y: 177)); context.strokePath()
+// Original connected-N geometry: M18 48V16L46 48V16, with four circular nodes.
+let points = [CGPoint(x: 372, y: 378), CGPoint(x: 372, y: 698), CGPoint(x: 652, y: 378), CGPoint(x: 652, y: 698)]
+let mark = CGMutablePath(); mark.move(to: points[0]); points.dropFirst().forEach { mark.addLine(to: $0) }
+context.saveGState()
+context.addPath(mark.copy(strokingWithWidth: 65, lineCap: .round, lineJoin: .round, miterLimit: 10))
+context.clip()
+let violet = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
+    colors: [color(0.77, 0.71, 0.99), color(0.54, 0.36, 0.96), color(0.30, 0.11, 0.58)] as CFArray,
+    locations: [0, 0.45, 1])!
+context.drawLinearGradient(violet, start: points[1], end: points[2], options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
+context.restoreGState()
+let nodeColors = [color(0.54, 0.36, 0.96), color(0.77, 0.71, 0.99), color(0.49, 0.23, 0.93), color(0.30, 0.11, 0.58)]
+for (point, fill) in zip(points, nodeColors) {
+    context.setFillColor(fill); context.fillEllipse(in: CGRect(x: point.x - 65, y: point.y - 65, width: 130, height: 130))
+}
+let image = context.makeImage()!
+let destination = CGImageDestinationCreateWithURL(URL(fileURLWithPath: output) as CFURL, UTType.png.identifier as CFString, 1, nil)!
+CGImageDestinationAddImage(destination, image, nil)
+precondition(CGImageDestinationFinalize(destination), "Could not save icon")
