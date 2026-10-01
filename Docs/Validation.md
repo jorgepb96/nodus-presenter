@@ -2,13 +2,23 @@
 
 ## Versión 0.2.0
 
+### Correcciones de la build 7
+
+- Dos XCUITests aprobados en iPhone 16 Pro Max iOS 26.3: lectura privada persistente después de las cuatro herramientas y pantalla negra, navegación por flechas/cuadrícula sin cambiar la audiencia, salida explícita mediante el libro y vídeo/volumen visibles únicamente en diapositivas con vídeo fuera de lectura privada.
+- Verificación conectada contra Nodus real: móvil leyendo las páginas 2 y 3 mientras el estado canónico del Mac permanecía en la 1; luna/sol enviados y confirmados; color verde `#22c55e` recibido por el Mac al cambiarlo en la paleta móvil. El controlador de overlays tiene una prueba de color/halo inmediatos sin requerir movimiento. La vista del presentador también refleja la pantalla negra; la audiencia oculta su barra al oscurecerse.
+- La lectura privada permanece activa hasta tocar de nuevo el libro. Los controles globales de herramientas y pantalla negra ya no la cancelan de forma implícita. El libro seleccionado muestra fondo y estado accesible.
+- El simulador usa un argumento disponible únicamente en DEBUG para llegar al endpoint del Mac cuando Bonjour no descubre el servicio del host; conserva la clave real del QR, TLS y el mismo protocolo. Se comprobó que el archivo Release firmado no contiene este argumento. Esta prueba no verifica AWDL entre dispositivos físicos.
+- Archivo firmado `0.2.0 (7)` y upload completados. El CI final del PR 1028 corresponde a `95792b7d`; build/lint y las tres plataformas cross-repo aprobados, particiones unit en curso.
+
+### Validaciones anteriores
+
 - Archivo iOS firmado de la build 6 y carga a App Store Connect completados el 1 de octubre de 2026. App Store Connect la muestra En pruebas en el grupo interno existente y asociada al borrador 0.2.0. Las builds 4 y 5 anteriores siguen disponibles.
 - XCUITest del vídeo de la build 6 aprobado: play/pausa en la franja de navegación, volumen 0–100, controles ocultos sin vídeo y en lectura privada tanto en la franja como en Ajustes, sliders compartidos y herramientas de dibujo/lupa conservadas entre las flechas. La demo simula el vídeo y no modifica el audio del Mac. Capturas: [controles](../Screenshots/iphone16promax-video-controls.png), [volumen](../Screenshots/iphone16promax-video-volume.png).
 - Once pruebas de Core y compilación Mac Catalyst aprobadas. El cambio final de nombre no modifica el protocolo ni los controles.
 - Capturas nativas de la build 5 en inglés: siete de iPhone 16 Pro Max y siete de iPad Pro de 13 pulgadas, ambas con runtime 26.3. La exportación normaliza la orientación de la imagen de pantalla completa para evitar el encuadre incorrecto de `app.screenshot()` en iPad horizontal. Ambas ejecuciones de capturas aprobaron.
 - Integración principal actualizada con `main`: helpers nativo y de audio incluidos juntos; prueba TLS real con PSK, PDF/SHA-256 y previsualización aprobada. El build completo de Nodus aprobó. El CI del PR 1028 en `5115ccde` está completamente en verde, incluidas las tres particiones de unit tests y el gate final.
-- Verificación adicional de vídeo en Nodus para macOS: reproducción efectiva y pausa desde la ventana del presentador, con el vídeo de prueba detenido a los 46 segundos. Se corrigieron dos defectos previos del reproductor: el listener de mapas reemplazaba el de YouTube (error 153), y faltaba iniciar el canal de control del iframe antes de enviar órdenes. Los dos fixes están en el PR 1028; aprobaron el build completo, ESLint de los archivos modificados y 28 pruebas de vídeo/cabeceras. El nuevo CI de `b1246b54` sigue en ejecución.
-- Instancia Electron de pruebas con perfil propio, sin backup, presentación sintética de ocho páginas, notas y vídeo en la cuarta. El QR de App iPhone–iPad queda disponible para probar el dispositivo físico. La build 6 sigue abierta en el simulador iPhone 16 Pro Max con iOS 26.3.
+- Verificación adicional de vídeo en Nodus para macOS: reproducción efectiva y pausa desde la ventana del presentador, con el vídeo de prueba detenido a los 46 segundos. Se corrigieron dos defectos previos del reproductor: el listener de mapas reemplazaba el de YouTube (error 153), y faltaba iniciar el canal de control del iframe antes de enviar órdenes. Los dos fixes están en el PR 1028; aprobaron el build completo, ESLint de los archivos modificados y 28 pruebas de vídeo/cabeceras. Ese run fue sustituido por el CI de las correcciones de la build 7.
+- Instancia Electron de pruebas con perfil propio, sin backup, presentación sintética de ocho páginas, notas y vídeo en la cuarta. El QR de App iPhone–iPad queda disponible para probar el dispositivo físico. La build 7 sigue abierta en el simulador iPhone 16 Pro Max con iOS 26.3.
 
 ## Historial de la implementación inicial
 
