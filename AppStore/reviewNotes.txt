@@ -15,3 +15,6 @@ On Mac the existing direct connection uses Wi-Fi/Bonjour and can operate without
 Video playback takes place on the desktop audience display. On Mac the volume control adjusts system output; on Windows and Linux it adjusts the presentation video volume.
 
 The app supports English, Spanish, French, German, Italian, Portuguese, Japanese, Simplified Chinese and Traditional Chinese; unsupported device languages fall back to English.
+
+PRIVACY
+The privacy policy is available from the welcome screen and Settings > About: https://nodusresearch.com/presenter/privacy/. The developer does not collect personal data from the mobile app.

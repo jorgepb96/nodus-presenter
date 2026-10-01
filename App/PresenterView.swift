@@ -472,6 +472,9 @@ struct ToolsSheet: View {
                         if session.isDemo { Text(L10n.text("The demo simulates the video state.")).font(.caption).foregroundStyle(.secondary) }
                     }.disabled(!session.canControl)
                 }
+                Section(L10n.text("About")) {
+                    PresenterPrivacyLink()
+                }
             }.onAppear { layoutDraft = PresenterLayout.clamp(preferences.slideShare, to: layoutRange) }
                 .onChange(of: layoutRange) { _, range in layoutDraft = PresenterLayout.clamp(layoutDraft, to: range) }
                 .onDisappear { preferences.slideShare = PresenterLayout.clamp(layoutDraft, to: layoutRange) }.navigationTitle(L10n.text("Settings")).toolbar(.visible, for: .navigationBar).toolbar { ToolbarItem(placement: .confirmationAction) { Button(L10n.text("Done")) { dismiss() }.accessibilityIdentifier("dismissTools") } }

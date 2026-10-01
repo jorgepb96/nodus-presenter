@@ -1324,6 +1324,26 @@
       "Verbinde dich über das lokale Netzwerk mit Nodus auf deinem Computer, um die Präsentation zu steuern.",
       "Connettiti a Nodus sul tuo computer per controllare la presentazione tramite la rete locale.",
       "Liga ao Nodus no teu computador para controlar a apresentação através da rede local."
+    ],
+    "Privacy policy": [
+      "Política de privacidad",
+      "Politique de confidentialité",
+      "隐私政策",
+      "隱私權政策",
+      "プライバシーポリシー",
+      "Datenschutzerklärung",
+      "Informativa sulla privacy",
+      "Política de privacidade"
+    ],
+    "About": [
+      "Información",
+      "À propos",
+      "关于",
+      "關於",
+      "このアプリについて",
+      "Über die App",
+      "Informazioni",
+      "Sobre"
     ]
   }
 }

@@ -75,6 +75,7 @@ struct RootView: View {
                             Button { session.enterDemo() } label: { Label(L10n.text("Try demo"), systemImage: "play.circle.fill") }
                                 .buttonStyle(.bordered).accessibilityIdentifier("demo")
                             Button(L10n.text("Paste session link")) { manual = true }.font(.footnote)
+                            PresenterPrivacyLink().font(.footnote)
                         }.frame(maxWidth: 520).padding(24).frame(maxWidth: .infinity)
                     }
                 }
@@ -93,5 +94,14 @@ struct RootView: View {
                 Button(L10n.text("OK")) { session.errorMessage = nil }
             } message: { Text(session.errorMessage ?? "") }
         }
+    }
+}
+
+struct PresenterPrivacyLink: View {
+    private let policyURL = URL(string: "https://nodusresearch.com/presenter/privacy/")!
+    var body: some View {
+        Link(destination: policyURL) {
+            Label(L10n.text("Privacy policy"), systemImage: "hand.raised")
+        }.accessibilityIdentifier("privacyPolicy")
     }
 }
