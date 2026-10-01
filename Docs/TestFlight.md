@@ -1,8 +1,8 @@
 # Beta interna 0.2.0
 
-La versión actual es **0.2.0 (6)**, con el nombre **Nodus Presenter**. Se archivó, firmó y subió correctamente el 1 de octubre de 2026, y App Store Connect la muestra **En pruebas** en el grupo existente **Jorge — beta interna**. Incluye todos los cambios de diseño, idiomas y controles de vídeo/volumen. La build 6 oculta también los controles de audio/vídeo de Ajustes cuando no hay vídeo o se lee en privado. Las builds 4 y 5 anteriores siguen disponibles. No se han creado grupos externos ni enlaces públicos.
+La versión actual es **0.2.0 (7)**, con el nombre **Nodus Presenter**. Se archivó, firmó y subió correctamente el 1 de octubre de 2026, y App Store Connect la muestra **En pruebas** en el grupo existente **Jorge — beta interna**. La build 7 aplica inmediatamente al puntero y su halo el color seleccionado en el móvil, mantiene la lectura privada al usar herramientas o luna/sol y refleja la pantalla negra también en la vista del presentador. El libro resaltado permanece activo hasta que el usuario lo vuelve a pulsar; la navegación privada no cambia la diapositiva del público. Conserva los controles de audio/vídeo ocultos sin vídeo y durante la lectura privada, también en Ajustes. Las builds 4, 5 y 6 anteriores siguen disponibles. No se han creado grupos externos ni enlaces públicos.
 
-Las capturas y descripciones de la versión están en [AppStore](../AppStore/README.md). Las catorce capturas son nativas y en inglés. El registro del App Store permanece en preparación con la build 6 asociada; una beta en TestFlight no equivale a publicar la app públicamente.
+Las capturas y descripciones de la versión están en [AppStore](../AppStore/README.md). Las catorce capturas son nativas y en inglés. El registro del App Store permanece en preparación con la build 7 asociada; una beta en TestFlight no equivale a publicar la app públicamente.
 
 Bundle ID `com.nodusresearch.presenter`, equipo `6RPLS9EA4X`. `ExportOptions.plist` ya no limita el archivo a TestFlight interno, por lo que el mismo binario puede servir para una revisión futura de App Store. Su distribución actual sigue restringida al grupo interno existente.
 

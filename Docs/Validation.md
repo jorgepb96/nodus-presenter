@@ -8,7 +8,7 @@
 - Verificación conectada contra Nodus real: móvil leyendo las páginas 2 y 3 mientras el estado canónico del Mac permanecía en la 1; luna/sol enviados y confirmados; color verde `#22c55e` recibido por el Mac al cambiarlo en la paleta móvil. El controlador de overlays tiene una prueba de color/halo inmediatos sin requerir movimiento. La vista del presentador también refleja la pantalla negra; la audiencia oculta su barra al oscurecerse.
 - La lectura privada permanece activa hasta tocar de nuevo el libro. Los controles globales de herramientas y pantalla negra ya no la cancelan de forma implícita. El libro seleccionado muestra fondo y estado accesible.
 - El simulador usa un argumento disponible únicamente en DEBUG para llegar al endpoint del Mac cuando Bonjour no descubre el servicio del host; conserva la clave real del QR, TLS y el mismo protocolo. Se comprobó que el archivo Release firmado no contiene este argumento. Esta prueba no verifica AWDL entre dispositivos físicos.
-- Archivo firmado `0.2.0 (7)` y upload completados. El CI final del PR 1028 corresponde a `95792b7d`; build/lint y las tres plataformas cross-repo aprobados, particiones unit en curso.
+- Archivo firmado `0.2.0 (7)` y upload completados. Apple la muestra **En pruebas** en el grupo interno existente **Jorge — beta interna**, con instrucciones de pruebas guardadas y la build 7 asociada al borrador 0.2.0. El CI final del PR 1028 corresponde a `95792b7d`; build/lint, las tres plataformas cross-repo y las particiones unit 2 y 3 aprobados; partición unit 1 en curso.
 
 ### Validaciones anteriores
 
