@@ -1,6 +1,6 @@
 # App Store assets — 0.2.0
 
-Store name: **Nodus Presenter**. Nodus Research is the companion Mac application.
+Store name: **Nodus Presenter**. Nodus Research is the companion desktop application. Build 9 also pairs with its Windows/Linux Presenter integration on the same local network; the Mac connection retains its existing implementation.
 
 `Metadata` contains descriptions, subtitles, promotional text, keywords and release notes for en-US, es-ES, fr-FR, de-DE, it, pt-PT, ja, zh-Hans and zh-Hant. Fields were checked against App Store Connect character limits. The initial App Store submission has no “What's New” field; these files are retained for subsequent releases.
 
@@ -17,6 +17,6 @@ Captures are reproducible with `StoreScreenshotTests/testEnglishStoreScreenshots
 
 The video on demo slide 4 and the volume changes are simulated. Real playback and volume changes occur on the paired Mac, and the controls are hidden for slides without a video and while reading privately.
 
-App Store Connect status, 1 October 2026: all nine descriptions and subtitles are saved under **Nodus Presenter**, and build **0.2.0 (8)** is associated with the draft and the existing internal TestFlight group. Seven iPhone and seven iPad images have finished uploading. One additional, obsolete iPhone screenshot reservation remains stuck processing; its replacement has uploaded successfully, but Apple's UI currently exposes no removal control for the unfinished reservation. The public listing has not been submitted for review.
+App Store Connect status, 1 October 2026: all nine descriptions and subtitles are saved under **Nodus Presenter**, and build **0.2.0 (8)** remains associated with the public draft. Build **0.2.0 (9)** is available in the existing internal TestFlight group with Windows/Linux testing instructions. The public draft's Mac-focused descriptions will need updating alongside release of the desktop integration. Seven iPhone and seven iPad images have finished uploading. One additional, obsolete iPhone screenshot reservation remains stuck processing; its replacement has uploaded successfully, but Apple's UI currently exposes no removal control for the unfinished reservation. The public listing has not been submitted for review.
 
 Apple reference: [Screenshot specifications](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/).
