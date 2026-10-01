@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 enum PresenterTheme: String, CaseIterable, Identifiable {
     case original, academic, primarySources, testimonios, databases, docencia, estudio, genealogy, prosopography, worldbuilding
@@ -31,20 +32,39 @@ enum PresenterTheme: String, CaseIterable, Identifiable {
         case .docencia: return "#ea580c"
         }
     }
-    var color: Color { Color(hex: hex) }
+    var color: Color {
+        let value = UInt64(hex.dropFirst(), radix: 16) ?? 0x8b5cf6
+        let components = [Double((value >> 16) & 255), Double((value >> 8) & 255), Double(value & 255)].map { $0 / 255 }
+        return Color(uiColor: UIColor { traits in
+            // Keep the vault hue; lift dark accents so controls remain readable on dark surfaces.
+            let lift = traits.userInterfaceStyle == .dark ? 0.32 : 0.0
+            return UIColor(red: components[0] + (1 - components[0]) * lift,
+                           green: components[1] + (1 - components[1]) * lift,
+                           blue: components[2] + (1 - components[2]) * lift, alpha: 1)
+        })
+    }
+}
+
+enum PresenterAppearance: String, CaseIterable, Identifiable {
+    case system, light, dark
+    var id: String { rawValue }
+    var title: String { self == .system ? "Sistema" : self == .light ? "Claro" : "Oscuro" }
+    var colorScheme: ColorScheme? { self == .system ? nil : self == .light ? .light : .dark }
 }
 
 @MainActor final class PresenterPreferences: ObservableObject {
     private let defaults: UserDefaults
     @Published var theme: PresenterTheme { didSet { defaults.set(theme.rawValue, forKey: "presenter.theme") } }
+    @Published var appearance: PresenterAppearance { didSet { defaults.set(appearance.rawValue, forKey: "presenter.appearance") } }
     @Published var slideShare: Double { didSet { defaults.set(slideShare, forKey: "presenter.slideShare") } }
     @Published var showNextSlide: Bool { didSet { defaults.set(showNextSlide, forKey: "presenter.showNextSlide") } }
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         if CommandLine.arguments.contains("--reset-preferences") {
-            ["presenter.theme", "presenter.slideShare", "presenter.showNextSlide"].forEach { defaults.removeObject(forKey: $0) }
+            ["presenter.theme", "presenter.appearance", "presenter.slideShare", "presenter.showNextSlide"].forEach { defaults.removeObject(forKey: $0) }
         }
         theme = PresenterTheme(rawValue: defaults.string(forKey: "presenter.theme") ?? "") ?? .original
+        appearance = PresenterAppearance(rawValue: defaults.string(forKey: "presenter.appearance") ?? "") ?? .system
         let saved = defaults.object(forKey: "presenter.slideShare") as? Double ?? 0.42
         slideShare = saved.isFinite ? min(0.72, max(0.24, saved)) : 0.42
         showNextSlide = defaults.object(forKey: "presenter.showNextSlide") as? Bool ?? false

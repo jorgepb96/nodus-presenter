@@ -4,6 +4,7 @@ import PresenterCore
 struct PresenterView: View {
     @EnvironmentObject var session: PresenterSession
     @EnvironmentObject var preferences: PresenterPreferences
+    @Environment(\.colorScheme) private var colorScheme
     @State private var showConnection = false
     @State private var dividerStart: Double?
     var body: some View {
@@ -37,14 +38,14 @@ struct PresenterView: View {
     private var header: some View {
         HStack(spacing: 8) {
             Button { showConnection = true } label: {
-                Image("AppIconPreview").resizable().scaledToFit().frame(width: 36, height: 36)
-                    .clipShape(RoundedRectangle(cornerRadius: 9))
+                NodusLogo().frame(width: 36, height: 36).accessibilityHidden(true)
                     .overlay(alignment: .bottomTrailing) {
                         Circle().fill(session.connected ? Color.green : Color.red).frame(width: 9, height: 9)
                             .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2)).offset(x: 2, y: 2)
                     }
             }.accessibilityLabel("Nodus Presenter. \(session.status)").accessibilityIdentifier("connectionStatus")
-            Text(session.deckName).foregroundStyle(.primary).font(.subheadline.weight(.semibold)).lineLimit(1)
+                .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? "Oscuro" : "Claro")")
+            Text(session.deckName).foregroundStyle(Color.primary).font(.subheadline.weight(.semibold)).lineLimit(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             timerControl
             Button { session.showSlides = true } label: { Image(systemName: "square.grid.2x2").frame(width: 40, height: 44).contentShape(Rectangle()) }
@@ -56,7 +57,7 @@ struct PresenterView: View {
     private var timerControl: some View {
         HStack(spacing: 5) {
             Image(systemName: session.state.timerRunning ? "pause.fill" : "play.fill").font(.system(size: 9))
-            Text(session.timerText).font(.system(size: 14, weight: .semibold, design: .monospaced)).foregroundStyle(.primary)
+            Text(session.timerText).font(.system(size: 14, weight: .semibold, design: .monospaced)).foregroundStyle(Color.primary)
         }.frame(minWidth: 68, minHeight: 44).contentShape(Rectangle())
             .gesture(LongPressGesture(minimumDuration: 0.6).exclusively(before: TapGesture()).onEnded { result in
                 guard session.canControl else { return }
@@ -134,7 +135,7 @@ struct PresenterView: View {
             VStack(spacing: 4) {
                 HStack {
                     Text("\(session.displayedSlide) / \(session.state.totalSlides)").font(.caption.monospacedDigit().weight(.semibold))
-                        .accessibilityIdentifier("slideCounter").foregroundStyle(.secondary)
+                        .accessibilityIdentifier("slideCounter").foregroundStyle(Color.secondary)
                     Spacer()
                     Button { session.togglePreview() } label: {
                         Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 32).contentShape(Rectangle())
@@ -181,7 +182,7 @@ struct PresenterView: View {
         HStack(spacing: 2) {
             Button { session.adjustSlideZoom(by: -0.25) } label: { Image(systemName: "minus.magnifyingglass").frame(width: 38, height: 44).contentShape(Rectangle()) }
                 .accessibilityLabel("Reducir zoom").accessibilityIdentifier("zoomOut").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale <= 1)
-            Text("\(Int(session.state.slideZoom.scale * 100)) %").font(.system(size: 11, design: .monospaced)).foregroundStyle(.primary)
+            Text("\(Int(session.state.slideZoom.scale * 100)) %").font(.system(size: 11, design: .monospaced)).foregroundStyle(Color.primary)
                 .accessibilityIdentifier("slideZoomValue").accessibilityLabel("Zoom \(Int(session.state.slideZoom.scale * 100)) por ciento")
             Button { session.adjustSlideZoom(by: 0.25) } label: { Image(systemName: "plus.magnifyingglass").frame(width: 38, height: 44).contentShape(Rectangle()) }
                 .accessibilityLabel("Ampliar zoom").accessibilityIdentifier("zoomIn").disabled(!session.canControl || session.localPreview || session.state.slideZoom.scale >= 5)
@@ -377,6 +378,9 @@ struct ToolsSheet: View {
                     }.padding(.vertical, 6)
                 }
                 Section("Tema") {
+                    Picker("Apariencia", selection: $preferences.appearance) {
+                        ForEach(PresenterAppearance.allCases) { appearance in Text(appearance.title).tag(appearance) }
+                    }.pickerStyle(.segmented).accessibilityIdentifier("appearancePicker")
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                         ForEach(PresenterTheme.allCases) { theme in
                             Button { preferences.theme = theme } label: {

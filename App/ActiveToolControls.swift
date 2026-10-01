@@ -31,8 +31,8 @@ struct ActiveToolControls: View {
             }
             if tool == .zoom {
                 HStack(spacing: 10) {
-                    VStack(spacing: 0) { Text("Radio").font(.caption2).foregroundStyle(.secondary); sizeSlider }
-                    VStack(spacing: 0) { Text(String(format: "%.1f×", factor)).font(.caption2.monospacedDigit()).foregroundStyle(.secondary); factorSlider }
+                    VStack(spacing: 0) { Text("Radio").font(.caption2).foregroundStyle(Color.secondary); sizeSlider }
+                    VStack(spacing: 0) { Text(String(format: "%.1f×", factor)).font(.caption2.monospacedDigit()).foregroundStyle(Color.secondary); factorSlider }
                 }
             } else { sizeSlider }
             if tool == .draw {

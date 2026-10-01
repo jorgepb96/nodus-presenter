@@ -1,6 +1,6 @@
 # Primera beta interna
 
-La build **3** incorpora el panel ajustable, los temas, el icono corregido y los nuevos controles. Está compilada para revisión local en el simulador iPhone 16 Pro Max (iOS 26.3) y en Mac Catalyst. **Todavía no se ha subido a TestFlight**; la beta interna disponible sigue siendo la build 2.
+La build **3** incorpora el panel ajustable, los temas, el logo vectorial adaptado al acento y la apariencia, los modos Sistema/Claro/Oscuro y los nuevos controles. Está compilada para revisión local en el simulador iPhone 16 Pro Max (iOS 26.3) y en Mac Catalyst. **Todavía no se ha subido a TestFlight**; la beta interna disponible sigue siendo la build 2.
 
 Bundle ID `com.nodusresearch.presenter`, versión `0.1.0`, build `2`, equipo `6RPLS9EA4X`. La primera beta es interna para el titular; no se crean grupos externos ni enlaces públicos. Registro [App Store Connect](https://appstoreconnect.apple.com/apps/6818107823/distribution). Los builds 1 y 2 se subieron correctamente a TestFlight interno. El build 2 separa el watchdog del canal de control del tráfico del PDF para que una descarga no pueda ocultar una pérdida de control.
 

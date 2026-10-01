@@ -1,5 +1,29 @@
 import XCTest
 final class DemoTests: XCTestCase {
+    func testAdaptiveBrandAppearance() {
+        let app = XCUIApplication(); app.launchArguments = ["--demo"]; app.launch()
+        XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))
+        app.buttons["tools"].tap()
+        let appearance = app.segmentedControls["appearancePicker"]
+        XCTAssertTrue(appearance.waitForExistence(timeout: 5))
+        appearance.buttons["Claro"].tap()
+        app.buttons["theme-docencia"].tap()
+        app.buttons["Listo"].tap()
+        XCTAssertEqual(app.buttons["connectionStatus"].value as? String, "Docencia, Claro")
+        XCTAssertTrue(app.staticTexts["presenterNotes"].isHittable)
+        let light = XCTAttachment(screenshot: app.screenshot()); light.name = "Adaptive logo light Docencia"; light.lifetime = .keepAlways; add(light)
+        app.buttons["tools"].tap()
+        app.segmentedControls["appearancePicker"].buttons["Oscuro"].tap()
+        app.buttons["theme-estudio"].tap()
+        app.buttons["Listo"].tap()
+        XCTAssertEqual(app.buttons["connectionStatus"].value as? String, "Estudio, Oscuro")
+        XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
+        let dark = XCTAttachment(screenshot: app.screenshot()); dark.name = "Adaptive logo dark Estudio"; dark.lifetime = .keepAlways; add(dark)
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.buttons["connectionStatus"].waitForExistence(timeout: 10))
+        XCTAssertEqual(app.buttons["connectionStatus"].value as? String, "Estudio, Oscuro")
+    }
+
     func testDemoNavigationAndPrivatePreview() {
         let app = XCUIApplication(); app.launchArguments = ["--demo", "--reset-preferences"]; app.launch()
         XCTAssertTrue(app.staticTexts["slideCounter"].waitForExistence(timeout: 10))
