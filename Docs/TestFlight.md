@@ -1,6 +1,6 @@
 # Beta interna 0.2.0
 
-La build **0.2.0 (10)** se firmó, archivó y subió correctamente el 2 de octubre de 2026. Añade el enlace a la [política de privacidad de Presenter](https://nodusresearch.com/presenter/privacy/) en bienvenida y Ajustes → Información, con etiquetas traducidas a los nueve idiomas. Conserva la implementación de conexión y controles de la build 9. Se verificó en un iPhone 16 Pro Max con iOS 26.3 y pasaron las 12 pruebas del núcleo. Apple está procesándola; todavía no se ha asignado al grupo interno ni seleccionado para revisión pública.
+La build **0.2.0 (10)** se firmó, archivó y subió correctamente el 2 de octubre de 2026. Añade el enlace a la [política de privacidad de Presenter](https://nodusresearch.com/presenter/privacy/) en bienvenida y Ajustes → Información, con etiquetas traducidas a los nueve idiomas. Conserva la implementación de conexión y controles de la build 9. Se verificó en un iPhone 16 Pro Max con iOS 26.3 y pasaron las 12 pruebas del núcleo. App Store Connect la muestra **En pruebas** en el grupo existente **Jorge — beta interna**, y la versión **0.2.0 (10)** se envió a revisión pública el 2 de octubre de 2026 a las 00:39 (Europe/Madrid). El estado es **Pendiente de revisión**, con publicación gratuita y automática después de la aprobación de Apple. No se han creado grupos externos ni enlaces públicos de TestFlight.
 
 La beta interna anterior es **0.2.0 (9)**, con el nombre **Nodus Presenter**. Se archivó, firmó y subió correctamente el 1 de octubre de 2026, y App Store Connect la muestra **En pruebas** en el grupo existente **Jorge — beta interna**, con las instrucciones de prueba guardadas. [Comprobante](../Screenshots/Connectivity/testflight-build9.png).
 
@@ -8,7 +8,7 @@ La build 9 añade emparejamiento nativo con Windows y Linux mediante QR y TLS 1.
 
 Conserva el logo original de la build 8 entre el icono del sistema y la interfaz, sus variantes claro/oscuro, los temas y todas las correcciones de la build 7: color inmediato del puntero, lectura privada persistente, pantalla negra y controles de vídeo/volumen ocultos sin vídeo y durante lectura privada. Las builds anteriores siguen disponibles. No se han creado grupos externos ni enlaces públicos.
 
-Las capturas y descripciones de la versión están en [AppStore](../AppStore/README.md). Las catorce capturas son nativas y en inglés. El registro del App Store permanece en preparación con la build 9 asociada mientras Apple procesa la build 10; una beta en TestFlight no equivale a publicar la app públicamente.
+Las capturas y descripciones de la versión están en [AppStore](../AppStore/README.md). Las catorce capturas son nativas y en inglés. La build 10 está asociada al envío de App Store, pendiente de revisión; una beta en TestFlight no equivale a publicar la app públicamente.
 
 Bundle ID `com.nodusresearch.presenter`, equipo `6RPLS9EA4X`. `ExportOptions.plist` ya no limita el archivo a TestFlight interno, por lo que el mismo binario puede servir para una revisión futura de App Store. Su distribución actual sigue restringida al grupo interno existente.
 
