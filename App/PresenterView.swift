@@ -145,16 +145,16 @@ struct PresenterView: View {
             let ratio = image.map { $0.size.width / max(1, $0.size.height) } ?? 16 / 9
             let hasNext = preferences.showNextSlide && session.displayedSlide < session.state.totalSlides
             let canvasHeight = min(geometry.size.width / ratio, max(1, geometry.size.height - CGFloat(PresenterLayout.chromeHeight(hasNext: hasNext))))
-            VStack(spacing: 4) {
+            VStack(spacing: CGFloat(PresenterLayout.paneSpacing)) {
                 HStack {
                     Text("\(session.displayedSlide) / \(session.state.totalSlides)").font(.caption.monospacedDigit().weight(.semibold))
                         .accessibilityIdentifier("slideCounter").foregroundStyle(Color.secondary)
                     Spacer()
                     Button { session.togglePreview() } label: {
-                        Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 32).contentShape(Rectangle())
+                        Image(systemName: session.localPreview ? "arrow.uturn.backward" : "book").frame(width: 44, height: 44).contentShape(Rectangle())
                     }.accessibilityLabel(session.localPreview ? L10n.text("Return to the slide on screen") : L10n.text("Read without changing the screen"))
                         .accessibilityIdentifier("preview")
-                }.buttonStyle(.plain).foregroundStyle(preferences.theme.color)
+                }.frame(height: CGFloat(PresenterLayout.headerHeight)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
                 Spacer(minLength: 0)
                 SlideCanvas(page: session.displayedSlide, interactive: true).frame(maxWidth: .infinity).frame(height: canvasHeight)
                 HStack(spacing: 8) {
@@ -170,11 +170,9 @@ struct PresenterView: View {
                     }.accessibilityLabel(L10n.text("Next")).accessibilityIdentifier("next")
                         .disabled(session.displayedSlide >= session.state.totalSlides || (!session.canControl && !session.localPreview))
                 }.font(.system(size: 18)).buttonStyle(.plain).foregroundStyle(preferences.theme.color)
-                    .frame(maxWidth: .infinity).frame(height: 50)
+                    .frame(maxWidth: .infinity).frame(height: CGFloat(PresenterLayout.navigationHeight))
                 if hasNext {
-                    Button {
-                        session.localSlide = session.displayedSlide + 1; session.localPreview = true; session.requestImage(session.localSlide)
-                    } label: {
+                    Button { session.previewNextSlide() } label: {
                         HStack(spacing: 12) {
                             SlideCanvas(page: session.displayedSlide + 1, interactive: false, renderWidth: 240)
                                 .frame(width: 90, height: 50).allowsHitTesting(false).accessibilityHidden(true)
@@ -182,8 +180,13 @@ struct PresenterView: View {
                                 Text(L10n.text("Next")).font(.caption).foregroundStyle(.secondary)
                                 Text("\(session.displayedSlide + 1) / \(session.state.totalSlides)").font(.caption.monospacedDigit())
                             }
-                            Spacer(); Image(systemName: "eye")
-                        }.frame(height: 54).padding(.horizontal, 4).contentShape(Rectangle())
+                            Spacer(minLength: 0)
+                            Image(systemName: "eye").font(.system(size: 20)).foregroundStyle(preferences.theme.color)
+                                .frame(width: 44, height: 44)
+                                .background(preferences.theme.color.opacity(0.08), in: RoundedRectangle(cornerRadius: 14))
+                                .contentShape(Rectangle()).accessibilityHidden(true)
+                        }.frame(maxWidth: .infinity).frame(height: CGFloat(PresenterLayout.nextPreviewHeight))
+                            .padding(.horizontal, 4).contentShape(Rectangle())
                     }.buttonStyle(.plain).accessibilityLabel(L10n.text("Read the next slide privately"))
                         .accessibilityIdentifier("nextSlidePreview")
                 }
@@ -343,7 +346,9 @@ struct SlideCanvas: View {
                     }
                     pinchStart = nil; suppressDragUntil = Date().addingTimeInterval(0.2)
                 }, including: interactive ? .all : .none)
-        }.aspectRatio(ratio, contentMode: .fit).clipShape(RoundedRectangle(cornerRadius: 14)).shadow(color: .black.opacity(0.12), radius: 12, y: 5)
+        }.aspectRatio(ratio, contentMode: .fit).clipShape(RoundedRectangle(cornerRadius: 14))
+            .contentShape(Rectangle()).allowsHitTesting(interactive)
+            .shadow(color: .black.opacity(0.12), radius: 12, y: 5)
             .onAppear { session.requestImage(page) }.onChange(of: page) { _, value in session.requestImage(value) }
             .accessibilityLabel(L10n.text("Slide %d", page))
     }

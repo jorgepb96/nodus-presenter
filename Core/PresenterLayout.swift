@@ -2,7 +2,15 @@
 public enum PresenterLayout {
     public static let defaultRange = 0.24...0.72
 
-    public static func chromeHeight(hasNext: Bool) -> Double { hasNext ? 152 : 94 }
+    public static let headerHeight = 44.0
+    public static let navigationHeight = 50.0
+    public static let nextPreviewHeight = 54.0
+    public static let paneSpacing = 4.0
+
+    public static func chromeHeight(hasNext: Bool) -> Double {
+        // Header, canvas, navigation and two flexible spacers, plus the optional preview row.
+        headerHeight + navigationHeight + 4 * paneSpacing + (hasNext ? nextPreviewHeight + paneSpacing : 0)
+    }
 
     public static func shareRange(width: Double, height: Double, aspectRatio: Double, hasNext: Bool) -> ClosedRange<Double> {
         guard width.isFinite, height.isFinite, aspectRatio.isFinite,

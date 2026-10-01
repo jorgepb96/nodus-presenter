@@ -360,7 +360,14 @@ struct InkStroke: Identifiable {
         if !isDemo { control?.send(["kind": .string("volume"), "value": .number(value)]) }
     }
     func togglePreview() {
+        endActiveGesture()
         localSlide = state.currentSlide; localPreview.toggle(); requestImage(displayedSlide)
+    }
+    func previewNextSlide() {
+        let next = displayedSlide + 1
+        guard next <= state.totalSlides else { return }
+        endActiveGesture()
+        localSlide = next; localPreview = true; requestImage(next)
     }
     func gesture(at point: CGPoint, ended: Bool = false) {
         guard !localPreview, let tool = selectedTool, canControl else { return }

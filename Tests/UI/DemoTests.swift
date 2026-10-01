@@ -1,5 +1,44 @@
 import XCTest
 final class DemoTests: XCTestCase {
+    func testNextSlideEyeRespondsAcrossItsTouchArea() {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments = ["--demo", "--reset-preferences", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]
+        app.launch()
+        XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))
+        app.buttons["tools"].tap()
+        app.switches["showNextSlide"].coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
+        app.buttons["dismissTools"].tap()
+
+        func checkEyeTouchArea() {
+            let preview = app.buttons["nextSlidePreview"]
+            XCTAssertTrue(preview.isHittable)
+            XCTAssertGreaterThanOrEqual(preview.frame.height, 44)
+            for point in [CGVector(dx: -22, dy: 0), CGVector(dx: -40, dy: -18), CGVector(dx: -4, dy: 18)] {
+                let bounds = preview.frame
+                preview.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: bounds.width + point.dx, dy: bounds.height / 2 + point.dy)).tap()
+                XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8", "The first tap anywhere in the eye target must work.")
+                XCTAssertEqual(app.buttons["preview"].label, "Volver a la diapositiva en pantalla")
+                app.buttons["preview"].tap()
+                XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8", "Private reading must not advance the audience slide.")
+            }
+        }
+
+        for split in [0.0, 0.5, 1.0] {
+            app.buttons["tools"].tap()
+            app.sliders["layoutSlider"].adjust(toNormalizedSliderPosition: split)
+            app.buttons["dismissTools"].tap()
+            checkEyeTouchArea()
+        }
+        for tool in ["draw", "zoom"] {
+            app.buttons["tool-\(tool)"].tap()
+            checkEyeTouchArea()
+            app.buttons["tool-\(tool)"].tap()
+        }
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Next slide eye with generous touch area"; screenshot.lifetime = .keepAlways; add(screenshot)
+    }
+
     func testToolsAndBlackScreenFromPrivateReading() {
         XCUIDevice.shared.orientation = .portrait
         let app = XCUIApplication()

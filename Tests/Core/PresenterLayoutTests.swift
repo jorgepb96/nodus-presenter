@@ -26,7 +26,7 @@ final class PresenterLayoutTests: XCTestCase {
     func testWideLayoutStopsAtFullHeightAndLeavesRoomForNotes() {
         let range = PresenterLayout.shareRange(width: 1200, height: 400, aspectRatio: 16 / 9, hasNext: false)
         let slideWidth = (1200 - 52) * range.upperBound
-        XCTAssertEqual(slideWidth / (16 / 9), 400 - 94, accuracy: 0.001)
+        XCTAssertEqual(slideWidth / (16 / 9), 400 - PresenterLayout.chromeHeight(hasNext: false), accuracy: 0.001)
         XCTAssertGreaterThanOrEqual((1200 - 52) - slideWidth, 220)
         let short = PresenterLayout.shareRange(width: 740, height: 180, aspectRatio: 16 / 9, hasNext: false)
         XCTAssertEqual(short.lowerBound, short.upperBound)
