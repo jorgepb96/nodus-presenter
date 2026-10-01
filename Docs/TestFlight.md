@@ -11,7 +11,7 @@ xcodebuild -exportArchive -archivePath .build/NodusPresenter.xcarchive \
   -exportOptionsPlist ExportOptions.plist -exportPath .build/export -allowProvisioningUpdates
 ```
 
-La sesión de Xcode debe pertenecer al equipo de firma. No se versionan claves p8, certificados p12 ni perfiles. `ExportOptions.plist` configura únicamente TestFlight interno. Una subida correcta todavía requiere esperar al procesamiento de Apple y asignar el build al grupo interno.
+La sesión de Xcode debe pertenecer al equipo de firma. No se versionan claves p8, certificados p12 ni perfiles. `ExportOptions.plist` configura únicamente TestFlight interno. El 1 de octubre de 2026 se comprobó el build `0.1.0 (2)` en estado **Testing**, asignado al grupo **Jorge — beta interna**, con un único tester interno en estado **Invited**. El build 1 queda sin asignar. [Comprobante](../Screenshots/testflight-internal.jpg). En futuras subidas hay que esperar al procesamiento de Apple y asignar el nuevo build al grupo interno.
 
 Texto de pruebas: prueba la demo local, navegación/lectura privada, notas y herramientas. Para una sesión real instala la integración nativa en Nodus para macOS, inicia Presenter y escanea el QR de App iPhone–iPad. Prueba la reconexión y verifica que el punto verde aparece solamente con una sesión activa.
 
