@@ -33,14 +33,17 @@ struct InkStroke: Identifiable {
     @Published var pdfDocument: PDFDocument?
     var isPairing: Bool { pairing != nil }
     private var foreground = true
-    private var discoveryTimeout: Task<Void, Never>?
+    private var connectionTimeout: Task<Void, Never>?
     private var pairing: Pairing?
-    private var browser: NWBrowser?
+    private var macEndpoint: NWEndpoint?
     private var control: FramedConnection?
     private var assets: FramedConnection?
     private var assetsReady = false
     private var generation = UUID()
     private var reconnectTask: Task<Void, Never>?
+    private var assetsReconnectTask: Task<Void, Never>?
+    private var assetsTimeout: Task<Void, Never>?
+    private var assetRetries = 0
     private var retries = 0
     private var lanCandidates: [FramedConnection] = []
     private var heartbeat: Timer?
@@ -57,6 +60,10 @@ struct InkStroke: Identifiable {
     private var downloadInFlight = false
     private var lastToolSent = Date.distantPast
     private var drawing = false
+    #if DEBUG && targetEnvironment(simulator)
+    // Hosted regression tests use the same TLS/hello/recovery flow over loopback.
+    var connectionEndpointForTesting: NWEndpoint?
+    #endif
 
     init() {
         let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
@@ -113,8 +120,9 @@ struct InkStroke: Identifiable {
         } catch { errorMessage = L10n.text("This QR code is not a Nodus Presenter app session. Choose App iPhone–iPad in Nodus.") }
     }
     func disconnect() {
-        generation = UUID(); reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
-        browser?.cancel(); browser = nil; control?.cancel(); assets?.cancel(); control = nil; assets = nil
+        generation = UUID(); reconnectTask?.cancel(); reconnectTask = nil; connectionTimeout?.cancel(); connectionTimeout = nil
+        cancelAssetRecovery(); macEndpoint = nil
+        control?.cancel(); assets?.cancel(); control = nil; assets = nil
         lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
         assetsReady = false; connected = false; isDemo = false; pairing = nil
         state = PresenterState(); deckName = ""; notes = [:]; videos = [:]; pdfDocument = nil
@@ -128,8 +136,9 @@ struct InkStroke: Identifiable {
         foreground = phase != .background
         if phase == .background, pairing != nil {
             generation = UUID(); connected = false; status = L10n.text("Not connected · App in background")
-            reconnectTask?.cancel(); reconnectTask = nil; discoveryTimeout?.cancel(); discoveryTimeout = nil
-            browser?.cancel(); browser = nil; control?.cancel(); control = nil; assets?.cancel(); assets = nil; assetsReady = false
+            reconnectTask?.cancel(); reconnectTask = nil; connectionTimeout?.cancel(); connectionTimeout = nil
+            cancelAssetRecovery(); macEndpoint = nil
+            control?.cancel(); control = nil; assets?.cancel(); assets = nil; assetsReady = false
             lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
             try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false
         }
@@ -149,46 +158,21 @@ struct InkStroke: Identifiable {
             beginLAN(pairing: pairing, lan: lan, token: token)
             return
         }
-        #if DEBUG
+        var endpoint = PresenterTLS.macEndpoint(service: pairing.service)
+        #if DEBUG && targetEnvironment(simulator)
         // Simulator Bonjour cannot always discover a service on its host Mac.
         // Connected verification still uses the QR's real TLS key and protocol.
         let args = ProcessInfo.processInfo.arguments
         if let index = args.firstIndex(of: "--simulator-endpoint"), args.count > index + 2,
            let port = UInt16(args[index + 2]), let nwPort = NWEndpoint.Port(rawValue: port) {
-            open(endpoint: .hostPort(host: NWEndpoint.Host(args[index + 1]), port: nwPort), pairing: pairing, token: token)
-            return
+            endpoint = .hostPort(host: NWEndpoint.Host(args[index + 1]), port: nwPort)
         }
+        if let override = connectionEndpointForTesting { endpoint = override }
         #endif
-        let parameters = NWParameters.tcp; parameters.includePeerToPeer = true
-        let browser = NWBrowser(for: .bonjour(type: Pairing.serviceType, domain: nil), using: parameters)
-        self.browser = browser
-        browser.stateUpdateHandler = { [weak self] value in
-            Task { @MainActor in
-            guard let self, self.generation == token else { return }
-            if case .failed = value {
-                self.errorMessage = L10n.text("Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled.")
-                self.scheduleReconnect()
-            }
-            }
-        }
-        browser.browseResultsChangedHandler = { [weak self] results, _ in
-            Task { @MainActor in
-            guard let self, self.generation == token else { return }
-            for result in results {
-                if case .service(let name, _, _, _) = result.endpoint, name == pairing.service {
-                    self.browser?.cancel(); self.browser = nil
-                    self.open(endpoint: result.endpoint, pairing: pairing, token: token); return
-                }
-            }
-            }
-        }
-        browser.start(queue: .main)
-        discoveryTimeout?.cancel()
-        discoveryTimeout = Task { [weak self] in
-            try? await Task.sleep(for: .seconds(12))
-            guard !Task.isCancelled, let self, self.generation == token, !self.connected else { return }
-            self.scheduleReconnect()
-        }
+        macEndpoint = endpoint
+        // Resolve the known service directly: no extra browse cycle and no
+        // interface-scoped result that can strand TLS on an unstable router.
+        open(endpoint: endpoint, pairing: pairing, token: token)
     }
     private func beginLAN(pairing: Pairing, lan: LANPairing, token: UUID) {
         status = L10n.text("Connecting to Nodus…")
@@ -231,8 +215,8 @@ struct InkStroke: Identifiable {
             }
             candidate.start(queue: .main)
         }
-        discoveryTimeout?.cancel()
-        discoveryTimeout = Task { [weak self] in
+        connectionTimeout?.cancel()
+        connectionTimeout = Task { [weak self] in
             try? await Task.sleep(for: .seconds(8))
             guard !Task.isCancelled, let self, self.generation == token, !self.connected else { return }
             self.errorMessage = L10n.text("Unable to reach Nodus. Check that both devices are on the same local network and that the computer’s firewall allows Nodus.")
@@ -260,30 +244,87 @@ struct InkStroke: Identifiable {
     }
     private func open(endpoint: NWEndpoint, pairing: Pairing, token: UUID) {
         status = L10n.text("Connecting to Nodus…")
-        for channel in ["control", "assets"] {
-            let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
-            if channel == "control" { control = connection } else { assets = connection }
-            connection.onState = { [weak self, weak connection] value in
-                guard let self, self.generation == token else { return }
-                switch value {
-                case .ready:
-                    connection?.send(["kind": .string("hello"), "version": .number(1), "channel": .string(channel), "deviceId": .string(self.deviceID)])
-                    if channel == "assets" { self.assetsReady = true; self.pendingImages.removeAll(); self.refreshVisibleImages() }
-                case .failed, .cancelled: self.scheduleReconnect()
-                default: break
-                }
+        // Give service resolution/TLS its own budget. The old 12-second browse
+        // deadline also cancelled TLS, often before peer-to-peer could recover.
+        armMacConnectionTimeout(seconds: 30, token: token)
+        let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
+        control = connection
+        connection.onState = { [weak self, weak connection] value in
+            guard let self, self.generation == token else { return }
+            switch value {
+            case .ready:
+                self.armMacConnectionTimeout(seconds: 10, token: token)
+                connection?.send(["kind": .string("hello"), "version": .number(1), "channel": .string("control"), "deviceId": .string(self.deviceID)])
+            case .failed, .cancelled: self.scheduleReconnect()
+            default: break
             }
-            connection.onMessage = { [weak self] message in
-                guard let self, self.generation == token else { return }; self.receive(message, channel: channel)
-            }
-            connection.start(queue: .main)
         }
+        connection.onMessage = { [weak self] message in
+            guard let self, self.generation == token else { return }; self.receive(message, channel: "control")
+        }
+        connection.start(queue: .main)
+    }
+    private func armMacConnectionTimeout(seconds: Double, token: UUID) {
+        connectionTimeout?.cancel()
+        connectionTimeout = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(seconds))
+            guard !Task.isCancelled, let self, self.generation == token, !self.connected else { return }
+            self.errorMessage = L10n.text("Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled.")
+            self.scheduleReconnect()
+        }
+    }
+    private func openMacAssets(pairing: Pairing, endpoint: NWEndpoint, token: UUID) {
+        guard connected, assets == nil, assetsReconnectTask == nil else { return }
+        // Control becomes usable before starting a second TLS connection/PDF.
+        let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
+        assets = connection
+        assetsTimeout?.cancel()
+        assetsTimeout = Task { [weak self, weak connection] in
+            try? await Task.sleep(for: .seconds(20))
+            guard !Task.isCancelled, let self, let connection, self.generation == token, !self.assetsReady else { return }
+            self.recoverMacAssets(connection, token: token)
+        }
+        connection.onState = { [weak self, weak connection] value in
+            guard let self, let connection, self.generation == token, self.assets === connection else { return }
+            switch value {
+            case .ready:
+                connection.send(["kind": .string("hello"), "version": .number(1), "channel": .string("assets"), "deviceId": .string(self.deviceID)])
+                self.assetsTimeout?.cancel(); self.assetsTimeout = nil
+                self.assetsReady = true; self.assetRetries = 0
+                self.pendingImages.removeAll(); self.refreshVisibleImages()
+            case .failed, .cancelled: self.recoverMacAssets(connection, token: token)
+            default: break
+            }
+        }
+        connection.onMessage = { [weak self] message in
+            guard let self, self.generation == token else { return }; self.receive(message, channel: "assets")
+        }
+        connection.start(queue: .main)
+    }
+    private func recoverMacAssets(_ connection: FramedConnection, token: UUID) {
+        guard generation == token, assets === connection, connected, foreground,
+              let pairing, let endpoint = macEndpoint, assetsReconnectTask == nil else { return }
+        assetsTimeout?.cancel(); assetsTimeout = nil
+        connection.cancel(); assets = nil; assetsReady = false
+        try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false; pendingImages.removeAll()
+        let delay = min(4, 1 << min(assetRetries, 2)); assetRetries += 1
+        assetsReconnectTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(delay))
+            guard !Task.isCancelled, let self, self.generation == token else { return }
+            self.assetsReconnectTask = nil
+            self.openMacAssets(pairing: pairing, endpoint: endpoint, token: token)
+        }
+    }
+    private func cancelAssetRecovery() {
+        assetsReconnectTask?.cancel(); assetsReconnectTask = nil
+        assetsTimeout?.cancel(); assetsTimeout = nil; assetRetries = 0
     }
     private func scheduleReconnect() {
         guard foreground, pairing != nil, reconnectTask == nil else { return }
-        discoveryTimeout?.cancel(); discoveryTimeout = nil
+        connectionTimeout?.cancel(); connectionTimeout = nil
+        cancelAssetRecovery(); macEndpoint = nil
         generation = UUID(); connected = false; status = L10n.text("Reconnecting to Nodus…")
-        browser?.cancel(); browser = nil; control?.cancel(); assets?.cancel(); control = nil; assets = nil; assetsReady = false
+        control?.cancel(); assets?.cancel(); control = nil; assets = nil; assetsReady = false
         lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
         try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false; pendingImages.removeAll(); drawing = false
         UIApplication.shared.isIdleTimerDisabled = false
@@ -303,7 +344,7 @@ struct InkStroke: Identifiable {
             guard let rawState = message["state"], let newState = try? PresenterState.decode(rawState) else { return }
             let oldSlide = state.currentSlide, oldID = state.pdfId
             state = newState
-            discoveryTimeout?.cancel(); discoveryTimeout = nil
+            connectionTimeout?.cancel(); connectionTimeout = nil
             connected = true; retries = 0; status = L10n.text("Connected to Nodus"); errorMessage = nil
             UIApplication.shared.isIdleTimerDisabled = true
             if let deck = message["deck"]?.object {
@@ -320,6 +361,9 @@ struct InkStroke: Identifiable {
             if let action = message["action"]?.object, message["origin"]?.string != deviceID { applyOverlay(action) }
             if let overlay = message["overlay"]?.arrayValue { strokes = []; for action in overlay.compactMap(\.object) { applyOverlay(action) } }
             if !localPreview { localSlide = state.currentSlide }
+            if let pairing, pairing.lan == nil, let endpoint = macEndpoint {
+                openMacAssets(pairing: pairing, endpoint: endpoint, token: generation)
+            }
             refreshVisibleImages()
         case "image":
             guard message["assetVersion"]?.string == assetVersion,

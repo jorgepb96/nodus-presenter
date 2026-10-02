@@ -44,6 +44,17 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD1B90F9B4E194535853EFC6"
+               BuildableName = "NodusPresenterTests.xctest"
+               BlueprintName = "NodusPresenterTests"
+               ReferencedContainer = "container:NodusPresenter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "217EC394C963F89285569620"
                BuildableName = "NodusPresenterUITests.xctest"
                BlueprintName = "NodusPresenterUITests"

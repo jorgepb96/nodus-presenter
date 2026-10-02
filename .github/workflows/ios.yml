@@ -14,3 +14,7 @@ jobs:
       - run: Scripts/configure-project.sh
       - run: swift test
       - run: xcodebuild -project NodusPresenter.xcodeproj -scheme NodusPresenter -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+      - name: Test real iOS session recovery over TLS
+        run: |
+          presenter_simulator=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; devices=json.load(sys.stdin)["devices"]; runtimes=sorted((r for r in devices if ".iOS-" in r), reverse=True); print(next(d["udid"] for r in runtimes for d in devices[r] if d["name"].startswith("iPhone")))')
+          xcodebuild -project NodusPresenter.xcodeproj -scheme NodusPresenter -destination "platform=iOS Simulator,id=$presenter_simulator" -parallel-testing-enabled NO -only-testing:NodusPresenterTests CODE_SIGNING_ALLOWED=NO test

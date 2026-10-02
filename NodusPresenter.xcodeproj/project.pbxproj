@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		00B990B45A020EFFBAB304EF /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34D5AC08DCBA9BD1E6E6CB /* Session.swift */; };
+		0410D5EF56E67BE24FDCCA28 /* ConnectionRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC91F07B36BB8F0EA468939 /* ConnectionRecoveryTests.swift */; };
 		213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */; };
 		2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAC4203728044DA6998C7B /* PresenterView.swift */; };
+		4A88A4B2A4A68F3951E79D1B /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = B5870AC64EBBE5B68A09AAD8 /* PresenterCore */; };
 		60E66E07A7495CA9586D6317 /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */; };
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
 		6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C219F692896CD41609D737 /* ActiveToolControls.swift */; };
@@ -34,6 +36,13 @@
 			remoteGlobalIDString = 0C05497AD352099F2CC33C76;
 			remoteInfo = NodusPresenter;
 		};
+		E25E6440D475F5FC9AC3E6F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1EE0117DFB453385BE11CAEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C05497AD352099F2CC33C76;
+			remoteInfo = NodusPresenter;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +51,7 @@
 		2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDeck.swift; sourceTree = "<group>"; };
 		358815F48093128F50406B7A /* NodusPresenter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NodusPresenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		360E3C7F1B1A91F87C07F25C /* LocalizationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUITests.swift; sourceTree = "<group>"; };
+		3DBCD95CF3E34E4532AC782F /* NodusPresenterTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NodusPresenterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45CB3308739BC1B3A207915D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4D6D379F98A88A82AC77DED9 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		54EA287CA826B8B1E050CAF2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -55,6 +65,7 @@
 		950A6049B379E84CA227FA83 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NodusPresenterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFC91F07B36BB8F0EA468939 /* ConnectionRecoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRecoveryTests.swift; sourceTree = "<group>"; };
 		B4C219F692896CD41609D737 /* ActiveToolControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveToolControls.swift; sourceTree = "<group>"; };
 		BAB7CC16AA850024143A15EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVolumeControl.swift; sourceTree = "<group>"; };
@@ -76,6 +87,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1DDADB436E4A2500AFD6644 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A88A4B2A4A68F3951E79D1B /* PresenterCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -83,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				358815F48093128F50406B7A /* NodusPresenter.app */,
+				3DBCD95CF3E34E4532AC782F /* NodusPresenterTests.xctest */,
 				A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */,
 			);
 			name = Products;
@@ -93,6 +113,7 @@
 			children = (
 				FC1543680A1F6B4767B3B2F9 /* App */,
 				98D0369A8324BA2B8A09B6B2 /* Packages */,
+				C8FDB0DC79F3140B9345BC02 /* Session */,
 				A85808894928987A93C0F1AB /* UI */,
 				02B46F32C233A59A26E03F94 /* Products */,
 			);
@@ -115,6 +136,15 @@
 			);
 			name = UI;
 			path = Tests/UI;
+			sourceTree = "<group>";
+		};
+		C8FDB0DC79F3140B9345BC02 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				AFC91F07B36BB8F0EA468939 /* ConnectionRecoveryTests.swift */,
+			);
+			name = Session;
+			path = Tests/Session;
 			sourceTree = "<group>";
 		};
 		FC1543680A1F6B4767B3B2F9 /* App */ = {
@@ -179,6 +209,26 @@
 			productReference = A9F0AF39EFB0C671108D90B0 /* NodusPresenterUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		DD1B90F9B4E194535853EFC6 /* NodusPresenterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F471C096FC3972075982339 /* Build configuration list for PBXNativeTarget "NodusPresenterTests" */;
+			buildPhases = (
+				CC03B88F126854EE2A707841 /* Sources */,
+				D1DDADB436E4A2500AFD6644 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDB34453B891E959C2D6B977 /* PBXTargetDependency */,
+			);
+			name = NodusPresenterTests;
+			packageProductDependencies = (
+				B5870AC64EBBE5B68A09AAD8 /* PresenterCore */,
+			);
+			productName = NodusPresenterTests;
+			productReference = 3DBCD95CF3E34E4532AC782F /* NodusPresenterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -196,6 +246,10 @@
 						DevelopmentTeam = 6RPLS9EA4X;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0C05497AD352099F2CC33C76;
+					};
+					DD1B90F9B4E194535853EFC6 = {
+						DevelopmentTeam = 6RPLS9EA4X;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -225,6 +279,7 @@
 			projectRoot = "";
 			targets = (
 				0C05497AD352099F2CC33C76 /* NodusPresenter */,
+				DD1B90F9B4E194535853EFC6 /* NodusPresenterTests */,
 				217EC394C963F89285569620 /* NodusPresenterUITests */,
 			);
 		};
@@ -254,6 +309,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC03B88F126854EE2A707841 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0410D5EF56E67BE24FDCCA28 /* ConnectionRecoveryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E68F8EF6C575076665C51871 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -278,6 +341,11 @@
 			isa = PBXTargetDependency;
 			target = 0C05497AD352099F2CC33C76 /* NodusPresenter */;
 			targetProxy = C0F2E606546991D95D7E564C /* PBXContainerItemProxy */;
+		};
+		EDB34453B891E959C2D6B977 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0C05497AD352099F2CC33C76 /* NodusPresenter */;
+			targetProxy = E25E6440D475F5FC9AC3E6F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -320,6 +388,23 @@
 			};
 			name = Release;
 		};
+		0A02FAAE3FDCFA6FA3BD2B9F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodusresearch.presenter.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NodusPresenter.app/NodusPresenter";
+			};
+			name = Debug;
+		};
 		133FD6877928A2BDBD1CE4E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -356,6 +441,23 @@
 			};
 			name = Debug;
 		};
+		9193DC40F61CB7F714348B01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodusresearch.presenter.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NodusPresenter.app/NodusPresenter";
+			};
+			name = Release;
+		};
 		AAECD1B9F92F4A1B466B2C08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -391,7 +493,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -469,7 +571,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6RPLS9EA4X;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -505,6 +607,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1F471C096FC3972075982339 /* Build configuration list for PBXNativeTarget "NodusPresenterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A02FAAE3FDCFA6FA3BD2B9F /* Debug */,
+				9193DC40F61CB7F714348B01 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		2363C0C254E5E832FC904AF1 /* Build configuration list for PBXNativeTarget "NodusPresenter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -543,6 +654,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		6E3A8BB4D9B5062031965E98 /* PresenterCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PresenterCore;
+		};
+		B5870AC64EBBE5B68A09AAD8 /* PresenterCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PresenterCore;
 		};

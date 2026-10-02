@@ -3,6 +3,13 @@ import Network
 import Security
 
 public enum PresenterTLS {
+    /// The QR already identifies the Bonjour service. An unscoped endpoint lets
+    /// Network resolve it over available interfaces, including Apple peer-to-peer.
+    /// A browser result can pin the connection to the room's failing Wi-Fi route.
+    public static func macEndpoint(service: String) -> NWEndpoint {
+        .service(name: service, type: Pairing.serviceType, domain: "local.", interface: nil)
+    }
+
     public static func parameters(key: Data, identity: String) -> NWParameters {
         let tls = NWProtocolTLS.Options()
         let secret = key.withUnsafeBytes { DispatchData(bytes: $0) }

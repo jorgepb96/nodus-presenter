@@ -13,7 +13,7 @@ settings:
     DEVELOPMENT_TEAM: 6RPLS9EA4X
     CODE_SIGN_STYLE: Automatic
     MARKETING_VERSION: 0.2.0
-    CURRENT_PROJECT_VERSION: 10
+    CURRENT_PROJECT_VERSION: 11
     ENABLE_USER_SCRIPT_SANDBOXING: YES
 targets:
   NodusPresenter:
@@ -32,7 +32,18 @@ targets:
         SUPPORTS_MACCATALYST: YES
         SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
     scheme:
-      testTargets: [NodusPresenterUITests]
+      testTargets: [NodusPresenterTests, NodusPresenterUITests]
+  NodusPresenterTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests/Session]
+    dependencies:
+      - target: NodusPresenter
+      - package: PresenterCore
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.nodusresearch.presenter.tests
   NodusPresenterUITests:
     type: bundle.ui-testing
     platform: iOS

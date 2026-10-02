@@ -2,6 +2,14 @@
 
 ## Versión 0.2.0
 
+### Conexión Mac/iOS de la build 11 — 2 de octubre de 2026
+
+- El QR del Mac se resuelve directamente como servicio Bonjour sin fijar una interfaz ni iniciar un segundo navegador. Se conserva `includePeerToPeer`, la clave del QR y los parámetros TLS-PSK existentes; no cambia el helper del Mac ni el transporte Windows/Linux.
+- La resolución/TLS dispone de 30 segundos y, una vez listo TLS, el estado autenticado dispone de 10 segundos propios. Ya no comparten el antiguo límite de 12 segundos de descubrimiento. El canal de recursos empieza después del primer estado válido; sus cortes se recuperan sin descartar el control, las notas ni la lectura privada.
+- Trece pruebas de Core aprobadas. Cuatro pruebas hospedadas en la app real del simulador iPhone 16 Pro Max (iOS 26.3) con sockets TLS-PSK reales: apertura ordenada de canales, TLS retrasado 13 segundos, corte/reconexión de recursos conservando control/lectura privada y cancelación de reintentos/actualizaciones tardías al desconectar. CI ejecuta estas regresiones además del núcleo y la compilación.
+- Comprobación adicional en macOS: un servicio Bonjour sin `NWBrowser` completa resolución, TLS-PSK y roundtrip autenticado. Las pruebas del helper actual de Nodus pasan con control, clave incorrecta rechazada, JPEG y PDF/SHA-256. Esto no sustituye una sesión entre Mac/iPhone físicos ni prueba la calidad de una red Wi-Fi real.
+- La comprobación física de la build 11, incluida red inestable y ruta Apple peer-to-peer, queda pendiente. Debe completarse antes de responder a Apple que la versión está preparada y de grabar la evidencia de revisión.
+
 ### Logo de la build 8
 
 - La N se dibuja mediante un único renderer CoreGraphics para el logo SwiftUI, el AppIcon claro/oscuro y su previsualización. Usa la geometría normalizada y el algoritmo de cuatro tonos del repositorio principal; mantiene los nodos opacos y el degradado diagonal con sus tres paradas.
