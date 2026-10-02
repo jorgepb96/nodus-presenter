@@ -46,6 +46,7 @@
 "Last received view. You can keep reading downloaded notes while the connection recovers." = "Dernière vue reçue. Vous pouvez continuer à lire les notes téléchargées pendant le rétablissement de la connexion.";
 "Layout" = "Disposition";
 "Light" = "Clair";
+"Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again." = "L’accès au réseau local est indisponible. Autorisez Nodus Presenter dans Réglages → Confidentialité et sécurité → Réseau local, puis revenez à l’app ou scannez à nouveau le code QR.";
 "Local demo. The controls are not connected to a Mac." = "Démo locale. Les commandes ne sont pas connectées à un Mac.";
 "Looking for Nodus…" = "Recherche de Nodus…";
 "Mac volume" = "Volume du Mac";
@@ -55,6 +56,7 @@
 "NODUS / IDEAS IN MOTION" = "NODUS / IDÉES EN MOUVEMENT";
 "Next" = "Suivante";
 "No camera is available. You can paste the session link on the home screen." = "Aucun appareil photo disponible. Vous pouvez coller le lien de session sur l’écran d’accueil.";
+"Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices." = "Nodus ne répond pas. Gardez Presenter ouvert sur votre ordinateur, scannez son code QR actuel et vérifiez que le Wi-Fi est activé. Certains réseaux bloquent les connexions entre appareils.";
 "Nodus logo" = "Logo Nodus";
 "None" = "Aucun";
 "Not connected" = "Non connecté";

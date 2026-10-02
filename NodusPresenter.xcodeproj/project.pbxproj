@@ -10,7 +10,9 @@
 		00B990B45A020EFFBAB304EF /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D34D5AC08DCBA9BD1E6E6CB /* Session.swift */; };
 		0410D5EF56E67BE24FDCCA28 /* ConnectionRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC91F07B36BB8F0EA468939 /* ConnectionRecoveryTests.swift */; };
 		213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */; };
+		224E055E88EC2CCEDD25E9E1 /* MacServiceDiscoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6316696417854B23A1EFFF /* MacServiceDiscoveryTests.swift */; };
 		2DD870F77F853812F41766B2 /* PresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DAC4203728044DA6998C7B /* PresenterView.swift */; };
+		31024E9D9FDF936D290F7225 /* ConnectionDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8EC67575FBFA06344ED849 /* ConnectionDiagnostics.swift */; };
 		4A88A4B2A4A68F3951E79D1B /* PresenterCore in Frameworks */ = {isa = PBXBuildFile; productRef = B5870AC64EBBE5B68A09AAD8 /* PresenterCore */; };
 		60E66E07A7495CA9586D6317 /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */; };
 		6DA9359659D2249CE3BD068C /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADE77DAE3CF412CAD813B6 /* DemoTests.swift */; };
@@ -22,6 +24,7 @@
 		B4586321986780B5EF967AEB /* QRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79177523994F808ACBAF15D6 /* QRScanner.swift */; };
 		BE605160C7BD8A13048DA77A /* NodusLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570BC6DEF33C4F03A11366BA /* NodusLogo.swift */; };
 		BF3E821676DAC886833B30C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 209B846EA3E80CFD772A2A60 /* InfoPlist.strings */; };
+		C7DE981D9CB5261BB7B145A5 /* MacServiceDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78B17EA1560407AEE94367 /* MacServiceDiscovery.swift */; };
 		E7224CC7E0C3376304A081D9 /* VideoVolumeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */; };
 		F5B932B6DF6B843F55F43979 /* PresenterPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259C218F33EA401A89D72E7B /* PresenterPreferences.swift */; };
 		F9D84ABED46A659BC7DCEAE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAB7CC16AA850024143A15EE /* Assets.xcassets */; };
@@ -69,6 +72,8 @@
 		B4C219F692896CD41609D737 /* ActiveToolControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveToolControls.swift; sourceTree = "<group>"; };
 		BAB7CC16AA850024143A15EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD8D0CC726B3743544553D58 /* VideoVolumeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVolumeControl.swift; sourceTree = "<group>"; };
+		BF78B17EA1560407AEE94367 /* MacServiceDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacServiceDiscovery.swift; sourceTree = "<group>"; };
+		CB6316696417854B23A1EFFF /* MacServiceDiscoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacServiceDiscoveryTests.swift; sourceTree = "<group>"; };
 		D753CB81588A327D8179987C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E2B66731865A085B40F65E63 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E81F6F507010111EE13742C1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -76,6 +81,7 @@
 		F81F4F411B5FD042B4DB926A /* NodusBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodusBrand.swift; sourceTree = "<group>"; };
 		F9830F13A272E43A886E5E50 /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
 		FB2C4462680B6A823C85647A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		FE8EC67575FBFA06344ED849 /* ConnectionDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDiagnostics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				AFC91F07B36BB8F0EA468939 /* ConnectionRecoveryTests.swift */,
+				CB6316696417854B23A1EFFF /* MacServiceDiscoveryTests.swift */,
 			);
 			name = Session;
 			path = Tests/Session;
@@ -152,9 +159,11 @@
 			children = (
 				B4C219F692896CD41609D737 /* ActiveToolControls.swift */,
 				BAB7CC16AA850024143A15EE /* Assets.xcassets */,
+				FE8EC67575FBFA06344ED849 /* ConnectionDiagnostics.swift */,
 				2980BDBC95D1AA8EDE340DC8 /* DemoDeck.swift */,
 				45CB3308739BC1B3A207915D /* Info.plist */,
 				209B846EA3E80CFD772A2A60 /* InfoPlist.strings */,
+				BF78B17EA1560407AEE94367 /* MacServiceDiscovery.swift */,
 				F81F4F411B5FD042B4DB926A /* NodusBrand.swift */,
 				570BC6DEF33C4F03A11366BA /* NodusLogo.swift */,
 				5FA141C049B07DE753EF28CA /* NodusPresenterApp.swift */,
@@ -314,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0410D5EF56E67BE24FDCCA28 /* ConnectionRecoveryTests.swift in Sources */,
+				224E055E88EC2CCEDD25E9E1 /* MacServiceDiscoveryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,7 +332,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E1B8394AC59027DDEBBE41C /* ActiveToolControls.swift in Sources */,
+				31024E9D9FDF936D290F7225 /* ConnectionDiagnostics.swift in Sources */,
 				96BC86B8881EBA980DEEC264 /* DemoDeck.swift in Sources */,
+				C7DE981D9CB5261BB7B145A5 /* MacServiceDiscovery.swift in Sources */,
 				705647EB00E2F8879563191B /* NodusBrand.swift in Sources */,
 				BE605160C7BD8A13048DA77A /* NodusLogo.swift in Sources */,
 				213EAF3275BE99FDDA3B4EA9 /* NodusPresenterApp.swift in Sources */,

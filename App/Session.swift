@@ -33,6 +33,11 @@ struct InkStroke: Identifiable {
     @Published var pdfDocument: PDFDocument?
     var isPairing: Bool { pairing != nil }
     private var foreground = true
+    private var wasBackgrounded = false
+    private var wasInactive = false
+    private var awaitingNetworkPermission = false
+    private var macPermissionWaiting = false
+    private let serviceDiscovery: MacServiceDiscovery
     private var connectionTimeout: Task<Void, Never>?
     private var pairing: Pairing?
     private var macEndpoint: NWEndpoint?
@@ -65,7 +70,8 @@ struct InkStroke: Identifiable {
     var connectionEndpointForTesting: NWEndpoint?
     #endif
 
-    init() {
+    init(serviceDiscovery: MacServiceDiscovery? = nil) {
+        self.serviceDiscovery = serviceDiscovery ?? MacServiceDiscovery()
         let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         if let files = try? FileManager.default.contentsOfDirectory(at: cache, includingPropertiesForKeys: [.contentModificationDateKey]) {
             for file in files where file.lastPathComponent.hasPrefix("presenter-") {
@@ -77,6 +83,18 @@ struct InkStroke: Identifiable {
             Task { @MainActor in self?.tick() }
         }
         let args = ProcessInfo.processInfo.arguments
+        #if DEBUG
+        // Physical QA imports the already visible Mac QR without exposing secrets
+        // in launch arguments. The file is consumed once; release excludes this.
+        if ConnectionDiagnostics.enabled, args.contains("--device-pair-file") {
+            let file = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("presenter-qa-pair.txt")
+            if let text = try? String(contentsOf: file, encoding: .utf8) {
+                try? FileManager.default.removeItem(at: file)
+                if let url = URL(string: text.trimmingCharacters(in: .whitespacesAndNewlines)) { connect(url: url) }
+            }
+        }
+        #endif
         #if DEBUG && targetEnvironment(simulator)
         // An ignored, private file lets connected QA avoid putting QR secrets in argv/logs.
         if let index = args.firstIndex(of: "--simulator-pair-file"), args.count > index + 1,
@@ -120,11 +138,13 @@ struct InkStroke: Identifiable {
         } catch { errorMessage = L10n.text("This QR code is not a Nodus Presenter app session. Choose App iPhone–iPad in Nodus.") }
     }
     func disconnect() {
+        serviceDiscovery.cancel()
         generation = UUID(); reconnectTask?.cancel(); reconnectTask = nil; connectionTimeout?.cancel(); connectionTimeout = nil
         cancelAssetRecovery(); macEndpoint = nil
         control?.cancel(); assets?.cancel(); control = nil; assets = nil
         lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
         assetsReady = false; connected = false; isDemo = false; pairing = nil
+        awaitingNetworkPermission = false; macPermissionWaiting = false
         state = PresenterState(); deckName = ""; notes = [:]; videos = [:]; pdfDocument = nil
         imageCache.removeAllObjects(); pendingImages.removeAll(); strokes = []
         try? pdfFile?.close(); pdfFile = nil; pdfURL = nil; pdfOffset = 0; downloadVersion = ""; downloadInFlight = false
@@ -133,8 +153,11 @@ struct InkStroke: Identifiable {
     }
     func sceneChanged(_ phase: ScenePhase) {
         UIApplication.shared.isIdleTimerDisabled = phase == .active && (connected || isDemo)
-        foreground = phase != .background
+        if phase == .inactive { wasInactive = true }
+        if phase == .background { foreground = false; wasBackgrounded = true }
+        if phase == .active { foreground = true }
         if phase == .background, pairing != nil {
+            serviceDiscovery.cancel()
             generation = UUID(); connected = false; status = L10n.text("Not connected · App in background")
             reconnectTask?.cancel(); reconnectTask = nil; connectionTimeout?.cancel(); connectionTimeout = nil
             cancelAssetRecovery(); macEndpoint = nil
@@ -142,7 +165,15 @@ struct InkStroke: Identifiable {
             lanCandidates.forEach { $0.cancel() }; lanCandidates.removeAll()
             try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false
         }
-        if phase == .active, pairing != nil, !connected, reconnectTask == nil { beginDiscovery() }
+        // Permission dialogs and initial activation produce inactive/active
+        // transitions too. Never replace an attempt which is still pending.
+        if phase == .active {
+            // A denied/expired attempt has already been cancelled. It may have
+            // happened before the first permission dialog received an answer.
+            let resume = wasBackgrounded || (wasInactive && awaitingNetworkPermission)
+            wasBackgrounded = false; wasInactive = false
+            if resume, pairing != nil, !connected, reconnectTask == nil { beginDiscovery() }
+        }
     }
     private func tick() {
         if isDemo { if state.timerRunning { state.timerSeconds += 1 }; return }
@@ -151,28 +182,48 @@ struct InkStroke: Identifiable {
         control?.send(["kind": .string("ping")]); refreshVisibleImages()
     }
     private func beginDiscovery() {
-        guard let pairing else { return }
+        guard foreground, let pairing else { return }
+        if awaitingNetworkPermission { errorMessage = nil }
+        awaitingNetworkPermission = false; macPermissionWaiting = false
+        serviceDiscovery.cancel()
         let token = UUID(); generation = token
         connected = false; status = retries == 0 ? L10n.text("Looking for Nodus…") : L10n.text("Reconnecting to Nodus…")
         if let lan = pairing.lan {
             beginLAN(pairing: pairing, lan: lan, token: token)
             return
         }
-        var endpoint = PresenterTLS.macEndpoint(service: pairing.service)
         #if DEBUG && targetEnvironment(simulator)
         // Simulator Bonjour cannot always discover a service on its host Mac.
         // Connected verification still uses the QR's real TLS key and protocol.
         let args = ProcessInfo.processInfo.arguments
         if let index = args.firstIndex(of: "--simulator-endpoint"), args.count > index + 2,
            let port = UInt16(args[index + 2]), let nwPort = NWEndpoint.Port(rawValue: port) {
-            endpoint = .hostPort(host: NWEndpoint.Host(args[index + 1]), port: nwPort)
+            let endpoint = NWEndpoint.hostPort(host: NWEndpoint.Host(args[index + 1]), port: nwPort)
+            macEndpoint = endpoint; open(endpoint: endpoint, pairing: pairing, token: token)
+            return
         }
-        if let override = connectionEndpointForTesting { endpoint = override }
+        if let endpoint = connectionEndpointForTesting {
+            macEndpoint = endpoint; open(endpoint: endpoint, pairing: pairing, token: token)
+            return
+        }
         #endif
-        macEndpoint = endpoint
-        // Resolve the known service directly: no extra browse cycle and no
-        // interface-scoped result that can strand TLS on an unstable router.
-        open(endpoint: endpoint, pairing: pairing, token: token)
+        serviceDiscovery.start(service: pairing.service) { [weak self] outcome in
+            guard let self, self.generation == token else { return }
+            let endpoint: NWEndpoint
+            switch outcome {
+            case .found(let discovered): endpoint = discovered
+            case .unavailable:
+                // Absence of a browse result is not proof of denied permission.
+                // Keep direct resolution available after stopping the browser.
+                endpoint = PresenterTLS.macEndpoint(service: pairing.service)
+            case .failed(let error):
+                if MacServiceDiscovery.isPermissionDenied(error) { self.localNetworkDenied() }
+                else { self.scheduleReconnect() } // includes defunct Bonjour; bounded backoff
+                return
+            }
+            self.macEndpoint = endpoint
+            self.open(endpoint: endpoint, pairing: pairing, token: token)
+        }
     }
     private func beginLAN(pairing: Pairing, lan: LANPairing, token: UUID) {
         status = L10n.text("Connecting to Nodus…")
@@ -247,15 +298,32 @@ struct InkStroke: Identifiable {
         // Give service resolution/TLS its own budget. The old 12-second browse
         // deadline also cancelled TLS, often before peer-to-peer could recover.
         armMacConnectionTimeout(seconds: 30, token: token)
-        let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
+        let parameters = PresenterTLS.parameters(key: pairing.key, identity: pairing.service)
+        #if DEBUG
+        ConnectionDiagnostics.excludeUSB(parameters)
+        #endif
+        let connection = FramedConnection(NWConnection(to: endpoint, using: parameters))
         control = connection
         connection.onState = { [weak self, weak connection] value in
             guard let self, self.generation == token else { return }
+            #if DEBUG
+            if let connection { ConnectionDiagnostics.record(value, channel: "mac-control", connection: connection.connection) }
+            #endif
             switch value {
+            case .preparing: self.macPermissionWaiting = false
             case .ready:
+                self.macPermissionWaiting = false
                 self.armMacConnectionTimeout(seconds: 10, token: token)
                 connection?.send(["kind": .string("hello"), "version": .number(1), "channel": .string("control"), "deviceId": .string(self.deviceID)])
-            case .failed, .cancelled: self.scheduleReconnect()
+            case .waiting(let error):
+                // Leave Network's connectivity wait intact while the user may
+                // still be deciding. The deadline reports continued denial.
+                self.macPermissionWaiting = MacServiceDiscovery.isPermissionDenied(error) || connection?.connection.currentPath?.unsatisfiedReason == .localNetworkDenied
+            case .failed(let error):
+                if MacServiceDiscovery.isPermissionDenied(error) || self.macPermissionWaiting || connection?.connection.currentPath?.unsatisfiedReason == .localNetworkDenied {
+                    self.localNetworkDenied()
+                } else { self.scheduleReconnect() }
+            case .cancelled: self.scheduleReconnect()
             default: break
             }
         }
@@ -269,14 +337,25 @@ struct InkStroke: Identifiable {
         connectionTimeout = Task { [weak self] in
             try? await Task.sleep(for: .seconds(seconds))
             guard !Task.isCancelled, let self, self.generation == token, !self.connected else { return }
-            self.errorMessage = L10n.text("Unable to find Nodus. Check the local network permission and that Wi-Fi is enabled.")
+            #if DEBUG
+            ConnectionDiagnostics.record("deadline-\(Int(seconds))s", channel: "mac-control", connection: self.control?.connection)
+            #endif
+            if self.macPermissionWaiting || self.control?.connection.currentPath?.unsatisfiedReason == .localNetworkDenied {
+                self.localNetworkDenied()
+                return
+            }
+            self.errorMessage = L10n.text("Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices.")
             self.scheduleReconnect()
         }
     }
     private func openMacAssets(pairing: Pairing, endpoint: NWEndpoint, token: UUID) {
         guard connected, assets == nil, assetsReconnectTask == nil else { return }
         // Control becomes usable before starting a second TLS connection/PDF.
-        let connection = FramedConnection(NWConnection(to: endpoint, using: PresenterTLS.parameters(key: pairing.key, identity: pairing.service)))
+        let parameters = PresenterTLS.parameters(key: pairing.key, identity: pairing.service)
+        #if DEBUG
+        ConnectionDiagnostics.excludeUSB(parameters)
+        #endif
+        let connection = FramedConnection(NWConnection(to: endpoint, using: parameters))
         assets = connection
         assetsTimeout?.cancel()
         assetsTimeout = Task { [weak self, weak connection] in
@@ -286,6 +365,9 @@ struct InkStroke: Identifiable {
         }
         connection.onState = { [weak self, weak connection] value in
             guard let self, let connection, self.generation == token, self.assets === connection else { return }
+            #if DEBUG
+            ConnectionDiagnostics.record(value, channel: "mac-assets", connection: connection.connection)
+            #endif
             switch value {
             case .ready:
                 connection.send(["kind": .string("hello"), "version": .number(1), "channel": .string("assets"), "deviceId": .string(self.deviceID)])
@@ -319,8 +401,20 @@ struct InkStroke: Identifiable {
         assetsReconnectTask?.cancel(); assetsReconnectTask = nil
         assetsTimeout?.cancel(); assetsTimeout = nil; assetRetries = 0
     }
+    private func localNetworkDenied() {
+        awaitingNetworkPermission = true; macPermissionWaiting = false
+        serviceDiscovery.cancel()
+        generation = UUID(); connected = false; status = L10n.text("Not connected")
+        reconnectTask?.cancel(); reconnectTask = nil; connectionTimeout?.cancel(); connectionTimeout = nil
+        cancelAssetRecovery(); macEndpoint = nil
+        control?.cancel(); assets?.cancel(); control = nil; assets = nil; assetsReady = false
+        try? pdfFile?.close(); pdfFile = nil; downloadInFlight = false; pendingImages.removeAll()
+        UIApplication.shared.isIdleTimerDisabled = false
+        errorMessage = L10n.text("Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again.")
+    }
     private func scheduleReconnect() {
         guard foreground, pairing != nil, reconnectTask == nil else { return }
+        serviceDiscovery.cancel()
         connectionTimeout?.cancel(); connectionTimeout = nil
         cancelAssetRecovery(); macEndpoint = nil
         generation = UUID(); connected = false; status = L10n.text("Reconnecting to Nodus…")
@@ -342,6 +436,9 @@ struct InkStroke: Identifiable {
         case "update":
             guard channel == "control" else { return }
             guard let rawState = message["state"], let newState = try? PresenterState.decode(rawState) else { return }
+            #if DEBUG
+            ConnectionDiagnostics.record("valid-presenter-state", channel: "control", connection: control?.connection)
+            #endif
             let oldSlide = state.currentSlide, oldID = state.pdfId
             state = newState
             connectionTimeout?.cancel(); connectionTimeout = nil

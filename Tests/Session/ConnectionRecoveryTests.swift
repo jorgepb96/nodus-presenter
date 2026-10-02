@@ -6,6 +6,76 @@ import PresenterCore
 
 /// Actual iOS session + TLS-PSK sockets. Loopback does not validate physical AWDL.
 @MainActor final class ConnectionRecoveryTests: XCTestCase {
+    func testRealBonjourDiscoveryFindsTheAdvertisedQRService() async throws {
+        let server = try MacFixture(advertise: true)
+        defer { server.stop() }
+        try await server.start()
+        let discovery = MacServiceDiscovery()
+        defer { discovery.cancel() }
+        let found = expectation(description: "actual NWBrowser discovers advertised QR service")
+        discovery.start(service: server.service) { outcome in
+            if case .found(let endpoint) = outcome,
+               case .service(let name, let type, _, _) = endpoint {
+                XCTAssertEqual(name, server.service)
+                XCTAssertEqual(type, Pairing.serviceType)
+            } else { XCTFail("Local Bonjour did not return the advertised test service") }
+            found.fulfill()
+        }
+        await fulfillment(of: [found], timeout: 12)
+        // TLS/hello and lifecycle are exercised below with loopback sockets.
+        // Do not treat same-host Bonjour or Simulator as a physical-radio test.
+    }
+
+    func testPermissionDialogActivationDoesNotReplaceThePendingTLSConnection() async throws {
+        let server = try MacFixture()
+        defer { server.stop() }
+        try await server.start()
+        let session = PresenterSession()
+        defer { session.disconnect() }
+        session.connectionEndpointForTesting = server.endpoint
+        let hello = expectation(description: "one control handshake")
+        server.onHello = { channel, _ in if channel == "control" { hello.fulfill() } }
+        let connected = expectation(description: "pending control receives valid state")
+        let subscription = session.$connected.filter { $0 }.prefix(1).sink { _ in connected.fulfill() }
+        defer { subscription.cancel() }
+        session.connect(url: server.url)
+        session.sceneChanged(.active)
+        await fulfillment(of: [hello], timeout: 5)
+        session.sceneChanged(.inactive); session.sceneChanged(.active)
+        try await Task.sleep(for: .milliseconds(200))
+        server.sendState()
+        await fulfillment(of: [connected], timeout: 5)
+        XCTAssertEqual(server.hellos.filter { $0 == "control" }.count, 1)
+        XCTAssertTrue(session.connected)
+    }
+
+    func testBackgroundResumeReconnectsOnceWithoutLosingPrivateReading() async throws {
+        let server = try MacFixture()
+        defer { server.stop() }
+        try await server.start()
+        let session = PresenterSession()
+        defer { session.disconnect() }
+        session.connectionEndpointForTesting = server.endpoint
+        server.onHello = { channel, _ in if channel == "control" { server.sendState() } }
+        let first = expectation(description: "initial authenticated state")
+        let initialSubscription = session.$connected.filter { $0 }.prefix(1).sink { _ in first.fulfill() }
+        session.connect(url: server.url)
+        await fulfillment(of: [first], timeout: 5)
+        initialSubscription.cancel()
+        session.togglePreview(); session.previewNextSlide()
+        session.sceneChanged(.background)
+        XCTAssertFalse(session.connected)
+        let resumed = expectation(description: "authenticated state after real background resume")
+        let subscription = session.$connected.filter { $0 }.prefix(1).sink { _ in resumed.fulfill() }
+        defer { subscription.cancel() }
+        session.sceneChanged(.inactive); session.sceneChanged(.active)
+        session.sceneChanged(.active)
+        await fulfillment(of: [resumed], timeout: 5)
+        XCTAssertEqual(server.hellos.filter { $0 == "control" }.count, 2)
+        XCTAssertTrue(session.localPreview)
+        XCTAssertEqual(session.displayedSlide, 4)
+    }
+
     func testSlowTLSCanFinishAfterTheOldTwelveSecondDiscoveryDeadline() async throws {
         let server = try MacFixture(acceptDelay: .seconds(13))
         defer { server.stop() }
@@ -73,9 +143,9 @@ import PresenterCore
         XCTAssertTrue(session.localPreview)
         let navigation = expectation(description: "control still carries navigation")
         server.onAction = { action in
-            if action["type"]?.string == "setBlackScreen" { navigation.fulfill() }
+            if action["type"]?.string == "blackScreen", action["enabled"]?.bool == true { navigation.fulfill() }
         }
-        session.send(["type": .string("setBlackScreen"), "value": .bool(true)])
+        session.send(["type": .string("blackScreen"), "enabled": .bool(true)])
         await fulfillment(of: [navigation, recoveredAssets], timeout: 6)
         XCTAssertTrue(session.connected, "A broken PDF channel must not turn the connection red")
         XCTAssertEqual(server.hellos.filter { $0 == "control" }.count, 1)
@@ -107,7 +177,7 @@ import PresenterCore
 }
 
 @MainActor private final class MacFixture {
-    let service = "nodus-12345678-1234-1234-1234-123456789abc"
+    let service: String
     let key = Data(repeating: 47, count: 32)
     private let listener: NWListener
     private let acceptDelay: Duration?
@@ -123,11 +193,14 @@ import PresenterCore
                                 URLQueryItem(name: "key", value: key.base64EncodedString()), URLQueryItem(name: "name", value: "Test Mac")]
         return components.url!
     }
-    init(acceptDelay: Duration? = nil) throws {
+    init(acceptDelay: Duration? = nil, advertise: Bool = false) throws {
+        let identity = "nodus-" + UUID().uuidString.lowercased()
+        service = identity
         self.acceptDelay = acceptDelay
-        let parameters = PresenterTLS.parameters(key: Data(repeating: 47, count: 32), identity: "nodus-12345678-1234-1234-1234-123456789abc")
-        parameters.requiredLocalEndpoint = .hostPort(host: "127.0.0.1", port: .any)
+        let parameters = PresenterTLS.parameters(key: Data(repeating: 47, count: 32), identity: identity)
+        if !advertise { parameters.requiredLocalEndpoint = .hostPort(host: "127.0.0.1", port: .any) }
         listener = try NWListener(using: parameters)
+        if advertise { listener.service = NWListener.Service(name: identity, type: Pairing.serviceType) }
     }
     func start() async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
