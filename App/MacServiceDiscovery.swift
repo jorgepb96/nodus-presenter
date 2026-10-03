@@ -7,13 +7,19 @@ import PresenterCore
 @MainActor protocol MacServiceBrowsing: AnyObject {
     var stateChanged: ((NWBrowser.State) -> Void)? { get set }
     var resultsChanged: (([NWEndpoint]) -> Void)? { get set }
+    var scopedEndpoints: [NWEndpoint] { get }
     func start()
     func cancel()
+}
+
+extension MacServiceBrowsing {
+    var scopedEndpoints: [NWEndpoint] { [] }
 }
 
 @MainActor private final class BonjourMacBrowser: MacServiceBrowsing {
     var stateChanged: ((NWBrowser.State) -> Void)?
     var resultsChanged: (([NWEndpoint]) -> Void)?
+    private(set) var scopedEndpoints: [NWEndpoint] = []
     private let browser: NWBrowser
 
     init() {
@@ -32,13 +38,54 @@ import PresenterCore
             Task { @MainActor in
                 guard let self else { return }
                 self.stateChanged?(state)
-                if case .ready = state { self.resultsChanged?(self.browser.browseResults.map(\.endpoint)) }
+                if case .ready = state { self.publish(self.browser.browseResults) }
             }
         }
         browser.browseResultsChangedHandler = { [weak self] results, _ in
-            Task { @MainActor in self?.resultsChanged?(results.map(\.endpoint)) }
+            Task { @MainActor in self?.publish(results) }
         }
         browser.start(queue: .main)
+    }
+
+    private func publish(_ results: Set<NWBrowser.Result>) {
+        #if DEBUG
+        results.forEach { ConnectionDiagnostics.recordDiscovery($0) }
+        scopedEndpoints = ConnectionDiagnostics.scopedFallback ? results.flatMap { result -> [NWEndpoint] in
+            guard case .service(let name, let type, let domain, nil) = result.endpoint else { return [] }
+            return result.interfaces.filter { $0.type == .wifi }.map {
+                .service(name: name, type: type, domain: domain, interface: $0)
+            }
+        } : []
+        if ConnectionDiagnostics.wifiDiscovery || ConnectionDiagnostics.scopeDiscovery {
+            let wireless = results.filter { result in
+                result.interfaces.contains {
+                    ConnectionDiagnostics.peerDiscovery ? ConnectionDiagnostics.isSeparateWiFi($0) : $0.type == .wifi
+                }
+            }
+            if !results.isEmpty && wireless.isEmpty {
+                ConnectionDiagnostics.record("diagnostic-deferred-no-wifi-result", channel: "mac-discovery")
+            }
+            resultsChanged?(wireless.map { result in
+                guard ConnectionDiagnostics.scopeDiscovery,
+                      case .service(let name, let type, let domain, nil) = result.endpoint else {
+                    return result.endpoint
+                }
+                let interfaces = result.interfaces.filter {
+                    ConnectionDiagnostics.peerDiscovery ? ConnectionDiagnostics.isSeparateWiFi($0) : $0.type == .wifi
+                }
+                // This comparison must not invent a name or arbitrarily select
+                // among multiple interfaces. Scope only an unambiguous result.
+                guard interfaces.count == 1, let interface = interfaces.first else {
+                    ConnectionDiagnostics.record("diagnostic-scope-ambiguous", channel: "mac-discovery")
+                    return result.endpoint
+                }
+                ConnectionDiagnostics.record("diagnostic-service-scoped-to-discovery-interface", channel: "mac-discovery")
+                return .service(name: name, type: type, domain: domain, interface: interface)
+            })
+            return
+        }
+        #endif
+        resultsChanged?(results.map(\.endpoint))
     }
 
     func cancel() {
@@ -60,6 +107,7 @@ import PresenterCore
     private var completion: ((Outcome) -> Void)?
     private var generation = UUID()
     private var permissionError: NWError?
+    private(set) var alternativeEndpoints: [NWEndpoint] = []
 
     init(makeBrowser: (() -> MacServiceBrowsing)? = nil) {
         self.makeBrowser = makeBrowser ?? { BonjourMacBrowser() }
@@ -85,13 +133,26 @@ import PresenterCore
                 guard case .service(let name, let type, _, _) = $0 else { return false }
                 return name == service && type == Pairing.serviceType
             }) {
-                self.finish(.found(endpoint))
+                #if DEBUG
+                ConnectionDiagnostics.record("browse-matched", channel: "mac-discovery")
+                let scope = endpoint.interface.map { "\($0.type)/\($0.name)" } ?? "unscoped"
+                ConnectionDiagnostics.record("selected-endpoint-scope=\(scope)", channel: "mac-discovery")
+                #endif
+                let alternatives = search.scopedEndpoints.filter {
+                    guard case .service(let name, let type, _, _) = $0 else { return false }
+                    return name == service && type == Pairing.serviceType && $0 != endpoint
+                }
+                self.finish(.found(endpoint), alternatives: alternatives)
             }
         }
         search.stateChanged = { [weak self] state in
             guard let self, self.generation == token else { return }
             switch state {
-            case .ready: self.permissionError = nil
+            case .ready:
+                self.permissionError = nil
+                #if DEBUG
+                ConnectionDiagnostics.record("browse-ready", channel: "mac-discovery")
+                #endif
             case .waiting(let error):
                 #if DEBUG
                 ConnectionDiagnostics.record("browse-waiting", channel: "mac-discovery", error: error)
@@ -108,7 +169,12 @@ import PresenterCore
             try? await Task.sleep(for: timeout)
             guard !Task.isCancelled, let self, self.generation == token else { return }
             if let error = self.permissionError { self.finish(.failed(error)) }
-            else { self.finish(.unavailable) }
+            else {
+                #if DEBUG
+                ConnectionDiagnostics.record("browse-deadline-no-match", channel: "mac-discovery")
+                #endif
+                self.finish(.unavailable)
+            }
         }
         search.start()
     }
@@ -116,17 +182,19 @@ import PresenterCore
     func cancel() {
         generation = UUID()
         completion = nil
+        alternativeEndpoints = []
         permissionError = nil
         deadline?.cancel(); deadline = nil
         browser?.stateChanged = nil; browser?.resultsChanged = nil
         browser?.cancel(); browser = nil
     }
 
-    private func finish(_ outcome: Outcome) {
+    private func finish(_ outcome: Outcome, alternatives: [NWEndpoint] = []) {
         let callback = completion
         // TN3213: stop peer browsing BEFORE opening the selected connection.
         // Invalidating the generation also rejects already queued callbacks.
         cancel()
+        alternativeEndpoints = alternatives
         callback?(outcome)
     }
 }

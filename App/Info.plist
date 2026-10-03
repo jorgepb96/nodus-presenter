@@ -25,6 +25,7 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_nodus-presenter._tcp</string>
+		<string>_nodus-peer._tcp</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>

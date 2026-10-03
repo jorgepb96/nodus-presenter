@@ -4,11 +4,75 @@ import Foundation
 
 /// Opt-in physical-device QA. Never prints the QR, key, service, peer name or addresses.
 enum ConnectionDiagnostics {
-    static var enabled: Bool { ProcessInfo.processInfo.arguments.contains("--connection-diagnostics") }
+    private static var defaultPathMonitor: NWPathMonitor?
+
+    static func startPathMonitoring() {
+        guard enabled, defaultPathMonitor == nil else { return }
+        let monitor = NWPathMonitor()
+        defaultPathMonitor = monitor
+        monitor.pathUpdateHandler = { path in
+            record("default-path=\(path.status) wifi=\(path.usesInterfaceType(.wifi)) cellular=\(path.usesInterfaceType(.cellular)) wired=\(path.usesInterfaceType(.wiredEthernet)) ipv4=\(path.supportsIPv4) dns=\(path.supportsDNS)", channel: "app")
+        }
+        monitor.start(queue: .main)
+    }
+    static var enabled: Bool {
+        #if PRESENTER_WIRELESS_QA
+        return true
+        #else
+        return ProcessInfo.processInfo.arguments.contains("--connection-diagnostics")
+        #endif
+    }
+    static var wirelessQA: Bool {
+        #if PRESENTER_WIRELESS_QA
+        return true
+        #else
+        return enabled && ProcessInfo.processInfo.arguments.contains("--wireless-qa")
+        #endif
+    }
+    /// Controlled comparison only: a cable-learned Bonjour result must not end
+    /// wireless discovery before a Wi-Fi advertisement is observed.
+    static var wifiDiscovery: Bool {
+        enabled && ProcessInfo.processInfo.arguments.contains("--wifi-discovery")
+    }
+
+    /// Explicit comparison of only the interface reported by Bonjour.
+    static var scopeDiscovery: Bool {
+        enabled && (ProcessInfo.processInfo.arguments.contains("--scope-discovery") || peerDiscovery)
+    }
+
+    /// The local candidate keeps Network's normal choice first and adds only
+    /// observed interfaces as delayed alternatives. Release excludes this.
+    static var scopedFallback: Bool {
+        #if PRESENTER_WIRELESS_QA
+        return !ProcessInfo.processInfo.arguments.contains("--unscoped-discovery") && !scopeDiscovery
+        #else
+        return false
+        #endif
+    }
+
+    static var peerDiscovery: Bool {
+        enabled && ProcessInfo.processInfo.arguments.contains("--peer-discovery")
+    }
+
+    /// Identify a separately discovered Wi-Fi interface using public interface
+    /// identities, without assuming any private peer-interface name.
+    static func isSeparateWiFi(_ interface: NWInterface) -> Bool {
+        guard interface.type == .wifi,
+              let path = defaultPathMonitor?.currentPath, path.status == .satisfied else { return false }
+        let defaults = path.availableInterfaces.filter { $0.type == .wifi }.map(\.index)
+        return !defaults.contains(interface.index)
+    }
+
+    static func recordDiscovery(_ result: NWBrowser.Result) {
+        guard enabled else { return }
+        let interfaces = result.interfaces.map { "\($0.type)/\($0.name)" }.sorted().joined(separator: ",")
+        let scope = result.endpoint.interface.map { "\($0.type)/\($0.name)" } ?? "unscoped"
+        record("result interfaces=\(interfaces) endpointScope=\(scope)", channel: "mac-discovery")
+    }
     /// Explicit QA only: keep USB for Xcode, but prevent it carrying app data.
     /// Release builds never constrain interfaces.
     static func excludeUSB(_ parameters: NWParameters) {
-        if enabled && ProcessInfo.processInfo.arguments.contains("--wireless-qa") {
+        if wirelessQA {
             parameters.prohibitedInterfaceTypes = [.wiredEthernet]
         }
     }
@@ -26,8 +90,12 @@ enum ConnectionDiagnostics {
         }
         if let path = connection?.currentPath {
             fields.append("path=\(path.status)")
+            let types: [NWInterface.InterfaceType] = [.wifi, .wiredEthernet, .cellular, .loopback, .other]
+            fields.append("usesTypes=\(types.filter { path.usesInterfaceType($0) }.map { String(describing: $0) }.joined(separator: ","))")
             if path.status == .unsatisfied { fields.append("reason=\(path.unsatisfiedReason)") }
-            fields.append("interfaces=\(path.availableInterfaces.map { "\($0.type)/\($0.name)" }.sorted().joined(separator: ","))")
+            fields.append("availableInterfaces=\(path.availableInterfaces.map { "\($0.type)/\($0.name)" }.sorted().joined(separator: ","))")
+            let remoteScope = path.remoteEndpoint?.interface.map { "\($0.type)/\($0.name)" } ?? "unscoped"
+            fields.append("remoteScope=\(remoteScope)")
         }
         let line = "\(ISO8601DateFormatter().string(from: Date())) \(fields.joined(separator: " "))\n"
         print(line, terminator: "")

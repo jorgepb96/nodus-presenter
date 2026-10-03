@@ -30,6 +30,8 @@ public final class FramedConnection {
     public let connection: NWConnection
     public var onMessage: ((Message) -> Void)?
     public var onState: ((NWConnection.State) -> Void)?
+    public var onViabilityChanged: ((Bool) -> Void)?
+    public var onPathChanged: (() -> Void)?
     private var decoder = FrameDecoder()
     private var stopped = false
     public init(_ connection: NWConnection) { self.connection = connection }
@@ -38,6 +40,14 @@ public final class FramedConnection {
             guard let self, !self.stopped else { return }
             self.onState?(state)
             if case .ready = state { self.receive() }
+        }
+        connection.viabilityUpdateHandler = { [weak self] viable in
+            guard let self, !self.stopped else { return }
+            self.onViabilityChanged?(viable)
+        }
+        connection.pathUpdateHandler = { [weak self] _ in
+            guard let self, !self.stopped else { return }
+            self.onPathChanged?()
         }
         connection.start(queue: queue)
     }
@@ -50,6 +60,9 @@ public final class FramedConnection {
     }
     public func cancel() {
         stopped = true; onMessage = nil; onState = nil
+        onViabilityChanged = nil; onPathChanged = nil
+        connection.stateUpdateHandler = nil
+        connection.viabilityUpdateHandler = nil; connection.pathUpdateHandler = nil
         connection.cancel()
     }
     private func receive() {

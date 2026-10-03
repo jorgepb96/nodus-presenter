@@ -8,8 +8,11 @@
 - Se evita sustituir una conexión pendiente al regresar de una ventana de permisos o por la primera activación. Solo una suspensión real en segundo plano inicia un nuevo intento al volver; se conserva la lectura privada.
 - Los errores distinguen falta de acceso a red local comunicada por el sistema de un timeout, con traducciones completas en los nueve idiomas. Según TN3179, esa falta de acceso puede preceder a la respuesta al primer permiso: se mantiene la espera de Network para permitir recuperarse al concederlo. Si persiste hasta el plazo o falla definitivamente, se detienen los reintentos periódicos; volver del diálogo o de Ajustes permite reintentar el intento ya cancelado. No se interpreta ese estado como una negativa expresa del usuario.
 - Los tests separan descubrimiento Bonjour real y sockets TLS reales por loopback. Una comprobación exploratoria conjunta Bonjour/TLS no completó en este equipo, tanto con endpoint descubierto como con resolución directa; loopback sí completó. No se interpreta como una causa confirmada ni se oculta como prueba aprobada. Detalles y fuentes en [ConnectionInvestigation.md](ConnectionInvestigation.md).
-- Resultado local final: 13 pruebas de Core y 15 pruebas hospedadas aprobadas en iPhone 16 Pro Max, runtime iOS 26.3, incluidas concesión del primer permiso mientras se espera y recuperación tras cerrar su diálogo. Compilaciones Release para iOS y Mac Catalyst aprobadas; el ejecutable iOS conserva la declaración Bonjour y no incluye los flags, importación ni almacenamiento de diagnósticos DEBUG. Se mantiene 0.2.0 sin generar una nueva build distribuida.
-- El titular no tiene disponible el iPhone por ahora. No se ha instalado ni subido una sustitución de la build 11. El helper y la app de escritorio permanecen sin cambios; la conexión inalámbrica física queda pendiente.
+- Resultado local final: 13 pruebas de Core y 18 pruebas hospedadas aprobadas en iPhone 16 Pro Max, runtime iOS 26.3, incluidas concesión del primer permiso mientras se espera y recuperación tras cerrar su diálogo. Compilaciones Release para iOS y Mac Catalyst aprobadas; el ejecutable iOS conserva la declaración Bonjour y no incluye los flags, importación ni almacenamiento de diagnósticos DEBUG. Se mantiene 0.2.0 sin generar una nueva build distribuida.
+- La build local DEBUG 0.2.0 (13) ya está instalada para comprobar la pérdida de red. Reacciona a pérdida de viabilidad de una conexión autenticada con un nuevo intento, sin esperar al watchdog de 12 segundos; conserva la lectura privada y rechaza callbacks antiguos. Dos regresiones nuevas verifican esta recuperación con sockets TLS locales y un evento de viabilidad inyectado. iOS Release compila y no contiene los diagnósticos; la build física firmada también compila.
+- Los registros mostraron control por `awdl0` y recursos pendientes en `en0`, pero el titular aclaró posteriormente que el éxito se produjo al conectar el Mac a una red. **Una interfaz `awdl0` no demuestra ausencia de conexión a infraestructura. Se retira la conclusión de control sin router: ese caso permanece fallando y sin validar.**
+- La build local 14 reutiliza el destino efectivo del control para abrir recursos. Está instalada, verificada y abierta en el iPhone. Una prueba nueva descarga imagen y PDF verificado por SHA-256 mediante TLS real; pasan las 18 regresiones hospedadas. También compilan DEBUG físico firmado y Release iOS. La prueba física inicial de la 14 descargó imagen y PDF por `en0`; se ha pedido repetir el escaneo sin red para descartar el PDF en caché. Esa comprobación inalámbrica directa de las imágenes permanece pendiente.
+- TestFlight permanece en 11. El helper y la app de escritorio permanecen sin cambios.
 
 ### Conexión Mac/iOS de la build 11 — 2 de octubre de 2026
 
@@ -88,6 +91,35 @@ Fuentes oficiales consultadas:
 - [TN3151: Choosing the right networking API](https://developer.apple.com/documentation/technotes/tn3151-choosing-the-right-networking-api)
 
 
+## Comparación física independiente — 3 de octubre de 2026
+
+- Prueba TCP separada de Nodus en iPhone 16 Pro Max iOS 26.4 y Mac, con el Mac fuera de la red y Wi-Fi encendido, sin cambiar la conexión Wi-Fi del iPhone. USB permanece conectado para lanzar y recuperar registros; los sockets excluyen Ethernet/USB y el diagnóstico espera un descubrimiento Bonjour por Wi-Fi.
+- Comparación VPN activada → desactivada → activada: las dos pruebas con la conexión VPN registrada de Tailscale activada agotan el plazo de 30 segundos. Desactivada, la conexión llega a estar lista en 18 segundos y ambos extremos registran al menos diez bloques de 1024 bytes devueltos y verificados, antes de restaurar la red del Mac. El Mac mantiene PHY cero durante toda la ventana.
+- Esto demuestra transferencia inalámbrica en la condición mixta de la prueba y apunta a una interferencia de la VPN/entorno en este equipo. No verifica todavía TLS, imágenes/PDF ni la sesión completa de Nodus sin router, ni sustituye una repetición retirando físicamente USB. No se publica una release especulativa.
+- Auto Join de las tres redes guardadas, preferencia de hotspot Automático, red original y VPN Connected/OnDemand true restaurados y verificados. Las apps separadas compilan y sus firmas Apple Development se verifican. Repositorio principal y helper/app Mac de producción sin cambios. [Procedimiento y límites](ConnectionInvestigation.md).
+
+### Comprobación posterior de la app real
+
+- Tres ventanas físicas con Nodus 5.7.4 y build móvil 14, Mac fuera del router con radio Wi-Fi encendida, VPN registrada desconectada y tráfico USB excluido: se descubre la sesión actual, pero el canal de control queda en preparación y supera 30 segundos. No hay estado autenticado, imágenes decodificadas ni PDF verificado antes de recuperar la red.
+- La comparación TCP independiente que funcionó no valida TLS ni resuelve por sí sola Nodus. La causa sigue abierta; preparación no distingue resolución/ruta/TCP de negociación TLS. La app real tampoco incluye el filtro adicional de descubrimiento Wi-Fi utilizado únicamente en el diagnóstico independiente.
+- Los intentos interrumpidos durante la preparación no cuentan como pruebas. La sesión creada fuera del router se probó posteriormente tras una reconexión y nueva desconexión; no demuestra una primera resolución sin caché.
+- Acceso automático de las tres redes, hotspot Automático, red original y VPN Connected restaurados y verificados. Sin cambios en el código de producción ni nueva subida a TestFlight. [Registro y límites](ConnectionInvestigation.md).
+
+### Comparación posterior de la interfaz Bonjour — 3 de octubre de 2026
+
+- Build DEBUG física 15: el helper firmado instalado en Nodus, sin modificar, transfiere estado, dos imágenes decodificadas y un PDF verificado por SHA-256 a la app real por la ruta `wifi/awdl0` al usar la interfaz pública del resultado Bonjour. Ventana 08:24:30–08:25:10 UTC; TLS listo en un segundo y recursos verificados al segundo siguiente.
+- El Mac permanece conectado al router y la VPN Connected durante toda la ventana. USB está conectado para administrar el dispositivo, pero el tráfico de la app lo excluye. El PDF/estado son sintéticos y el padre del helper es un fixture; no es todavía una validación del caso Mac sin router/iPhone asociado ni de la integración Electron completa.
+- La comparación anterior sin ámbito descubrió el servicio por la interfaz peer pero estableció ambos canales por la infraestructura. Usar la interfaz observada es una hipótesis concreta para la siguiente prueba, no una corrección de producción validada. Las opciones de comparación y el monitor de ruta predeterminada están limitados a DEBUG.
+- Última compilación física firmada correcta. Release también compila y su ejecutable no contiene los argumentos, importación de QR ni marcadores del diagnóstico. Las 18 pruebas de sesión pasaron antes de añadir estas opciones de diagnóstico. No se ha subido una nueva build a TestFlight.
+- Wi-Fi/servicio/red original y VPN restablecidos. Pendiente restaurar acceso automático de las tres redes y hotspot Automático: fallos de captura de Ajustes impiden verificar todavía esos cambios. [Condiciones exactas y pruebas descartadas](ConnectionInvestigation.md).
+
+### Candidata local 0.2.0 (17)
+
+- Sustituye la selección exclusiva de interfaz de la build 16, que en una repetición permaneció en preparación durante la ventana de 19 segundos. Conserva primero la resolución normal de Network y prueba después las interfaces observadas como alternativas; solo una conexión TLS autenticada envía hello. Los destinos adicionales solo se recogen en esta build DEBUG de QA, hasta verificar el caso físico sin router.
+- Pasan 13 pruebas de sesión/TLS y nueve de descubrimiento: recuperación desde TLS detenido, cancelación de candidatos, descarte de callbacks tardíos, camino normal rápido, filtrado por el servicio del QR y limpieza de sus rutas. Release compila y excluye los marcadores del diagnóstico.
+- Build 17 instalada y confirmada en el inventario del iPhone. Ventana física 08:56:24–08:56:44 UTC con red/VPN conservadas: TLS/control/recursos en un segundo; dos imágenes y PDF SHA-256 al segundo siguiente. La app usa Wi-Fi y excluye el cable USB. El estado/PDF provienen del fixture del helper firmado, no de una prueba completa del presenter de Electron sin router.
+- Queda en bienvenida para escanear el QR real. La prueba mixta manual no llegó a ejecutarse y ya está cerrada. No hay trabajo pendiente que corte la red automáticamente. Continúa pendiente restaurar las preferencias de acceso automático en Ajustes, cuyas acciones siguen fallando en ScreenCaptureKit. No se ha publicado en TestFlight.
+
 ## Paridad Windows/Linux — 1 de octubre de 2026
 
 - Core: doce pruebas pasan, con validación adicional de QR v2, endpoints IPv4, puerto, fingerprint y campos duplicados; QR v1 sigue seleccionando el transporte original del Mac.
@@ -98,3 +130,39 @@ Fuentes oficiales consultadas:
 - CI específico aprobado en Windows y Ubuntu bajo Electron 43.4: TLS real, comandos, renderizado JPEG nativo y PDF completo/reanudado. [Run 36918699670](https://github.com/Drakonis96/nodus/actions/runs/36918699670).
 - La build firmada `0.2.0 (9)` se ha subido y está **En pruebas** en el grupo interno existente, con instrucciones guardadas. La build 9 de Simulator se ha relanzado conectada en iPhone 16 Pro Max iOS 26.3: [captura real](../Screenshots/Connectivity/iphone16promax-lan-build9.png). El argumento de QA `--simulator-pair-file` no está en el ejecutable Release firmado.
 - Reconexión al volver desde la pantalla de inicio del dispositivo comprobada con la app real; recupera el estado del público, volumen y color del puntero. La validación de LAN/firewalls con una máquina Windows/Linux y un iPhone físicos queda pendiente.
+
+Restauración final de este seguimiento: red original con acceso automático activado y comprobado al reabrir Detalles; hotspots Automático; radio/servicio Wi-Fi activos, VPN Connected/OnDemand true e IPv6 desactivado. Restan únicamente las preferencias de acceso automático de TP-LINK_37F9 y TP-LINK_37F9_5G: los botones repetidos y las filas desplazadas fallan en la herramienta de UI. No se ha cambiado de router para evitarlos. Ajustes queda abierto en Wi-Fi.
+
+
+## Multipeer: candidata local 0.2.0 (18)
+
+- QR v3 explícito, invitación y mensajes autenticados, flujo de recursos limitado a una confirmación pendiente; rutas existentes conservadas.
+- Core: 18 pruebas. Sesión/descubrimiento: 22 pruebas en iPhone 16 Pro Max Simulator iOS 26.3. Todas pasan.
+- MCSession real entre procesos del Mac: estado/notas, acción, JPEG y PDF/SHA-256; el control responde mientras se retrasa la confirmación de un bloque PDF. Helper predeterminado: regresión TLS/clave incorrecta/comandos/recursos aprobada.
+- App real del simulador contra Electron de prueba: conexión/estado, dos imágenes y PDF verificado en dos segundos, notas y punto verde visibles. Captura: `Screenshots/Connectivity/iphone16promax-multipeer-build18.png`.
+- Debug y Release físicas 18 compiladas y firmadas. **No instalada todavía en el iPhone del propietario; no está validado el caso físico sin router.** No se ha publicado en TestFlight.
+- Instancia Mac con perfil privado independiente y QR preparado. Sin cambios de red/VPN del Mac; la instalación habitual y sus datos se conservan.
+
+Actualización física: instalada y abierta en el iPhone del propietario; inventario confirma 0.2.0 (18). A las 12:25:30 UTC se reciben estado autenticado, dos imágenes y PDF SHA-256 en un segundo. USB conectado; la interfaz real de MCSession no se conoce. No contar esta conexión inicial como validación inalámbrica. El registro local queda activo para la prueba tras retirar USB.
+
+## Multipeer: candidata de fluidez 0.2.0 (19)
+
+- El propietario confirma la conexión/controles después de retirar USB y manteniendo el Mac en su red. No se extrapola a ambos dispositivos sin router. Describe tirones en puntero/Spotlight/dibujo.
+- Posiciones Multipeer agrupadas por refresco, preferencia 60 Hz, última posición garantizada al terminar; dibujo fiable sin descarte de puntos. El eco compacto evita publicar un estado completo por movimiento. Ruta Network y renderizador del Mac conservados.
+- 25 pruebas hospedadas de sesión/descubrimiento/envío por refresco pasan. Tres pruebas de relay de Electron pasan, incluida conservación de 302 eventos de trazo y replay. Debug/Release 19 compilan y están firmadas.
+- Build 19 instalada y abierta en el iPhone del propietario; inventario confirma 0.2.0 (19). El simulador recibe imágenes y PDF verificado de la instancia Electron actualizada. El propietario confirma después: «ahora va perfecto», incluyendo la fluidez de las herramientas. Es una valoración física del propietario, sin medición de frames; no se extrapola a ambos dispositivos sin router. Se prepara la distribución por TestFlight a petición del propietario.
+
+Distribución 19: archivo Release firmado, versión/build verificados, Bonjour del nuevo enlace declarado y ausencia de los cuatro marcadores de diagnóstico comprobada. Xcode confirma `Upload succeeded` y `EXPORT SUCCEEDED` a las 14:58 del 3 de octubre de 2026 (Europe/Madrid). Apple completa el procesamiento. Se asigna al grupo interno existente **Jorge — beta interna** y se verifica el estado **En pruebas**, con instrucciones guardadas en español.
+
+## Inicio horizontal: candidata 0.2.0 (20)
+
+- Vista de bienvenida en dos columnas según las dimensiones disponibles: marca a la izquierda, conexión/QR y accesos a la derecha. El tamaño de texto normal cabe sin ScrollView en horizontal; ViewThatFits conserva una alternativa desplazable para tamaños de accesibilidad que no caben.
+- iPhone 16 Pro Max e iPad Pro 11 pulgadas, iOS 26.3 Simulator: pasan las pruebas de bienvenida en español, inglés, alemán y francés. Se verifica ausencia de scroll, cuatro accesos visibles y pulsables, giro vertical/horizontal, apertura del enlace manual y entrada en Demo. Se guardan cuatro capturas de cada dispositivo.
+- iPhone SE, iOS 18.2 Simulator: el inicio cabe en español e inglés, pero el primer test se interrumpe porque XCTest calcula (-1, -1) al desplazar la fila de acciones del alert nativo. Se repite usando el centro observado de Cancelar, sin modificar el diálogo de la app. Esta repetición sigue en curso.
+- Archive Release 20 firmado, versión/build verificados y diagnósticos excluidos. La conexión y los controles conservan la implementación de la build 19. La subida y disponibilidad de TestFlight están pendientes de confirmación.
+
+### Ajuste final: 0.2.0 (21)
+
+La columna de marca se limita al 28 % de la anchura en pantallas bajas, conservando más espacio para los textos de conexión. Los accesos inferiores incluyen el área táctil de 44 puntos dentro de la etiqueta interactiva y permiten envolver el texto completo. La build 20 se subió pero no se asignó al grupo; la candidata final es 21.
+
+La repetición en iPhone SE iOS 18.2 pasa en los cuatro idiomas, sin scroll y con las áreas táctiles de 44 puntos verificadas. El test espera a que terminen los dos giros antes de inyectar los toques; la grabación anterior mostraba aún la pantalla en vertical aunque la accesibilidad reportaba coordenadas horizontales. También apunta al centro del botón Cancelar para evitar el desplazamiento automático de su fila por XCTest. No se cambia el diálogo de emparejamiento. La candidata 21 pasa también el test completo en iPhone 16 Pro Max e iPad Pro 11 pulgadas (iOS 26.3.1 Simulator): cuatro idiomas, ausencia de scroll, controles dentro de la pantalla y áreas táctiles de 44 puntos, giro, enlace manual y Demo. Sin fallos ni pruebas omitidas. Archive Release 21 validado y firmado; Xcode confirma la subida a las 15:48 del 3 de octubre de 2026 (Europe/Madrid). Apple completa el procesamiento a las 15:54. La build 21 se asigna al grupo existente Jorge — beta interna; las instrucciones en español se guardan y se verifican tras recargar.

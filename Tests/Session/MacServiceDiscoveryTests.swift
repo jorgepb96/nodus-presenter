@@ -23,6 +23,25 @@ import PresenterCore
         XCTAssertEqual(results, [selected])
     }
 
+    func testAlternativeRoutesBelongOnlyToTheQRSessionAndAreClearedOnCancel() {
+        let browser = FakeMacBrowser()
+        let discovery = MacServiceDiscovery(makeBrowser: { browser })
+        let original = NWEndpoint.service(name: service, type: Pairing.serviceType, domain: "local.", interface: nil)
+        let alternate = NWEndpoint.service(name: service, type: Pairing.serviceType, domain: "fixture.local.", interface: nil)
+        browser.scopedEndpoints = [original, alternate,
+            .service(name: "another-session", type: Pairing.serviceType, domain: "local.", interface: nil),
+            .service(name: service, type: "_unrelated._tcp", domain: "local.", interface: nil)]
+        discovery.start(service: service) { outcome in
+            XCTAssertTrue(browser.cancelled)
+            if case .found(let selected) = outcome { XCTAssertEqual(selected, original) }
+            else { XCTFail("QR session should match") }
+            XCTAssertEqual(discovery.alternativeEndpoints, [alternate])
+        }
+        browser.resultsChanged?([original])
+        discovery.cancel()
+        XCTAssertTrue(discovery.alternativeEndpoints.isEmpty, "Do not reuse routes from an old QR")
+    }
+
     func testCancelledAttemptCannotCompleteANewAttempt() {
         var browsers: [FakeMacBrowser] = []
         let discovery = MacServiceDiscovery(makeBrowser: {
@@ -154,6 +173,7 @@ import PresenterCore
     var stateChanged: ((NWBrowser.State) -> Void)?
     var resultsChanged: (([NWEndpoint]) -> Void)?
     var cancelled = false
+    var scopedEndpoints: [NWEndpoint] = []
     func start() { stateChanged?(.ready) }
     func cancel() { cancelled = true }
 }
