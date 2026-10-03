@@ -1,20 +1,21 @@
-Nodus Presenter is 100% free: no purchases, subscriptions, advertising or account.
+Thank you for reviewing Nodus Presenter. Version 0.2.0 (21):
 
-REVIEW WITHOUT A COMPUTER
-On the welcome screen, tap Try demo. This local demo works without sign-in, QR pairing or network access and includes eight slides, presenter notes and all remote tools.
+1. PHYSICAL-DEVICE RECORDING AND QA
+Attached: Nodus-Presenter-0.2.0-21-iPhone16ProMax.mp4 (3:05). The developer personally recorded the app on a physical iPhone 16 Pro Max. It begins by opening build 21 from TestFlight, then shows QR pairing with Nodus Research, slide navigation, pointer/color, Spotlight, drawing, magnifier, timer, next-slide preview, layout/theme settings and landscape use. It is the complete recording, re-encoded for attachment compatibility. No registration, login, deletion or paid features exist: no account is created and the app is free. There is no public content feed, user-to-user publishing or messaging. PDFs, notes and drawing are private presentation content exchanged only with the paired computer. Simulator checks cover iPhone/iPad layouts, rotation and languages; they are distinct from physical testing.
 
-Use the arrows or tap the left/right half of the slide to navigate. The grid selects a slide. The book icon enables private reading: navigation then changes only the controller preview, not the audience slide. The moon button blanks/restores the audience screen. The top timer starts/pauses on tap and resets on long press. Settings adjust the slide/notes split, next-slide preview, appearance and nine accent colors. Pointer, Spotlight, drawing and magnifier controls appear between the arrows when active.
+2. PURPOSE AND AUDIENCE
+A native iPhone/iPad remote for PDF Presenter in Nodus Research. Teachers, researchers, students and other presenters can move around a room while viewing slides/notes and controlling the audience display. It is available to everyone, not restricted to an employer or institution. It has no purchases, subscriptions, advertising or analytics.
 
-Slide 4 demonstrates video play/pause and volume. These controls are visible only for slides containing video and hidden during private reading. Demo playback/volume and other remote commands are simulated; no external computer is controlled in demo mode.
+3. ACCESS AND SETUP
+No credentials are required. Launch the app and tap Try demo (Probar demo in Spanish). Eight included demo slides/notes need no account, computer or network. Arrows or left/right slide taps navigate; the grid selects a slide. The book enables private reading without advancing the audience. The moon blanks/restores the audience. Tap the top timer to start/pause; hold to reset. Settings control the slide/notes split, next preview, appearance and accent. Select pointer, Spotlight, drawing or magnifier; controls appear between the arrows. Slide 4 simulates video play/pause and volume. Video controls appear only on video slides and are hidden during private reading. Demo commands are simulated and do not control a computer.
 
-REAL PAIRING
-Requires Nodus Research with native Presenter pairing on Mac, Windows or Linux. Download the desktop app from https://nodusresearch.com/. Open a PDF in PDF Presenter, choose the iPhone/iPad app connection and scan its QR with this app. Allow camera access for scanning and local-network access for pairing. A green dot indicates connection.
+For real control, download Nodus Research at https://nodusresearch.com/ and open a PDF in PDF Presenter. Start presenting, choose App iPhone-iPad and scan its current QR in the mobile app. Grant camera and local-network access. Keep Wi-Fi enabled and use the same reachable local network for a reproducible review; green indicates authenticated presentation state. Mac QR v1 and Windows/Linux QR v2 remain supported. New Mac Multipeer QR v3 requires the companion desktop integration and is explicitly selected by its QR. Video plays on the desktop audience display; Mac volume controls system output, Windows/Linux volume controls presentation video.
 
-On Mac the existing direct connection uses Wi-Fi/Bonjour and can operate without the room router depending on devices/environment. Windows and Linux use authenticated TLS on a reachable local network. The app exchanges presentation data only with the computer the user pairs. It has no developer backend or analytics.
+4. EXTERNAL TOOLS AND SERVICES
+Core functionality uses Nodus Research desktop and Apple system frameworks: SwiftUI/UIKit, PDFKit, AVFoundation (QR camera), Network/Bonjour, Multipeer Connectivity and CryptoKit. No mobile developer backend, authentication provider, payment processor, AI service or third-party analytics SDK is used. Local PDF/notes/control needs no internet when devices can communicate. Optional user-selected YouTube overlays are played by the desktop and require YouTube/internet; the mobile app sends playback commands. The privacy/support pages open our website: https://nodusresearch.com/presenter/privacy/ and https://nodusresearch.com/faq/.
 
-Video playback takes place on the desktop audience display. On Mac the volume control adjusts system output; on Windows and Linux it adjusts the presentation video volume.
+5. REGIONS
+Features and bundled content are consistent across regions. Device-language localization supports English, Spanish, French, German, Italian, Portuguese, Japanese and Simplified/Traditional Chinese; other languages fall back to English.
 
-The app supports English, Spanish, French, German, Italian, Portuguese, Japanese, Simplified Chinese and Traditional Chinese; unsupported device languages fall back to English.
-
-PRIVACY
-The privacy policy is available from the welcome screen and Settings > About: https://nodusresearch.com/presenter/privacy/. The developer does not collect personal data from the mobile app.
+6. REGULATION AND CONTENT
+This is a presentation utility, not a regulated service. The bundled demo text/graphics and Nodus branding are our own. It supplies no licensed third-party media catalog. Users select their own PDFs and optional video links; the recording's presentation is a user-selected document, not bundled content.
