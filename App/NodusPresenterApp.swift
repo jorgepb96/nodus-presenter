@@ -55,29 +55,7 @@ struct RootView: View {
             Group {
                 if session.state.presenting { PresenterView() }
                 else {
-                    ScrollView {
-                        VStack(spacing: 28) {
-                            NodusLogo().frame(width: 120, height: 120)
-                                .shadow(color: preferences.theme.color.opacity(0.18), radius: 24, y: 10)
-                                .padding(.top, 48)
-                            VStack(spacing: 10) {
-                                Text("Nodus Presenter").font(.largeTitle.bold()).multilineTextAlignment(.center)
-                                Text(L10n.text("Your presentation, in your hands.")).font(.title3).foregroundStyle(.secondary)
-                            }
-                            VStack(alignment: .leading, spacing: 20) {
-                                ConnectionBadge()
-                                if session.isPairing { Button(L10n.text("Cancel connection"), role: .cancel) { session.disconnect() } }
-                                Label(L10n.text("Open Presenter in Nodus and choose App iPhone–iPad. Scan its QR code to pair."), systemImage: "qrcode")
-                                Label(L10n.text("On Mac, keep Wi-Fi enabled for a direct link. On Windows and Linux, connect both devices to the same local network."), systemImage: "antenna.radiowaves.left.and.right")
-                                Button { scanning = true } label: { Label(L10n.text("Scan QR code"), systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity).padding(.vertical, 6) }
-                                    .buttonStyle(.borderedProminent).accessibilityIdentifier("scanQR")
-                            }.padding(24).modifier(GlassPanel())
-                            Button { session.enterDemo() } label: { Label(L10n.text("Try demo"), systemImage: "play.circle.fill") }
-                                .buttonStyle(.bordered).accessibilityIdentifier("demo")
-                            Button(L10n.text("Paste session link")) { manual = true }.font(.footnote)
-                            PresenterPrivacyLink().font(.footnote)
-                        }.frame(maxWidth: 520).padding(24).frame(maxWidth: .infinity)
-                    }
+                    WelcomeView(onScan: { scanning = true }, onPaste: { manual = true })
                 }
             }.background {
                 Color(.systemBackground).overlay {
@@ -98,10 +76,14 @@ struct RootView: View {
 }
 
 struct PresenterPrivacyLink: View {
+    var expandsTouchTarget = false
     private let policyURL = URL(string: "https://nodusresearch.com/presenter/privacy/")!
     var body: some View {
         Link(destination: policyURL) {
             Label(L10n.text("Privacy policy"), systemImage: "hand.raised")
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: expandsTouchTarget ? .infinity : nil, minHeight: expandsTouchTarget ? 44 : nil)
+                .contentShape(Rectangle())
         }.accessibilityIdentifier("privacyPolicy")
     }
 }

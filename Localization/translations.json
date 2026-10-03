@@ -1344,6 +1344,26 @@
       "Über die App",
       "Informazioni",
       "Sobre"
+    ],
+    "Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices.": [
+      "Nodus no ha respondido. Mantén Presenter abierto en el ordenador, escanea su QR actual y comprueba que Wi-Fi esté encendido. Algunas redes bloquean las conexiones entre dispositivos.",
+      "Nodus ne répond pas. Gardez Presenter ouvert sur votre ordinateur, scannez son code QR actuel et vérifiez que le Wi-Fi est activé. Certains réseaux bloquent les connexions entre appareils.",
+      "Nodus 未响应。请在电脑上保持 Presenter 打开，扫描当前二维码，并确认 Wi-Fi 已开启。某些网络会阻止设备之间的连接。",
+      "Nodus 未回應。請在電腦上保持 Presenter 開啟，掃描目前的 QR 碼，並確認 Wi-Fi 已開啟。某些網路會阻擋裝置之間的連線。",
+      "Nodus から応答がありません。コンピュータで Presenter を開いたままにして、現在の QR コードをスキャンし、Wi-Fi がオンになっていることを確認してください。一部のネットワークではデバイス間の接続がブロックされます。",
+      "Nodus antwortet nicht. Lass Presenter auf deinem Computer geöffnet, scanne den aktuellen QR-Code und prüfe, ob WLAN eingeschaltet ist. Manche Netzwerke blockieren Verbindungen zwischen Geräten.",
+      "Nodus non risponde. Tieni Presenter aperto sul computer, scansiona il suo codice QR attuale e controlla che il Wi-Fi sia attivo. Alcune reti bloccano le connessioni tra dispositivi.",
+      "O Nodus não respondeu. Mantém o Presenter aberto no computador, lê o código QR atual e verifica se o Wi-Fi está ligado. Algumas redes bloqueiam ligações entre dispositivos."
+    ],
+    "Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again.": [
+      "El acceso a la red local no está disponible. Permite Nodus Presenter en Ajustes → Privacidad y seguridad → Red local y vuelve a la app o escanea el QR de nuevo.",
+      "L’accès au réseau local est indisponible. Autorisez Nodus Presenter dans Réglages → Confidentialité et sécurité → Réseau local, puis revenez à l’app ou scannez à nouveau le code QR.",
+      "本地网络访问不可用。请在“设置”→“隐私与安全性”→“本地网络”中允许 Nodus Presenter，然后返回应用或重新扫描二维码。",
+      "區域網路存取無法使用。請在「設定」→「隱私權與安全性」→「區域網路」中允許 Nodus Presenter，然後返回 App 或重新掃描 QR 碼。",
+      "ローカルネットワークにアクセスできません。「設定」→「プライバシーとセキュリティ」→「ローカルネットワーク」で Nodus Presenter を許可してから、アプリに戻るか QR コードを再度スキャンしてください。",
+      "Der Zugriff auf das lokale Netzwerk ist nicht verfügbar. Erlaube Nodus Presenter unter Einstellungen → Datenschutz & Sicherheit → Lokales Netzwerk und kehre dann zur App zurück oder scanne den QR-Code erneut.",
+      "L’accesso alla rete locale non è disponibile. Consenti Nodus Presenter in Impostazioni → Privacy e sicurezza → Rete locale, poi torna all’app o scansiona di nuovo il codice QR.",
+      "O acesso à rede local não está disponível. Permite o Nodus Presenter em Definições → Privacidade e segurança → Rede local e volta à app ou lê novamente o código QR."
     ]
   }
 }

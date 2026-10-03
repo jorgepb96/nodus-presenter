@@ -37,18 +37,22 @@ final class DemoTests: XCTestCase {
         volume.tap()
         let slider = app.sliders["videoVolumeSlider"]
         XCTAssertTrue(slider.waitForExistence(timeout: 5))
+        func percent(_ value: Any?) -> Double {
+            Double((value as? String ?? "").filter { $0.isNumber }) ?? -1
+        }
+        // XCUITest drags approximate positions; verify the requested range and
+        // cross-view synchronization rather than requiring a pixel-perfect end.
         slider.adjust(toNormalizedSliderPosition: 1)
-        XCTAssertEqual(volume.value as? String, "100 %")
+        XCTAssertEqual(percent(volume.value), 100, accuracy: 3)
         slider.adjust(toNormalizedSliderPosition: 0)
-        XCTAssertEqual(volume.value as? String, "0 %")
+        XCTAssertEqual(percent(volume.value), 0, accuracy: 3)
         let popup = XCTAttachment(screenshot: app.screenshot()); popup.name = "Video volume popover"; popup.lifetime = .keepAlways; add(popup)
         app.buttons["dismissVolume"].tap()
         app.buttons["tools"].tap()
         app.swipeUp()
         app.sliders["macVolumeSlider"].adjust(toNormalizedSliderPosition: 1)
         let settingsVolume = (app.sliders["macVolumeSlider"].value as? String ?? "").filter { !$0.isWhitespace }
-        // XCUITest's approximate slider gesture may stop one step before the endpoint.
-        XCTAssertTrue(["99%", "100%"].contains(settingsVolume))
+        XCTAssertEqual(percent(settingsVolume), 100, accuracy: 3)
         app.buttons["dismissTools"].tap()
         XCTAssertEqual((volume.value as? String ?? "").filter { !$0.isWhitespace }, settingsVolume)
         for tool in ["draw", "zoom"] {

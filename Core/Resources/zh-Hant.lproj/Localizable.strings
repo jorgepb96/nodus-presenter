@@ -46,6 +46,7 @@
 "Last received view. You can keep reading downloaded notes while the connection recovers." = "顯示最後收到的畫面。連線恢復期間，你可以繼續閱讀已下載的備忘稿。";
 "Layout" = "版面配置";
 "Light" = "淺色";
+"Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again." = "區域網路存取無法使用。請在「設定」→「隱私權與安全性」→「區域網路」中允許 Nodus Presenter，然後返回 App 或重新掃描 QR 碼。";
 "Local demo. The controls are not connected to a Mac." = "本機示範。控制項未連線至 Mac。";
 "Looking for Nodus…" = "正在尋找 Nodus…";
 "Mac volume" = "Mac 音量";
@@ -55,6 +56,7 @@
 "NODUS / IDEAS IN MOTION" = "NODUS / 思想在行動";
 "Next" = "下一張";
 "No camera is available. You can paste the session link on the home screen." = "相機無法使用。你可以在應用程式首頁貼上工作階段連結。";
+"Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices." = "Nodus 未回應。請在電腦上保持 Presenter 開啟，掃描目前的 QR 碼，並確認 Wi-Fi 已開啟。某些網路會阻擋裝置之間的連線。";
 "Nodus logo" = "Nodus 標誌";
 "None" = "無";
 "Not connected" = "未連線";

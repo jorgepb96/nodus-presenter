@@ -46,6 +46,7 @@
 "Last received view. You can keep reading downloaded notes while the connection recovers." = "显示最后收到的画面。连接恢复期间，你可以继续阅读已下载的备注。";
 "Layout" = "布局";
 "Light" = "浅色";
+"Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again." = "本地网络访问不可用。请在“设置”→“隐私与安全性”→“本地网络”中允许 Nodus Presenter，然后返回应用或重新扫描二维码。";
 "Local demo. The controls are not connected to a Mac." = "本地演示。控件未连接到 Mac。";
 "Looking for Nodus…" = "正在查找 Nodus…";
 "Mac volume" = "Mac 音量";
@@ -55,6 +56,7 @@
 "NODUS / IDEAS IN MOTION" = "NODUS / 思想在行动";
 "Next" = "下一张";
 "No camera is available. You can paste the session link on the home screen." = "相机不可用。你可以在应用首页粘贴会话链接。";
+"Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices." = "Nodus 未响应。请在电脑上保持 Presenter 打开，扫描当前二维码，并确认 Wi-Fi 已开启。某些网络会阻止设备之间的连接。";
 "Nodus logo" = "Nodus 标志";
 "None" = "无";
 "Not connected" = "未连接";

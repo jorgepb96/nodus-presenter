@@ -42,17 +42,23 @@ public struct Pairing: Equatable, Sendable {
     public let key: Data
     public let name: String
     public let lan: LANPairing?
+    public let usesMultipeer: Bool
     public init(url: URL) throws {
         guard url.scheme == "nodus-presenter", url.host == "pair", url.absoluteString.count <= 2048,
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let items = components.queryItems else { throw ProtocolError.invalidPairing }
         let values = Dictionary(items.map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { _, _ in "" })
-        guard ["1", "2"].contains(values["version"] ?? ""), let service = values["service"],
+        guard ["1", "2", "3"].contains(values["version"] ?? ""), let service = values["service"],
               service.range(of: "^nodus-[a-f0-9-]{36}$", options: .regularExpression) != nil,
               let encoded = values["key"], let key = Data(base64Encoded: encoded), key.count == 32
         else { throw ProtocolError.invalidPairing }
         self.service = service; self.key = key
         self.name = String((values["name"] ?? "Nodus").prefix(100))
+        self.usesMultipeer = values["version"] == "3"
+        if usesMultipeer {
+            guard values["transport"] == "multipeer", values["hosts"] == nil,
+                  values["port"] == nil, values["fingerprint"] == nil else { throw ProtocolError.invalidPairing }
+        }
         if values["version"] == "2" {
             guard values["transport"] == "lan", let portText = values["port"],
                   let port = UInt16(portText), port > 0, let rawHosts = values["hosts"],

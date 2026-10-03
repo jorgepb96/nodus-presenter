@@ -46,6 +46,7 @@
 "Last received view. You can keep reading downloaded notes while the connection recovers." = "Last received view. You can keep reading downloaded notes while the connection recovers.";
 "Layout" = "Layout";
 "Light" = "Light";
+"Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again." = "Local Network access is unavailable. Allow Nodus Presenter in Settings → Privacy & Security → Local Network, then return to the app or scan the QR code again.";
 "Local demo. The controls are not connected to a Mac." = "Local demo. The controls are not connected to a Mac.";
 "Looking for Nodus…" = "Looking for Nodus…";
 "Mac volume" = "Mac volume";
@@ -55,6 +56,7 @@
 "NODUS / IDEAS IN MOTION" = "NODUS / IDEAS IN MOTION";
 "Next" = "Next";
 "No camera is available. You can paste the session link on the home screen." = "No camera is available. You can paste the session link on the home screen.";
+"Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices." = "Nodus did not respond. Keep Presenter open on your computer, scan its current QR code, and check that Wi-Fi is enabled. Some networks block connections between devices.";
 "Nodus logo" = "Nodus logo";
 "None" = "None";
 "Not connected" = "Not connected";

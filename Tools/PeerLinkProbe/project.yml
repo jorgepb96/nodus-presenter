@@ -1,0 +1,45 @@
+name: PeerLinkProbe
+options:
+  deploymentTarget:
+    iOS: '18.0'
+    macOS: '15.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    DEVELOPMENT_TEAM: 6RPLS9EA4X
+    CODE_SIGN_STYLE: Automatic
+    GENERATE_INFOPLIST_FILE: YES
+    MARKETING_VERSION: '1.0'
+    CURRENT_PROJECT_VERSION: '2'
+    INFOPLIST_KEY_CFBundleDisplayName: Peer Link Test
+targets:
+  PeerLinkPhone:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    info:
+      path: Phone-Info.plist
+      properties:
+        NSLocalNetworkUsageDescription: Prueba local de conexión directa con el Mac, sin enviar datos personales.
+        NSBonjourServices: ['_peerprobe-tls._tcp', '_peerprobe-tcp._tcp']
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nodusresearch.peerlinkprobe
+        TARGETED_DEVICE_FAMILY: '1,2'
+        SUPPORTS_MACCATALYST: NO
+  PeerLinkMac:
+    type: application
+    platform: macOS
+    sources: [Sources]
+    info:
+      path: Mac-Info.plist
+      properties:
+        NSLocalNetworkUsageDescription: Prueba local de conexión directa con el iPhone, sin enviar datos personales.
+        NSBonjourServices: ['_peerprobe-tls._tcp', '_peerprobe-tcp._tcp']
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nodusresearch.peerlinkprobe.mac
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: YES
