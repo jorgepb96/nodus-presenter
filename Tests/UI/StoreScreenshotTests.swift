@@ -40,14 +40,14 @@ final class StoreScreenshotTests: XCTestCase {
         app.buttons["tool-draw"].tap()
 
         app.buttons["next"].tap()
-        let play = app.buttons["videoPlayback"]
-        XCTAssertTrue(play.isHittable)
-        play.tap(); XCTAssertEqual(play.label, "Pause video")
-        capture("03-video-controls")
-        app.buttons["videoVolume"].tap()
-        XCTAssertTrue(app.sliders["videoVolumeSlider"].waitForExistence(timeout: 5))
-        capture("04-mac-volume")
-        app.buttons["dismissVolume"].tap()
+        XCTAssertFalse(app.buttons["videoPlayback"].exists)
+        XCTAssertFalse(app.buttons["videoVolume"].exists)
+        app.buttons["preview"].tap()
+        app.buttons["next"].tap()
+        capture("03-private-reading")
+        app.buttons["preview"].tap()
+        app.buttons["tool-flashlight"].tap()
+        capture("04-spotlight")
 
         app.terminate()
         app.launchArguments = english + ["--demo", "--tools"]

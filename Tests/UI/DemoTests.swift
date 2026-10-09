@@ -1,85 +1,37 @@
 import XCTest
 final class DemoTests: XCTestCase {
-    func testVideoControlsInNavigationStrip() {
+    func testDemoQROpensWithoutVideoOrVolumeInPresentationAndSettings() {
         XCUIDevice.shared.orientation = .portrait
         defer { XCUIDevice.shared.orientation = .portrait }
         let app = XCUIApplication()
-        app.launchArguments = ["--demo", "--video", "--reset-preferences", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]
+        app.launchArguments = ["--pair", "nodus-presenter://demo", "--reset-preferences", "-AppleLanguages", "(es)", "-AppleLocale", "es_ES"]
         app.launch()
-        let play = app.buttons["videoPlayback"], volume = app.buttons["videoVolume"]
-        XCTAssertTrue(play.waitForExistence(timeout: 10))
-        app.buttons["previous"].tap()
-        XCTAssertFalse(play.exists); XCTAssertFalse(volume.exists)
-        app.buttons["tools"].tap(); app.swipeUp()
-        XCTAssertFalse(app.sliders["macVolumeSlider"].exists)
-        XCTAssertFalse(app.buttons["Reproducir vídeo"].exists)
-        app.buttons["dismissTools"].tap()
+        XCTAssertTrue(app.buttons["tools"].waitForExistence(timeout: 10))
+        XCTAssertEqual(app.staticTexts["slideCounter"].label, "3 / 8")
         app.buttons["next"].tap()
         XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8")
-        app.buttons["tools"].tap()
-        app.segmentedControls["appearancePicker"].buttons["Oscuro"].tap()
-        app.buttons["theme-estudio"].tap(); app.buttons["dismissTools"].tap()
 
-        func checkStrip() {
-            let previous = app.buttons["previous"], next = app.buttons["next"]
-            XCTAssertGreaterThanOrEqual(play.frame.width, 44)
-            XCTAssertGreaterThanOrEqual(volume.frame.width, 44)
-            XCTAssertLessThanOrEqual(play.frame.maxX, previous.frame.minX)
-            XCTAssertGreaterThanOrEqual(volume.frame.minX, next.frame.maxX)
-            XCTAssertEqual((previous.frame.midX + next.frame.midX) / 2, app.frame.midX, accuracy: 2)
-            XCTAssertEqual(play.frame.midY, previous.frame.midY, accuracy: 2)
+        for orientation in [UIDeviceOrientation.portrait, .landscapeLeft] {
+            XCUIDevice.shared.orientation = orientation
+            XCTAssertTrue(app.buttons["next"].isHittable)
+            XCTAssertFalse(app.buttons["videoPlayback"].exists)
+            XCTAssertFalse(app.buttons["videoVolume"].exists)
+            app.buttons["tools"].tap()
+            app.swipeUp()
+            XCTAssertFalse(app.sliders["macVolumeSlider"].exists)
+            XCTAssertFalse(app.sliders["videoVolumeSlider"].exists)
+            XCTAssertFalse(app.buttons["Reproducir vídeo"].exists)
+            XCTAssertFalse(app.buttons["Pausar vídeo"].exists)
+            app.buttons["dismissTools"].tap()
+            app.buttons["preview"].tap()
+            app.buttons["next"].tap()
+            XCTAssertEqual(app.staticTexts["slideCounter"].label, "5 / 8")
+            app.buttons["preview"].tap()
+            XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8")
+            let shot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            shot.name = "Demo without video or volume controls - \(orientation.rawValue)"
+            shot.lifetime = .keepAlways; add(shot)
         }
-        checkStrip()
-        XCTAssertEqual(play.label, "Reproducir vídeo")
-        play.tap(); XCTAssertEqual(play.label, "Pausar vídeo"); XCTAssertTrue(play.isSelected)
-        XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8")
-        play.tap(); XCTAssertEqual(play.label, "Reproducir vídeo")
-        volume.tap()
-        let slider = app.sliders["videoVolumeSlider"]
-        XCTAssertTrue(slider.waitForExistence(timeout: 5))
-        func percent(_ value: Any?) -> Double {
-            Double((value as? String ?? "").filter { $0.isNumber }) ?? -1
-        }
-        // XCUITest drags approximate positions; verify the requested range and
-        // cross-view synchronization rather than requiring a pixel-perfect end.
-        slider.adjust(toNormalizedSliderPosition: 1)
-        XCTAssertEqual(percent(volume.value), 100, accuracy: 3)
-        slider.adjust(toNormalizedSliderPosition: 0)
-        XCTAssertEqual(percent(volume.value), 0, accuracy: 3)
-        let popup = XCTAttachment(screenshot: app.screenshot()); popup.name = "Video volume popover"; popup.lifetime = .keepAlways; add(popup)
-        app.buttons["dismissVolume"].tap()
-        app.buttons["tools"].tap()
-        app.swipeUp()
-        app.sliders["macVolumeSlider"].adjust(toNormalizedSliderPosition: 1)
-        let settingsVolume = (app.sliders["macVolumeSlider"].value as? String ?? "").filter { !$0.isWhitespace }
-        XCTAssertEqual(percent(settingsVolume), 100, accuracy: 3)
-        app.buttons["dismissTools"].tap()
-        XCTAssertEqual((volume.value as? String ?? "").filter { !$0.isWhitespace }, settingsVolume)
-        for tool in ["draw", "zoom"] {
-            app.buttons["tool-\(tool)"].tap()
-            checkStrip()
-            XCTAssertGreaterThan(app.sliders["activeToolSize"].frame.minX, app.buttons["previous"].frame.maxX)
-            XCTAssertLessThan(app.sliders["activeToolSize"].frame.maxX, app.buttons["next"].frame.minX)
-            if tool == "draw" {
-                XCTAssertLessThan(app.buttons["clearDraw"].frame.maxX, app.buttons["next"].frame.minX)
-                app.buttons["clearDraw"].tap()
-            } else {
-                XCTAssertLessThan(app.sliders["activeZoomFactor"].frame.maxX, app.buttons["next"].frame.minX)
-            }
-            play.tap(); XCTAssertEqual(play.label, "Pausar vídeo")
-            play.tap(); app.buttons["tool-\(tool)"].tap()
-        }
-        app.buttons["preview"].tap()
-        XCTAssertFalse(play.exists); XCTAssertFalse(volume.exists)
-        app.buttons["tools"].tap(); app.swipeUp()
-        XCTAssertFalse(app.sliders["macVolumeSlider"].exists)
-        XCTAssertFalse(app.buttons["Reproducir vídeo"].exists)
-        app.buttons["dismissTools"].tap()
-        app.buttons["next"].tap()
-        app.buttons["preview"].tap()
-        XCTAssertEqual(app.staticTexts["slideCounter"].label, "4 / 8")
-        XCTAssertTrue(play.exists)
-        let strip = XCTAttachment(screenshot: app.screenshot()); strip.name = "Video playback and volume beside centered arrows"; strip.lifetime = .keepAlways; add(strip)
     }
 
     func testNextSlideEyeRespondsAcrossItsTouchArea() {

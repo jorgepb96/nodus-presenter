@@ -1,21 +1,21 @@
-Thank you for reviewing Nodus Presenter. Version 0.2.0 (21):
+Nodus Presenter 0.2.0 (23) — App Review information
 
-1. PHYSICAL-DEVICE RECORDING AND QA
-Attached: Nodus-Presenter-0.2.0-21-iPhone16ProMax.mp4 (3:05). The developer personally recorded the app on a physical iPhone 16 Pro Max. It begins by opening build 21 from TestFlight, then shows QR pairing with Nodus Research, slide navigation, pointer/color, Spotlight, drawing, magnifier, timer, next-slide preview, layout/theme settings and landscape use. It is the complete recording, re-encoded for attachment compatibility. No registration, login, deletion or paid features exist: no account is created and the app is free. There is no public content feed, user-to-user publishing or messaging. PDFs, notes and drawing are private presentation content exchanged only with the paired computer. Simulator checks cover iPhone/iPad layouts, rotation and languages; they are distinct from physical testing.
+1. QR AND OFFLINE DEMO
+Attach nodus-presenter-demo-qr.png. Display it on another screen or print it, launch the app, tap Scan QR code, allow camera access and scan. Its permanent payload, nodus-presenter://demo, opens eight local sample slides and notes. It contains no credentials and does not expire. Alternatively use Try demo, or Paste session link with that URL; those routes require no camera.
+The app clearly shows Demo · Not connected to Nodus. Navigation, slide grid, private reading, pointer, Spotlight, drawing, magnifier, timer, black-screen simulation, next preview and layout/appearance settings are available. Commands are simulated locally. Build 23 hides video playback and Mac-volume controls in both the demo presenter and Settings. No computer, account or network is required for the demo. This QR tests scanning and demo entry, not real desktop pairing.
 
-2. PURPOSE AND AUDIENCE
-A native iPhone/iPad remote for PDF Presenter in Nodus Research. Teachers, researchers, students and other presenters can move around a room while viewing slides/notes and controlling the audience display. It is available to everyone, not restricted to an employer or institution. It has no purchases, subscriptions, advertising or analytics.
+2. REAL DESKTOP PAIRING
+Download Nodus Research at https://nodusresearch.com/ (macOS, Windows or Linux). No account or purchase is required for PDF Presenter. Open Toolkit → PDF Presenter, import any sample PDF and select Present. Keep the computer and review device on the same reachable local network, with Wi-Fi enabled on the mobile device and Mac. In the desktop presenter, open Mobile remote (QR) and select iPhone–iPad app (App iPhone–iPad in Spanish), then scan that QR using Nodus Presenter. Allow camera and local-network access. Keep the presentation active; green indicates authenticated state.
+The desktop QR contains a temporary key for that local session, so a QR from our computer cannot connect at your location and becomes invalid when its presentation ends. Use the QR generated on your review computer. Real video controls require a slide with video: desktop playback, Mac system volume or Windows/Linux presentation-video volume. External video services require Internet.
 
-3. ACCESS AND SETUP
-No credentials are required. Launch the app and tap Try demo (Probar demo in Spanish). Eight included demo slides/notes need no account, computer or network. Arrows or left/right slide taps navigate; the grid selects a slide. The book enables private reading without advancing the audience. The moon blanks/restores the audience. Tap the top timer to start/pause; hold to reset. Settings control the slide/notes split, next preview, appearance and accent. Select pointer, Spotlight, drawing or magnifier; controls appear between the arrows. Slide 4 simulates video play/pause and volume. Video controls appear only on video slides and are hidden during private reading. Demo commands are simulated and do not control a computer.
+3. PHYSICAL-DEVICE VIDEO AND TESTING
+The previously supplied Nodus-Presenter-0.2.0-21-iPhone16ProMax.mp4 (3:05) was personally recorded on a physical iPhone 16 Pro Max using build 21. It shows actual QR pairing, slide navigation, pointer/color, Spotlight, drawing, magnifier, timer, next preview, layout/theme and landscape use. It is not a recording of build 23. Build 23 passes 26 iOS session tests and a simulator UI test checking no demo video/volume controls in portrait, landscape and Settings; these are distinct from physical-device validation.
 
-For real control, download Nodus Research at https://nodusresearch.com/ and open a PDF in PDF Presenter. Start presenting, choose App iPhone-iPad and scan its current QR in the mobile app. Grant camera and local-network access. Keep Wi-Fi enabled and use the same reachable local network for a reproducible review; green indicates authenticated presentation state. Mac QR v1 and Windows/Linux QR v2 remain supported. New Mac Multipeer QR v3 requires the companion desktop integration and is explicitly selected by its QR. Video plays on the desktop audience display; Mac volume controls system output, Windows/Linux volume controls presentation video.
+4. PURPOSE, SERVICES AND PRIVACY
+A free iPhone/iPad remote for Nodus Research PDF Presenter, available to everyone, including teachers, researchers and students. No mobile account, purchases, subscriptions, advertising, analytics, content feed or messaging. PDFs, notes and drawings are private content exchanged with the paired computer.
+Core frameworks: SwiftUI/UIKit, PDFKit, AVFoundation, Network/Bonjour, Multipeer Connectivity and CryptoKit. No mobile developer backend, authentication provider, AI service or third-party analytics SDK. Local PDF/notes/control needs no Internet when devices can communicate. Optional user-selected YouTube overlays play on the desktop.
+Privacy: https://nodusresearch.com/presenter/privacy/
+Support: https://nodusresearch.com/faq/
 
-4. EXTERNAL TOOLS AND SERVICES
-Core functionality uses Nodus Research desktop and Apple system frameworks: SwiftUI/UIKit, PDFKit, AVFoundation (QR camera), Network/Bonjour, Multipeer Connectivity and CryptoKit. No mobile developer backend, authentication provider, payment processor, AI service or third-party analytics SDK is used. Local PDF/notes/control needs no internet when devices can communicate. Optional user-selected YouTube overlays are played by the desktop and require YouTube/internet; the mobile app sends playback commands. The privacy/support pages open our website: https://nodusresearch.com/presenter/privacy/ and https://nodusresearch.com/faq/.
-
-5. REGIONS
-Features and bundled content are consistent across regions. Device-language localization supports English, Spanish, French, German, Italian, Portuguese, Japanese and Simplified/Traditional Chinese; other languages fall back to English.
-
-6. REGULATION AND CONTENT
-This is a presentation utility, not a regulated service. The bundled demo text/graphics and Nodus branding are our own. It supplies no licensed third-party media catalog. Users select their own PDFs and optional video links; the recording's presentation is a user-selected document, not bundled content.
+5. CONTENT AND REGIONS
+This presentation utility is not a regulated service. Bundled demo content and Nodus branding are our own; no licensed media catalog is provided. Users choose their own PDFs/video links. Features are consistent across regions. Languages: English, Spanish, French, German, Italian, Portuguese, Japanese, Simplified/Traditional Chinese; fallback English.

@@ -10,7 +10,9 @@ En Mac, el enlace admite Wi-Fi entre dispositivos Apple (`includePeerToPeer`) si
 
 En Windows y Linux, el ordenador y el móvil deben estar en la misma red local; el ordenador puede usar Ethernet. El QR configura automáticamente los extremos y verifica el certificado de sesión con TLS 1.3. No hay que escribir direcciones ni PIN en la app. El permiso de red local y el firewall deben permitir la conexión. La app y el navegador pueden usarse a la vez. Este enlace necesita la integración LAN de Nodus y la nueva versión del cliente móvil.
 
-La demo funciona sin ordenador, sin cámara y sin red. Genera un PDF local de ocho diapositivas, notas y estado de vídeo simulado. El punto verde indica un estado recibido de Nodus en una sesión autenticada; la demo y la reconexión muestran rojo, además de texto.
+La demo funciona sin ordenador, sin cámara y sin red. Genera un PDF local de ocho diapositivas y notas. Desde la build 23 no incluye controles de vídeo ni volumen, tanto en la vista de presentación como en Ajustes. El punto verde indica un estado recibido de Nodus en una sesión autenticada; la demo y la reconexión muestran rojo, además de texto.
+
+Desde la build 22, el enlace `nodus-presenter://demo` también abre esa demo desde el escáner, el enlace manual o una URL externa. El [QR de demostración](AppStore/Demo/nodus-presenter-demo-qr.png) es permanente y no contiene claves de sesión. Escanearlo requiere cámara; la demo no establece ninguna conexión ni controla un ordenador. Se puede regenerar y verificar con `swift Scripts/generate-demo-qr.swift`.
 
 ## Controles
 
@@ -22,7 +24,7 @@ Las flechas están centradas justo debajo de la diapositiva. Toca la mitad izqui
 
 Una única barra inferior reúne puntero, Spotlight, dibujo, lupa y pantalla negra. La lectura privada permanece activa al pulsar una herramienta o la luna/sol. Sus acciones se aplican a la pantalla del público sin cambiar de diapositiva ni cancelar la lectura del móvil; solo pulsar de nuevo el libro vuelve a la diapositiva proyectada. Otro toque en una herramienta seleccionada la desactiva. También hay botones de fuente de 44 puntos separados, volumen y reproducción/búsqueda del vídeo asociado. Las herramientas actúan sobre las coordenadas de la diapositiva, sin las bandas del encuadre. Durante una desconexión se conserva la última vista y el contenido descargado; no se guardan órdenes para reproducirlas más tarde.
 
-Si la diapositiva proyectada tiene vídeo, la franja bajo ella muestra reproducción/pausa a la izquierda y volumen a la derecha, con las flechas centradas. El volumen abre un popover con slider: controla el audio del sistema en Mac y el volumen del vídeo de la presentación en Windows/Linux, y comparte su valor con Ajustes. Las herramientas conservan sus controles entre las flechas. En columnas de menos de 340 puntos, los botones multimedia pasan junto al contador para evitar solapamientos. Se ocultan durante la lectura privada. Ajustes mantiene el salto a un segundo concreto. En la demo, la diapositiva 4 simula la reproducción sin reproducir audio ni cambiar el volumen del Mac.
+Si la diapositiva proyectada tiene vídeo, la franja bajo ella muestra reproducción/pausa a la izquierda y volumen a la derecha, con las flechas centradas. El volumen abre un popover con slider: controla el audio del sistema en Mac y el volumen del vídeo de la presentación en Windows/Linux, y comparte su valor con Ajustes. Las herramientas conservan sus controles entre las flechas. En columnas de menos de 340 puntos, los botones multimedia pasan junto al contador para evitar solapamientos. Se ocultan durante la lectura privada y no aparecen en la demo. Ajustes mantiene el salto a un segundo concreto para las sesiones reales.
 
 ## Idiomas
 

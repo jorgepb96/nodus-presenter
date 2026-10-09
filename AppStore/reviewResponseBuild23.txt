@@ -1,0 +1,33 @@
+Hello App Review team,
+
+Thank you for your message regarding Guideline 2.1(a). We have provided a permanent demonstration QR image, nodus-presenter-demo-qr.png. The instructions below apply to Nodus Presenter version 0.2.0 (build 23).
+
+Nodus Presenter is an iPhone/iPad remote for PDF Presenter in the Nodus Research desktop application. No account, login credentials, subscription or purchase is required. There are two ways to test the app:
+
+1. Scan the supplied QR and try the offline demo
+
+Display nodus-presenter-demo-qr.png on another screen or print it. Open Nodus Presenter, tap “Scan QR code”, allow camera access and scan the image. The QR contains nodus-presenter://demo and opens eight included sample slides and speaker notes. It is permanent, does not expire and contains no credentials.
+
+You can test slide navigation, the slide grid, private reading, pointer, Spotlight, drawing, magnifier, timer, black-screen simulation, next-slide preview and layout/appearance settings. The app clearly displays “Demo · Not connected to Nodus”. These presentation commands are simulated locally and do not control a computer. Video playback and Mac-volume controls are hidden in the demo, including in Settings.
+
+The same demo can also be opened with “Try demo” on the welcome screen, or by pasting nodus-presenter://demo using “Paste session link”. These alternatives do not require camera access. The offline demo requires no computer, account or network connection. The supplied QR tests the scanner and opens the demo; it does not establish or demonstrate desktop pairing.
+
+2. Test actual QR pairing and desktop control with Nodus Research
+
+Download and install the Nodus Research desktop app from https://nodusresearch.com/. Installers for macOS, Windows and Linux are also available at https://github.com/jorgepb96/nodus/releases/latest. The desktop app is free and requires no account for PDF Presenter.
+
+a. Keep the computer and iPhone/iPad on the same reachable local network, with Wi-Fi enabled on the mobile device. For the Mac, keep Wi-Fi enabled as well. Allow Nodus through the computer's firewall if prompted.
+b. Open Toolkit → PDF Presenter in Nodus Research, import a PDF and start the presentation with “Present”. Any sample PDF can be used.
+c. In the desktop presenter window, open “Mobile remote (QR)” and select “iPhone–iPad app” (“App iPhone–iPad” in Spanish). Use this app-specific QR; the separate “Web browser” option is for browser-based control.
+d. Open Nodus Presenter on the review device, select “Scan QR code”, allow camera and local-network access, and scan the current desktop QR.
+e. Keep the desktop presentation active. A successful connection shows a green status indicator and the presentation's slides and notes. You can then test actual slide navigation and tools on the desktop audience display.
+f. To test real video playback and volume, add a video to a slide in the desktop app and select that slide. Playback occurs on the desktop audience display. On Mac the volume control adjusts system output; on Windows/Linux it adjusts the presentation video volume. External video services require Internet access.
+
+The desktop pairing QR identifies a specific active local presentation and contains a temporary session key. It becomes invalid when that presentation ends. A desktop QR generated at our location cannot connect to a review device at your location, so actual pairing must use a QR generated on your own review computer. The permanent demo QR above is a separate, clearly identified demonstration entry point.
+
+The previously supplied physical-device video demonstrates actual QR pairing and interaction with Nodus Research. That recording uses build 21; build 23 includes the demo QR entry point and removes the demo's video and volume controls.
+
+Please let us know if you encounter any difficulty with either test procedure.
+
+Best regards,
+Jorge Pérez Burgueño

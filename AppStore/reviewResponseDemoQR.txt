@@ -1,0 +1,21 @@
+Hello App Review team,
+
+Please find attached a permanent QR code to test the app’s demo mode.
+
+Display the QR image on another screen or print it. Open Nodus Presenter, tap “Scan QR code”, allow camera access and scan the attached image. It opens eight sample slides and speaker notes, allowing you to explore the presentation controls without a computer, account or network connection.
+
+These instructions apply to version 0.2.0 (build 23).
+
+You can also test the actual desktop pairing and remote-control functionality by installing Nodus for macOS from https://nodusresearch.com/:
+
+1. In Nodus Tools, open PDF Presenter.
+2. Import a PDF presentation and click “Present” to start it.
+3. Click the QR-code icon in the top bar of the presenter window and select “iPhone–iPad app”.
+4. Open Nodus Presenter on your iPhone, tap “Scan QR code”, allow camera and local-network access, and scan the QR displayed on your Mac.
+
+Keep the Mac and iPhone on the same reachable local network, with Wi-Fi enabled, and keep the desktop presentation open while testing. This connects the iPhone app to the actual presentation so you can test live slide navigation and remote controls.
+
+Nodus generates a new pairing QR for each presentation session. This QR is temporary and remains valid only while that presentation session is active; it expires when the session ends. Please generate it on your own review Mac.
+
+Best regards,
+Jorge Pérez Burgueño

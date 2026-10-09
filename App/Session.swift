@@ -138,10 +138,16 @@ struct InkStroke: Identifiable {
         state = PresenterState(); state.presenting = true; state.pdfId = "demo"
         state.totalSlides = pdfDocument?.pageCount ?? 8; state.currentSlide = 3; state.timerSeconds = 522
         state.toolColor = "#8b5cf6"
-        notes = DemoDeck.notes; videos = ["4": .object(["url": .string("demo")])]
+        notes = DemoDeck.notes; videos = [:]
         localSlide = state.currentSlide; assetVersion = "demo"; imageRevision += 1
     }
     func connect(url: URL) {
+        // The public demo QR uses the same scanner and URL entry points as pairing.
+        if url.absoluteString == "nodus-presenter://demo" {
+            errorMessage = nil
+            enterDemo()
+            return
+        }
         do {
             let newPairing = try Pairing(url: url)
             disconnect(); pairing = newPairing; macName = newPairing.name

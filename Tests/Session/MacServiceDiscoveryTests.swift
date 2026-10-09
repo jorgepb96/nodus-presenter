@@ -6,6 +6,37 @@ import PresenterCore
 @MainActor final class MacServiceDiscoveryTests: XCTestCase {
     private let service = "nodus-12345678-1234-1234-1234-123456789abc"
 
+    func testDemoQRCancelsPairingAndIgnoresLateDiscoveryWithoutConnecting() throws {
+        var browsers: [FakeMacBrowser] = []
+        let discovery = MacServiceDiscovery(makeBrowser: {
+            let browser = FakeMacBrowser(); browsers.append(browser); return browser
+        })
+        let session = PresenterSession(serviceDiscovery: discovery)
+        defer { session.disconnect() }
+        session.connect(url: qr)
+        let staleResult = try XCTUnwrap(browsers[0].resultsChanged)
+        session.errorMessage = "Previous pairing error"
+
+        session.connect(url: URL(string: "nodus-presenter://demo")!)
+        XCTAssertTrue(browsers[0].cancelled)
+        XCTAssertFalse(session.isPairing)
+        XCTAssertTrue(session.isDemo)
+        XCTAssertFalse(session.connected)
+        XCTAssertNil(session.errorMessage)
+        XCTAssertEqual(session.pdfDocument?.pageCount, 8)
+        XCTAssertTrue(session.videos.isEmpty)
+        XCTAssertFalse(session.hasCurrentVideo)
+        XCTAssertEqual(session.status, L10n.text("Demo · Not connected to Nodus"))
+
+        staleResult([.service(name: service, type: Pairing.serviceType, domain: "local.", interface: nil)])
+        session.sceneChanged(.background)
+        session.sceneChanged(.inactive); session.sceneChanged(.active)
+        XCTAssertEqual(browsers.count, 1, "Opening the demo must not start or resume network discovery")
+        XCTAssertTrue(session.isDemo)
+        XCTAssertFalse(session.connected)
+        XCTAssertTrue(session.state.presenting)
+    }
+
     func testSelectsOnlyQRServiceAndStopsBrowsingBeforeConnecting() {
         let browser = FakeMacBrowser()
         let discovery = MacServiceDiscovery(makeBrowser: { browser })

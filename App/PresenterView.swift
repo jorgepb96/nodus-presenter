@@ -469,7 +469,6 @@ struct ToolsSheet: View {
                     Section(L10n.text("Slide video")) {
                         Button(session.state.videoPlaying ? L10n.text("Pause video") : L10n.text("Play video")) { session.send(["type": .string("videoToggle")]) }
                         HStack { TextField(L10n.text("Seconds"), value: $seek, format: .number).keyboardType(.decimalPad); Button(L10n.text("Go")) { session.send(["type": .string("videoSeek"), "time": .number(max(0, seek))]) } }
-                        if session.isDemo { Text(L10n.text("The demo simulates the video state.")).font(.caption).foregroundStyle(.secondary) }
                     }.disabled(!session.canControl)
                 }
                 Section(L10n.text("About")) {

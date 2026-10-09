@@ -1,0 +1,9 @@
+DEMO QR — Nodus Presenter 0.2.0 build 23
+
+Display the attached nodus-presenter-demo-qr.png on another screen or print it. Open Nodus Presenter, tap “Scan QR code”, allow camera access and scan the image. It opens the built-in offline demo with eight sample slides and notes. Alternatively, open nodus-presenter://demo or paste that link using “Paste session link” on the welcome screen.
+
+The app visibly identifies this mode as “Demo · Not connected to Nodus”. Presentation commands are simulated locally; no connection to a computer is established. Build 23 removes video playback and Mac-volume controls from both the demo presenter view and its Settings. The QR is permanent and contains no credentials. It tests QR scanning and demo functionality, not real desktop pairing.
+
+To test actual pairing and desktop control, download Nodus Research from https://nodusresearch.com/, open a PDF in PDF Presenter and start presenting. Open the presentation’s QR connection panel, select “App iPhone–iPad”, and scan that session’s QR with Nodus Presenter. Keep the computer and mobile device on the same reachable local network, allow camera and local-network access, and keep the presentation active during testing.
+
+Build 21 does not support the attached demo QR. Build 22 introduced the demo link; build 23 also removes the simulated video and volume controls. Use these instructions with build 23 or later.
