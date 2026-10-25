@@ -1,1 +1,1 @@
-支援與Mac、Windows或Linux版Nodus Research配對。Windows和Linux使用區域網路，Mac現有連線方式保持不變。影片控制項僅在含影片的投影片上顯示。
+全新主畫面，與其他 Nodus 應用程式風格一致，並帶來新標語「全場由你掌控。」。配對與簡報功能維持不變。

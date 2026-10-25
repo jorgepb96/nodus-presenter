@@ -16,16 +16,16 @@ final class LocalizationUITests: XCTestCase {
 
     func testEveryLanguageAndUnsupportedLanguageFallback() {
         let cases: [(String, String, String, String, String, String, String)] = [
-            ("en", "Settings", "Next", "Violet", "Knowledge networks", "Knowledge networks let us connect people, ideas and opportunities in meaningful ways.", "Your presentation, in your hands."),
-            ("es", "Ajustes", "Siguiente", "Violeta", "Redes de conocimiento", "Las redes de conocimiento nos permiten conectar personas, ideas y oportunidades de forma significativa.", "Tu presentación, en tus manos."),
-            ("fr", "Réglages", "Suivante", "Violet", "Réseaux de connaissances", "Les réseaux de connaissances nous permettent de relier les personnes, les idées et les opportunités de manière significative.", "Votre présentation, entre vos mains."),
-            ("zh-Hans", "设置", "下一张", "紫罗兰", "知识网络", "知识网络让我们能够有意义地连接人、思想和机遇。", "演示尽在掌握。"),
-            ("zh-Hant", "設定", "下一張", "紫羅蘭", "知識網絡", "知識網絡讓我們能夠有意義地連結人、思想和機遇。", "簡報盡在掌握。"),
-            ("ja", "設定", "次へ", "バイオレット", "知識のネットワーク", "知識のネットワークは、人、アイデア、機会を意味のある形で結びつけます。", "プレゼンテーションを、あなたの手に。"),
-            ("de", "Einstellungen", "Weiter", "Violett", "Wissensnetzwerke", "Wissensnetzwerke ermöglichen es uns, Menschen, Ideen und Chancen sinnvoll miteinander zu verbinden.", "Deine Präsentation, in deinen Händen."),
-            ("it", "Impostazioni", "Successiva", "Viola", "Reti di conoscenza", "Le reti di conoscenza ci permettono di collegare persone, idee e opportunità in modo significativo.", "La tua presentazione, nelle tue mani."),
-            ("pt", "Definições", "Seguinte", "Violeta", "Redes de conhecimento", "As redes de conhecimento permitem-nos ligar pessoas, ideias e oportunidades de forma significativa.", "A tua apresentação, nas tuas mãos."),
-            ("ru", "Settings", "Next", "Violet", "Knowledge networks", "Knowledge networks let us connect people, ideas and opportunities in meaningful ways.", "Your presentation, in your hands.")
+            ("en", "Settings", "Next", "Violet", "Knowledge networks", "Knowledge networks let us connect people, ideas and opportunities in meaningful ways.", "You run the show."),
+            ("es", "Ajustes", "Siguiente", "Violeta", "Redes de conocimiento", "Las redes de conocimiento nos permiten conectar personas, ideas y oportunidades de forma significativa.", "Tú tienes el mando."),
+            ("fr", "Réglages", "Suivante", "Violet", "Réseaux de connaissances", "Les réseaux de connaissances nous permettent de relier les personnes, les idées et les opportunités de manière significative.", "Vous avez la main."),
+            ("zh-Hans", "设置", "下一张", "紫罗兰", "知识网络", "知识网络让我们能够有意义地连接人、思想和机遇。", "全场由你掌控。"),
+            ("zh-Hant", "設定", "下一張", "紫羅蘭", "知識網絡", "知識網絡讓我們能夠有意義地連結人、思想和機遇。", "全場由你掌控。"),
+            ("ja", "設定", "次へ", "バイオレット", "知識のネットワーク", "知識のネットワークは、人、アイデア、機会を意味のある形で結びつけます。", "主導権は、あなたの手に。"),
+            ("de", "Einstellungen", "Weiter", "Violett", "Wissensnetzwerke", "Wissensnetzwerke ermöglichen es uns, Menschen, Ideen und Chancen sinnvoll miteinander zu verbinden.", "Du hast das Sagen."),
+            ("it", "Impostazioni", "Successiva", "Viola", "Reti di conoscenza", "Le reti di conoscenza ci permettono di collegare persone, idee e opportunità in modo significativo.", "Il comando è tuo."),
+            ("pt", "Definições", "Seguinte", "Violeta", "Redes de conhecimento", "As redes de conhecimento permitem-nos ligar pessoas, ideias e oportunidades de forma significativa.", "O comando é teu."),
+            ("ru", "Settings", "Next", "Violet", "Knowledge networks", "Knowledge networks let us connect people, ideas and opportunities in meaningful ways.", "You run the show.")
         ]
         let app = XCUIApplication()
         for (language, settings, next, violet, title, notes, welcome) in cases {

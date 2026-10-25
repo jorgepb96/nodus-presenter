@@ -1,1 +1,1 @@
-Enlace con Nodus Research en Mac, Windows o Linux. Windows y Linux utilizan la red local; la conexión actual de Mac se mantiene. Los controles de vídeo solo aparecen en diapositivas con vídeo.
+Nueva pantalla de inicio con el estilo del resto de apps Nodus y el lema «Tú tienes el mando.». El emparejamiento y la presentación funcionan igual que antes.

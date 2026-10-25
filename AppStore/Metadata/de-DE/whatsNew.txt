@@ -1,1 +1,1 @@
-Kopplung mit Nodus Research auf Mac, Windows oder Linux. Windows und Linux nutzen das lokale Netzwerk; die bestehende Mac-Verbindung bleibt erhalten. Videosteuerung nur bei Folien mit Video.
+Neuer Startbildschirm im Stil der übrigen Nodus-Apps mit dem Motto „Du hast das Sagen.“. Kopplung und Präsentation funktionieren wie bisher.

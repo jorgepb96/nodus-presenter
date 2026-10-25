@@ -1,1 +1,1 @@
-Pair with Nodus Research on Mac, Windows or Linux. Windows and Linux use your local network; the existing Mac connection is unchanged. Video controls appear only on slides with video.
+A refreshed home screen that matches the rest of the Nodus apps, with the new “You run the show.” welcome. Pairing and presenting work exactly as before.
