@@ -1,1 +1,1 @@
-支持与Mac、Windows或Linux版Nodus Research配对。Windows和Linux使用局域网，Mac现有连接方式保持不变。视频控件仅在含视频的幻灯片上显示。
+全新主屏幕，与其他 Nodus 应用风格一致，并带来新标语“全场由你掌控。”。配对与演示功能保持不变。

@@ -38,3 +38,26 @@ struct NodusLogo: View {
             .accessibilityValue("\(preferences.theme.title), \(colorScheme == .dark ? L10n.text("Dark") : L10n.text("Light"))")
     }
 }
+
+/// The connected N alone, fitted to its painted bounds for the navigation bar.
+struct NodusMark: View {
+    @EnvironmentObject var preferences: PresenterPreferences
+    @Environment(\.colorScheme) private var colorScheme
+    var body: some View {
+        Canvas { context, size in
+            let traits = UITraitCollection(userInterfaceStyle: colorScheme == .dark ? .dark : .light)
+            let resolved = UIColor(preferences.theme.color).resolvedColor(with: traits)
+            var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+            resolved.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            // Painted bounds of the 64-unit mark are 41 × 45, starting at (11.5, 9.5).
+            let unit = min(size.width / 41, size.height / 45)
+            let rect = CGRect(x: (size.width - 41 * unit) / 2 - 11.5 * unit,
+                              y: (size.height - 45 * unit) / 2 - 9.5 * unit,
+                              width: 64 * unit, height: 64 * unit)
+            context.withCGContext { cgContext in
+                NodusBrand.drawMark(in: cgContext, rect: rect, accent: .init(red: red, green: green, blue: blue))
+            }
+        }
+        .accessibilityHidden(true)
+    }
+}

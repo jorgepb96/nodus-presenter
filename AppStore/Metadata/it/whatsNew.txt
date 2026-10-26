@@ -1,1 +1,1 @@
-Abbinamento con Nodus Research su Mac, Windows o Linux. Windows e Linux usano la rete locale; il collegamento Mac esistente rimane invariato. Controlli video solo nelle diapositive con video.
+Nuova schermata iniziale nello stile delle altre app Nodus, con il motto «Il comando è tuo.». L’abbinamento e la presentazione funzionano come prima.

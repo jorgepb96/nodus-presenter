@@ -1,1 +1,1 @@
-Emparelhamento com Nodus Research no Mac, Windows ou Linux. Windows e Linux usam a rede local; a ligação Mac existente mantém-se. Controlos de vídeo apenas em diapositivos com vídeo.
+Novo ecrã inicial com o estilo das restantes apps Nodus e o lema «O comando é teu.». O emparelhamento e a apresentação funcionam como antes.

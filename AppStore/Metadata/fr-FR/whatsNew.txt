@@ -1,1 +1,1 @@
-Association avec Nodus Research sur Mac, Windows ou Linux. Windows et Linux utilisent le réseau local ; la liaison Mac existante est conservée. Commandes vidéo uniquement sur les diapositives avec vidéo.
+Nouvel écran d’accueil aligné sur les autres apps Nodus, avec la devise « Vous avez la main. ». L’appairage et la présentation fonctionnent comme avant.

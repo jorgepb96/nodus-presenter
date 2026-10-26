@@ -1,3 +1,11 @@
+# Versión 0.2.1
+
+**Enviada a App Review el 25 de octubre de 2026 a las 21:32 (Europe/Madrid).** La versión **0.2.1 (24)** está **Pendiente de revisión** y se publicará automáticamente cuando Apple la apruebe. [Comprobante](../Screenshots/Connectivity/app-review-0.2.1-submitted.jpg).
+
+Solo cambia el aspecto de la pantalla de inicio para alinearla con Nodus Reader y Nodus Drift: cabecera `NODUS / PRESENTER` con la marca N, el lema «Tú tienes el mando.» («You run the show.», traducido a los nueve idiomas), el estado de conexión bajo el logo y los botones Escanear QR y Probar demo con el mismo tamaño. El emparejamiento, los controles, la demo y el tratamiento de datos no cambian. Pasan las 18 pruebas Core, `LocalizationUITests` (nueve idiomas) y `WelcomeLayoutTests` (horizontal y rotación). [Captura](../Screenshots/Brand/home-0.2.1-es-dark.png).
+
+La build 24 se archivó, firmó y subió el 25 de octubre de 2026 a las 18:17. Las novedades de los nueve idiomas están en `AppStore/Metadata/*/whatsNew.txt`. Las notas de App Review se actualizaron para la 0.2.1 y ya no mencionan el vídeo simulado de la diapositiva 4. Se eliminó una localización en canarés (kannada) de la información de la app, creada por error durante la preparación. Registros locales: `.build/archive24.log` y `.build/upload24.log`.
+
 # Beta interna 0.2.0
 
 **Publicación confirmada el 9 de octubre de 2026.** El titular confirma que Apple ya ha publicado la app. La release de GitHub [v0.2.0](https://github.com/jorgepb96/nodus-presenter-mobile/releases/tag/v0.2.0) conserva el estado actual del código, **0.2.0 (23)**, junto con la documentación y los recursos de App Store. Los registros de envíos y borradores que siguen corresponden a sus fechas originales.
