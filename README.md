@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Screenshots/readme-banner.png" alt="Nodus Presenter: Nodi holding a remote, presentation slides and the Nodus Presenter N on a dark background.">
+  <img src="Screenshots/readme-banner.png" alt="Nodus Presenter: a presentation remote in front of a laptop showing slides, and the Nodus Presenter N. You run the show. Slides control, laser, spotlight, zoom and speaker notes. Free and open source, on iPhone, iPad and Mac.">
 </p>
 
 <p align="center">
